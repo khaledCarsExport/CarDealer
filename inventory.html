@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
@@ -18,19 +17,13 @@
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="inventory.html" class="active">Inventory</a>
-                <a href="add-car.html">Sell Your Car</a>
-                <a href="admin.html">Admin</a>
-                <a href="tel:+213549883720" class="btn-call">
+                <a href="tel:+1234567890" class="btn-call">
                     <i class="fas fa-phone"></i> Call Now
                 </a>
             </div>
-            <button class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </nav>
 
-    <!-- Page Header -->
     <section class="page-header">
         <div class="container">
             <h1>Our Car Inventory</h1>
@@ -38,398 +31,86 @@
         </div>
     </section>
 
-    <!-- Filters -->
-    <section class="filters">
-        <div class="container">
-            <div class="filter-container">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search by brand, model, year...">
-                </div>
-                <div class="filter-options">
-                    <select id="filterBrand">
-                        <option value="">All Brands</option>
-                        <option value="Toyota">Toyota</option>
-                        <option value="BMW">BMW</option>
-                        <option value="Mercedes">Mercedes</option>
-                        <option value="Audi">Audi</option>
-                        <option value="Honda">Honda</option>
-                    </select>
-                    <select id="filterPrice">
-                        <option value="">Price Range</option>
-                        <option value="0-10">Under 10M</option>
-                        <option value="10-25">10M - 25M</option>
-                        <option value="25-50">25M - 50M</option>
-                        <option value="50-100">50M - 100M</option>
-                    </select>
-                    <select id="filterYear">
-                        <option value="">Year</option>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                        <option value="2022">2022</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                    </select>
-                    <button onclick="clearFilters()" class="btn-clear">
-                        <i class="fas fa-times"></i> Clear Filters
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Inventory Grid -->
     <section class="inventory">
         <div class="container">
-            <div class="inventory-header">
-                <h2 id="inventoryCount">Loading cars...</h2>
-                <div class="view-options">
-                    <button class="view-btn active" onclick="setGridView()">
-                        <i class="fas fa-th"></i>
-                    </button>
-                    <button class="view-btn" onclick="setListView()">
-                        <i class="fas fa-list"></i>
-                    </button>
-                </div>
-            </div>
-            
             <div class="cars-grid" id="carsGrid">
-                <!-- Cars will be loaded here -->
-            </div>
-            
-            <div class="pagination" id="pagination">
-                <!-- Pagination will be added here -->
+                <!-- Cars will be loaded from cars.json -->
             </div>
         </div>
     </section>
 
-    <!-- CTA Banner -->
-    <section class="cta-banner">
-        <div class="container">
-            <div class="banner-content">
-                <h2>Can't Find What You're Looking For?</h2>
-                <p>Contact us and we'll help you find your perfect car</p>
-                <div class="banner-buttons">
-                    <a href="tel:+213549883720" class="btn-primary">
-                        <i class="fas fa-phone"></i> Call Now
-                    </a>
-                    <a href="add-car.html" class="btn-secondary">
-                        <i class="fas fa-car"></i> Sell Your Car
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Footer same as index.html -->
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="index.html" class="logo">
-                        <i class="fas fa-car"></i>
-                        <span>Khaled Cars</span>
-                    </a>
-                    <p>Premium car dealership offering the best selection of luxury and family vehicles.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <a href="index.html">Home</a>
-                    <a href="inventory.html">Inventory</a>
-                    <a href="add-car.html">Sell Your Car</a>
-                    <a href="admin.html">Admin Login</a>
-                </div>
-                <div class="footer-col">
-                    <h3>Contact Info</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Car Street, City</p>
-                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
-                    <p><i class="fas fa-envelope"></i> khaledcarsexport.skikda@gmail.com</p>
-                    <p><i class="fas fa-clock"></i> Mon-Sat: 9AM-7PM</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe for latest offers</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your Email" required>
-                        <button type="submit">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Khaled Cars. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal Gallery -->
-    <div class="modal" id="galleryModal">
-        <button class="modal-close" onclick="closeModal()">&times;</button>
-        <button class="modal-nav prev" onclick="prevModalMedia()">❮</button>
-        <div class="modal-content">
-            <img id="modalImage" class="modal-media" style="display: none;">
-            <video id="modalVideo" class="modal-media" controls style="display: none;"></video>
-        </div>
-        <button class="modal-nav next" onclick="nextModalMedia()">❯</button>
-        <div class="modal-counter" id="modalCounter"></div>
-    </div>
-
-    <script src="script.js"></script>
     <script>
-        // Inventory management
-        let allCars = [];
-        let currentPage = 1;
-        const carsPerPage = 12;
-        let currentView = 'grid';
-        
-        async function loadInventory() {
+        // Load cars from a JSON file
+        async function loadCars() {
             try {
-                const response = await fetch('/api/cars');
-                allCars = await response.json();
-                displayCars();
-                updateInventoryCount();
-                setupFilters();
+                const response = await fetch('cars.json');
+                const cars = await response.json();
+                displayCars(cars);
             } catch (error) {
-                console.error('Error loading inventory:', error);
-                document.getElementById('carsGrid').innerHTML = `
-                    <div class="error-state">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Unable to load inventory</h3>
-                        <p>Please try again later</p>
-                    </div>
-                `;
+                console.error('Error loading cars:', error);
+                // Fallback to hardcoded cars
+                displayCars(getFallbackCars());
             }
         }
-        
-        function displayCars() {
+
+        function getFallbackCars() {
+            return [
+                {
+                    id: '1',
+                    brand: 'Toyota',
+                    model: 'Camry',
+                    year: 2023,
+                    price: 25.5,
+                    kilometrage: 15000,
+                    boite: 'Automatic',
+                    version: 'LE',
+                    description: 'Excellent condition, one owner',
+                    image: 'assets/car1.jpg'
+                },
+                {
+                    id: '2',
+                    brand: 'BMW',
+                    model: 'X5',
+                    year: 2022,
+                    price: 45.0,
+                    kilometrage: 25000,
+                    boite: 'Automatic',
+                    version: 'xDrive40i',
+                    description: 'Luxury SUV with all features',
+                    image: 'assets/car2.jpg'
+                }
+                // Add more cars as needed
+            ];
+        }
+
+        function displayCars(cars) {
             const container = document.getElementById('carsGrid');
-            const startIndex = (currentPage - 1) * carsPerPage;
-            const endIndex = startIndex + carsPerPage;
-            const carsToShow = allCars.slice(startIndex, endIndex);
-            
-            if (currentView === 'grid') {
-                container.className = 'cars-grid';
-                container.innerHTML = carsToShow.map(car => createCarCard(car)).join('');
-            } else {
-                container.className = 'cars-list';
-                container.innerHTML = carsToShow.map(car => createCarListItem(car)).join('');
-            }
-            
-            updatePagination();
-        }
-        
-        function createCarCard(car) {
-            return `
-                <div class="car-card" id="car-${car.id}">
-                    <div class="car-media" onclick="openCarGallery('${car.id}')">
-                        ${car.media && car.media.length > 0 ? 
-                            `<img src="${car.media[0].url}" alt="${car.brand} ${car.model}">` :
-                            `<div class="no-image"><i class="fas fa-car"></i></div>`
-                        }
-                        ${car.media && car.media.length > 1 ? 
-                            `<div class="image-count"><i class="fas fa-images"></i> ${car.media.length}</div>` : ''
-                        }
+            container.innerHTML = cars.map(car => `
+                <div class="car-card">
+                    <div class="car-media">
+                        <img src="${car.image}" alt="${car.brand} ${car.model}">
                     </div>
                     <div class="car-info">
-                        <div class="car-header">
-                            <h3>${car.brand} ${car.model}</h3>
-                            <div class="car-year">${car.year}</div>
-                        </div>
+                        <h3>${car.brand} ${car.model}</h3>
                         <div class="car-details">
+                            <span><i class="fas fa-calendar"></i> ${car.year}</span>
                             <span><i class="fas fa-tachometer-alt"></i> ${car.kilometrage.toLocaleString()} km</span>
                             <span><i class="fas fa-cog"></i> ${car.boite}</span>
-                            <span><i class="fas fa-tag"></i> ${car.version}</span>
                         </div>
                         <div class="car-price">${car.price} M</div>
-                        ${car.description ? `<p class="car-description">${car.description.substring(0, 100)}...</p>` : ''}
-                        <div class="car-actions">
-                            <button onclick="openCarGallery('${car.id}')" class="btn-view">
-                                <i class="fas fa-images"></i> View Photos
-                            </button>
-                            <a href="tel:+1234567890" class="btn-call">
-                                <i class="fas fa-phone"></i> Inquire
-                            </a>
-                        </div>
+                        <p class="car-description">${car.description}</p>
+                        <a href="tel:+1234567890" class="btn-call">
+                            <i class="fas fa-phone"></i> Inquire Now
+                        </a>
                     </div>
                 </div>
-            `;
+            `).join('');
         }
-        
-        function createCarListItem(car) {
-            return `
-                <div class="car-list-item" id="car-${car.id}">
-                    <div class="list-media" onclick="openCarGallery('${car.id}')">
-                        ${car.media && car.media.length > 0 ? 
-                            `<img src="${car.media[0].url}" alt="${car.brand} ${car.model}">` :
-                            `<div class="no-image"><i class="fas fa-car"></i></div>`
-                        }
-                    </div>
-                    <div class="list-info">
-                        <div class="list-header">
-                            <h3>${car.brand} ${car.model} <span class="list-year">${car.year}</span></h3>
-                            <div class="list-price">${car.price} M</div>
-                        </div>
-                        <div class="list-details">
-                            <span><i class="fas fa-tachometer-alt"></i> ${car.kilometrage.toLocaleString()} km</span>
-                            <span><i class="fas fa-cog"></i> ${car.boite}</span>
-                            <span><i class="fas fa-tag"></i> ${car.version}</span>
-                        </div>
-                        ${car.description ? `<p class="list-description">${car.description}</p>` : ''}
-                        <div class="list-actions">
-                            <button onclick="openCarGallery('${car.id}')" class="btn-view">
-                                <i class="fas fa-images"></i> View Photos
-                            </button>
-                            <a href="tel:+1234567890" class="btn-call">
-                                <i class="fas fa-phone"></i> Call Now
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        function updateInventoryCount() {
-            const count = allCars.length;
-            document.getElementById('inventoryCount').textContent = 
-                `${count} Car${count !== 1 ? 's' : ''} Available`;
-        }
-        
-        function setupFilters() {
-            const searchInput = document.getElementById('searchInput');
-            const brandFilter = document.getElementById('filterBrand');
-            const priceFilter = document.getElementById('filterPrice');
-            const yearFilter = document.getElementById('filterYear');
-            
-            searchInput.addEventListener('input', filterCars);
-            brandFilter.addEventListener('change', filterCars);
-            priceFilter.addEventListener('change', filterCars);
-            yearFilter.addEventListener('change', filterCars);
-        }
-        
-        function filterCars() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const brand = document.getElementById('filterBrand').value;
-            const priceRange = document.getElementById('filterPrice').value;
-            const year = document.getElementById('filterYear').value;
-            
-            let filtered = allCars.filter(car => {
-                // Search term filter
-                if (searchTerm && !(
-                    car.brand.toLowerCase().includes(searchTerm) ||
-                    car.model.toLowerCase().includes(searchTerm) ||
-                    car.version.toLowerCase().includes(searchTerm) ||
-                    (car.description && car.description.toLowerCase().includes(searchTerm))
-                )) return false;
-                
-                // Brand filter
-                if (brand && car.brand !== brand) return false;
-                
-                // Year filter
-                if (year && car.year.toString() !== year) return false;
-                
-                // Price range filter
-                if (priceRange) {
-                    const [min, max] = priceRange.split('-').map(Number);
-                    if (max) {
-                        if (car.price < min || car.price > max) return false;
-                    } else {
-                        if (car.price > min) return false;
-                    }
-                }
-                
-                return true;
-            });
-            
-            allCars = filtered;
-            currentPage = 1;
-            displayCars();
-            updateInventoryCount();
-        }
-        
-        function clearFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('filterBrand').value = '';
-            document.getElementById('filterPrice').value = '';
-            document.getElementById('filterYear').value = '';
-            loadInventory();
-        }
-        
-        function setGridView() {
-            currentView = 'grid';
-            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.view-btn:nth-child(1)').classList.add('active');
-            displayCars();
-        }
-        
-        function setListView() {
-            currentView = 'list';
-            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.view-btn:nth-child(2)').classList.add('active');
-            displayCars();
-        }
-        
-        function updatePagination() {
-            const totalPages = Math.ceil(allCars.length / carsPerPage);
-            const pagination = document.getElementById('pagination');
-            
-            if (totalPages <= 1) {
-                pagination.innerHTML = '';
-                return;
-            }
-            
-            let html = '';
-            
-            // Previous button
-            html += `<button class="page-btn ${currentPage === 1 ? 'disabled' : ''}" 
-                      onclick="changePage(${currentPage - 1})">
-                      <i class="fas fa-chevron-left"></i>
-                    </button>`;
-            
-            // Page numbers
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
-                    html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" 
-                              onclick="changePage(${i})">${i}</button>`;
-                } else if (i === currentPage - 2 || i === currentPage + 2) {
-                    html += `<span class="page-dots">...</span>`;
-                }
-            }
-            
-            // Next button
-            html += `<button class="page-btn ${currentPage === totalPages ? 'disabled' : ''}" 
-                      onclick="changePage(${currentPage + 1})">
-                      <i class="fas fa-chevron-right"></i>
-                    </button>`;
-            
-            pagination.innerHTML = html;
-        }
-        
-        function changePage(page) {
-            if (page < 1 || page > Math.ceil(allCars.length / carsPerPage)) return;
-            currentPage = page;
-            displayCars();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadInventory();
-            
-            // Mobile menu toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-        });
+
+        // Load cars on page load
+        document.addEventListener('DOMContentLoaded', loadCars);
     </script>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation - SIMPLE VERSION -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
@@ -18,15 +18,10 @@
             <div class="nav-links">
                 <a href="index.html" class="active">Home</a>
                 <a href="inventory.html">Inventory</a>
-                <a href="add-car.html">Sell Your Car</a>
-                <a href="admin.html">Admin</a>
-                <a href="tel:+213549883720" class="btn-call">
+                <a href="tel:+1234567890" class="btn-call">
                     <i class="fas fa-phone"></i> Call Now
                 </a>
             </div>
-            <button class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
     </nav>
 
@@ -43,78 +38,50 @@
         </div>
     </section>
 
-    <!-- Featured Cars -->
+    <!-- Featured Cars - HARDCODED -->
     <section class="featured-cars">
         <div class="container">
             <h2 class="section-title">Featured Cars</h2>
-            <div class="cars-grid" id="featuredCars">
-                <!-- Featured cars will be loaded here -->
-            </div>
-            <div class="text-center">
-                <a href="inventory.html" class="btn-secondary">
-                    View All Cars <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section class="services">
-        <div class="container">
-            <h2 class="section-title">Why Choose Us</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shield-alt"></i>
+            <div class="cars-grid">
+                <!-- Car 1 -->
+                <div class="car-card">
+                    <div class="car-media">
+                        <img src="assets/car1.jpg" alt="Toyota Camry">
                     </div>
-                    <h3>Quality Guaranteed</h3>
-                    <p>All cars undergo thorough inspection and certification</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-tags"></i>
+                    <div class="car-info">
+                        <h3>Toyota Camry</h3>
+                        <div class="car-details">
+                            <span><i class="fas fa-calendar"></i> 2023</span>
+                            <span><i class="fas fa-tachometer-alt"></i> 15,000 km</span>
+                            <span><i class="fas fa-cog"></i> Automatic</span>
+                        </div>
+                        <div class="car-price">25.5 M</div>
+                        <a href="inventory.html" class="btn-view">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
                     </div>
-                    <h3>Best Prices</h3>
-                    <p>Competitive pricing with flexible financing options</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-car-side"></i>
+                
+                <!-- Car 2 -->
+                <div class="car-card">
+                    <div class="car-media">
+                        <img src="assets/car2.jpg" alt="BMW X5">
                     </div>
-                    <h3>Test Drive</h3>
-                    <p>Schedule a test drive at your convenience</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-handshake"></i>
+                    <div class="car-info">
+                        <h3>BMW X5</h3>
+                        <div class="car-details">
+                            <span><i class="fas fa-calendar"></i> 2022</span>
+                            <span><i class="fas fa-tachometer-alt"></i> 25,000 km</span>
+                            <span><i class="fas fa-cog"></i> Automatic</span>
+                        </div>
+                        <div class="car-price">45.0 M</div>
+                        <a href="inventory.html" class="btn-view">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
                     </div>
-                    <h3>Trade-In</h3>
-                    <p>Get the best value for your current vehicle</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Cars Sold</p>
-                </div>
-                <div class="stat-item">
-                    <h3>50+</h3>
-                    <p>Brands Available</p>
-                </div>
-                <div class="stat-item">
-                    <h3>98%</h3>
-                    <p>Customer Satisfaction</p>
-                </div>
-                <div class="stat-item">
-                    <h3>15+</h3>
-                    <p>Years Experience</p>
-                </div>
+                
+                <!-- Add more cars as needed -->
             </div>
         </div>
     </section>
@@ -124,13 +91,13 @@
         <div class="container">
             <div class="cta-content">
                 <h2>Ready to Find Your Perfect Car?</h2>
-                <p>Visit our showroom or contact us today</p>
+                <p>Contact us today for more information</p>
                 <div class="cta-buttons">
-                    <a href="tel:+213549883720" class="btn-primary">
-                        <i class="fas fa-phone"></i> (213) 549883720
+                    <a href="tel:+1234567890" class="btn-primary">
+                        <i class="fas fa-phone"></i> Call Now
                     </a>
-                    <a href="add-car.html" class="btn-secondary">
-                        <i class="fas fa-car"></i> Sell Your Car
+                    <a href="https://wa.me/1234567890" class="btn-secondary">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
                 </div>
             </div>
@@ -147,111 +114,21 @@
                         <span>Khaled Cars</span>
                     </a>
                     <p>Premium car dealership offering the best selection of luxury and family vehicles.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <a href="index.html">Home</a>
-                    <a href="inventory.html">Inventory</a>
-                    <a href="add-car.html">Sell Your Car</a>
-                    <a href="admin.html">Admin Login</a>
                 </div>
                 <div class="footer-col">
                     <h3>Contact Info</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Ramdan Djamel, Skikda</p>
-                    <p><i class="fas fa-phone"></i> (213) 549883720</p>
-                    <p><i class="fas fa-envelope"></i> khaledcarsexport.skikda@gmail.com</p>
-                    <p><i class="fas fa-clock"></i> Mon-Sat: 9AM-7PM</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Your Address Here</p>
+                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                    <p><i class="fas fa-envelope"></i> info@khaledcars.com</p>
                 </div>
-                <div class="footer-col">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe for latest offers</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Your Email" required>
-                        <button type="submit">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Khaled Cars. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Modal Gallery -->
-    <div class="modal" id="galleryModal">
-        <button class="modal-close" onclick="closeModal()">&times;</button>
-        <button class="modal-nav prev" onclick="prevModalMedia()">❮</button>
-        <div class="modal-content">
-            <img id="modalImage" class="modal-media" style="display: none;">
-            <video id="modalVideo" class="modal-media" controls style="display: none;"></video>
-        </div>
-        <button class="modal-nav next" onclick="nextModalMedia()">❯</button>
-        <div class="modal-counter" id="modalCounter"></div>
-    </div>
-
-    <script src="script.js"></script>
     <script>
-        // Load featured cars on homepage
-        async function loadFeaturedCars() {
-            try {
-                const response = await fetch('/api/cars');
-                const cars = await response.json();
-                
-                // Get first 4 cars as featured
-                const featured = cars.slice(0, 4);
-                const container = document.getElementById('featuredCars');
-                
-                if (featured.length === 0) {
-                    container.innerHTML = '<p class="no-cars">No cars available yet. Check back soon!</p>';
-                    return;
-                }
-                
-                container.innerHTML = featured.map(car => `
-                    <div class="car-card">
-                        <div class="car-media" onclick="openCarGallery('${car.id}')">
-                            ${car.media && car.media.length > 0 ? 
-                                `<img src="${car.media[0].url}" alt="${car.brand} ${car.model}">` :
-                                `<div class="no-image"><i class="fas fa-car"></i></div>`
-                            }
-                        </div>
-                        <div class="car-info">
-                            <h3>${car.brand} ${car.model}</h3>
-                            <div class="car-details">
-                                <span><i class="fas fa-calendar"></i> ${car.year}</span>
-                                <span><i class="fas fa-tachometer-alt"></i> ${car.kilometrage.toLocaleString()} km</span>
-                                <span><i class="fas fa-cog"></i> ${car.boite}</span>
-                            </div>
-                            <div class="car-price">${car.price} M</div>
-                            <a href="inventory.html#car-${car.id}" class="btn-view">
-                                <i class="fas fa-eye"></i> View Details
-                            </a>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (error) {
-                console.error('Error loading featured cars:', error);
-            }
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadFeaturedCars();
-            
-            // Mobile menu toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
+        // Simple mobile menu toggle
+        document.querySelector('.menu-toggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
         });
     </script>
 </body>
