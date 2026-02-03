@@ -9,30 +9,18 @@
     "boite": "Manual",
     "version": "Equilibre",
     "description": "",
-    "image": "assets/1770110529936-991813658.jpeg"
+    "image": "assets/1770112007941-64578731.jpeg"
   },
   {
-    "id": "2",
-    "brand": "BMW",
-    "model": "X5",
-    "year": 2022,
-    "price": 45,
-    "kilometrage": 25000,
+    "id": "1770112332844",
+    "brand": "Toyota",
+    "model": "uk",
+    "year": null,
+    "price": 278,
+    "kilometrage": 7285,
     "boite": "Automatic",
-    "version": "xDrive40i",
-    "description": "Luxury SUV with panoramic roof, leather seats",
-    "image": "assets/default-car.jpg"
-  },
-  {
-    "id": "3",
-    "brand": "Mercedes",
-    "model": "C-Class",
-    "year": 2021,
-    "price": 35,
-    "kilometrage": 30000,
-    "boite": "Automatic",
-    "version": "AMG Line",
-    "description": "Premium sedan, low mileage, excellent condition",
-    "image": "assets/default-car.jpg"
+    "version": "84752",
+    "description": "",
+    "image": "assets/1770112332141-387545147.jpeg"
   }
 ]
