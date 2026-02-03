@@ -1,15 +1,15 @@
 [
   {
     "id": "1",
-    "brand": "Toyota",
-    "model": "Camry",
+    "brand": "Renault",
+    "model": "Clio V",
     "year": 2023,
-    "price": 25.5,
-    "kilometrage": 15000,
-    "boite": "Automatic",
-    "version": "LE",
-    "description": "Excellent condition, one owner, full service history",
-    "image": "assets/default-car.jpg"
+    "price": 320,
+    "kilometrage": 45000,
+    "boite": "Manual",
+    "version": "Equilibre",
+    "description": "",
+    "image": "assets/1770110529936-991813658.jpeg"
   },
   {
     "id": "2",
