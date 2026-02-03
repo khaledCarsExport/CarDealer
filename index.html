@@ -3,133 +3,1885 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khaled Cars - Premium Car Dealer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Available Cars in Stock - Online Display</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .online-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+        
+        header h1 {
+            color: #2c3e50;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 15px;
+        }
+        
+        .contact-bar {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+        
+        .contact-item.phone a {
+            color: #3498db;
+        }
+        
+        .contact-item.whatsapp a {
+            color: #25D366;
+        }
+        
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+        
+        .admin-controls-section {
+            background: #34495e;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        
+        .admin-controls-section h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .admin-toggle {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .admin-toggle:hover {
+            background: #8e44ad;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .update-section {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            display: none;
+        }
+        
+        .update-section h3 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 140px;
+            background: #34495e;
+            color: #ecf0f1;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin-bottom: 20px;
+            resize: vertical;
+            transition: all 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #2980b9;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
+        .btn-success {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #27ae60;
+        }
+        
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #d68910;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .stats-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+        
+        .stat-number#avgPrice::before {
+            content: "M ";
+            font-size: 1.8rem;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .filter-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .filter-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-label {
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .filter-input, .filter-select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .filter-input:focus, .filter-select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .cars-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .car-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .car-image-container {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .car-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .car-card:hover .car-image {
+            transform: scale(1.1);
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #2ecc71;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .car-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .car-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .car-title {
+            flex: 1;
+        }
+        
+        .car-make {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .car-model {
+            color: #34495e;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .car-origin {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 2px;
+            font-style: italic;
+        }
+        
+        .car-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2ecc71;
+            background: linear-gradient(135deg, #d4efdf, #a9dfbf);
+            padding: 8px 20px;
+            border-radius: 25px;
+            white-space: nowrap;
+            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.2);
+        }
+        
+        .car-price::before {
+            content: "M ";
+            font-size: 1.5rem;
+        }
+        
+        .car-contact-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .car-contact-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .car-contact-btn.whatsapp {
+            background: #25D366;
+        }
+        
+        .car-contact-btn.whatsapp:hover {
+            background: #1da851;
+        }
+        
+        .car-specs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .spec-item {
+            text-align: center;
+            padding: 8px;
+        }
+        
+        .spec-value {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            min-height: 24px;
+        }
+        
+        .spec-label {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }
+        
+        .car-description {
+            margin-top: 15px;
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .no-cars {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            grid-column: 1 / -1;
+        }
+        
+        .no-cars-icon {
+            font-size: 5rem;
+            color: #bdc3c7;
+            margin-bottom: 20px;
+        }
+        
+        .no-cars h3 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .no-cars p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto 25px;
+        }
+        
+        .last-updated {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .footer-contacts {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .footer-contacts h3 {
+            color: #3498db;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-button {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+            min-width: 200px;
+            justify-content: center;
+        }
+        
+        .contact-button.phone {
+            background: #3498db;
+            color: white;
+        }
+        
+        .contact-button.phone:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .contact-button.whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
+        .contact-button.whatsapp:hover {
+            background: #1da851;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 20px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: none;
+            animation: slideInRight 0.3s ease;
+            max-width: 400px;
+        }
+        
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .notification-success {
+            background: #2ecc71;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .notification-error {
+            background: #e74c3c;
+            border-left: 5px solid #c0392b;
+        }
+        
+        .notification-info {
+            background: #3498db;
+            border-left: 5px solid #2980b9;
+        }
+        
+        .notification.show {
+            display: block;
+        }
+        
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .password-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .password-box h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .password-error {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating-whatsapp:hover {
+            background: #1da851;
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+        }
+        
+        .floating-phone {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: #3498db;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+        
+        .floating-phone:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(52, 152, 219, 0.6);
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+                justify-content: center;
+            }
+            
+            .cars-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .car-header {
+                flex-direction: column;
+            }
+            
+            .car-price {
+                margin-top: 10px;
+                align-self: flex-start;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .car-specs {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .spec-value {
+                font-size: 1rem;
+            }
+            
+            .spec-label {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation - SIMPLE VERSION -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-car"></i>
-                <span>Khaled Cars</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html" class="active">Home</a>
-                <a href="inventory.html">Inventory</a>
-                <a href="tel:+1234567890" class="btn-call">
-                    <i class="fas fa-phone"></i> Call Now
-                </a>
+    <!-- Floating Contact Buttons -->
+    <a href="tel:+213549883720" class="floating-phone" title="Call Now">
+        📞
+    </a>
+    <a href="https://wa.me/213549883720" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
+        💬
+    </a>
+    
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <h3>🔒 Admin Access Required</h3>
+            <p>Enter password to access admin controls:</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="Enter password" autocomplete="off">
+            <div id="passwordError" class="password-error">Incorrect password. Try again.</div>
+            <button onclick="checkPassword()" class="btn btn-primary">Login</button>
+            <button onclick="closePasswordModal()" class="btn btn-secondary" style="margin-top: 10px;">Cancel</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <header>
+            <div class="online-indicator">🌐 INVENTAIRE EN DIRECT</div>
+            <h1>🚗 Voitures Disponibles en Stock</h1>
+            <p>Affichage en temps réel - Mis à jour depuis le panneau d'administration local</p>
+            
+            <!-- Contact Bar in Header -->
+            <div class="contact-bar">
+                <div class="contact-item phone">
+                    <span class="contact-icon">📞</span>
+                    <a href="tel:+213549883720">
+                        <strong>Téléphone:</strong> +213 549 88 37 20
+                    </a>
+                </div>
+                <div class="contact-item whatsapp">
+                    <span class="contact-icon">💬</span>
+                    <a href="https://wa.me/213549883720" target="_blank">
+                        <strong>WhatsApp:</strong> +213 549 88 37 20
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Admin Controls Section -->
+        <section class="admin-controls-section">
+            <h3>⚙️ Contrôles Admin</h3>
+            <button onclick="showPasswordModal()" class="admin-toggle">
+                🔧 Mettre à jour l'Inventaire
+            </button>
+            <p style="margin-top: 15px; color: #bdc3c7; font-size: 0.9rem;">
+                Cliquez pour mettre à jour l'inventaire depuis le panneau d'administration local (Mot de passe: admin)
+            </p>
+        </section>
+        
+        <!-- Update Data Section (Hidden) -->
+        <section class="update-section" id="updateSection">
+            <h3>📤 Mettre à jour l'Inventaire</h3>
+            <p>Collez les données JSON de votre panneau d'administration local:</p>
+            <textarea id="jsonInput" placeholder='Collez les données JSON ici depuis le panneau d administration local...'></textarea>
+            
+            <div class="quick-actions">
+                <button onclick="loadCarData()" class="btn btn-success">
+                    🔄 Charger & Afficher les Voitures
+                </button>
+                <button onclick="loadSampleData()" class="btn btn-primary">
+                    📋 Charger les Données Exemple
+                </button>
+                <button onclick="clearAllData()" class="btn btn-danger">
+                    🗑️ Effacer l'Affichage
+                </button>
+                <button onclick="closeUpdateSection()" class="btn btn-secondary">
+                    ❌ Fermer
+                </button>
+            </div>
+            
+            <div class="quick-actions">
+                <button onclick="viewJsonStructure()" class="quick-action-btn">🔍 Voir la Structure JSON</button>
+                <button onclick="saveCurrentData()" class="quick-action-btn">💾 Sauvegarder les Données</button>
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">
+                <strong>💡 Astuce:</strong> Obtenez JSON depuis Admin Local → "Mettre à jour les Données d'Export" → "Copier dans le Presse-papier"
+            </div>
+        </section>
+        
+        <!-- Statistics -->
+        <div id="statsBar" class="stats-bar">
+            <div class="stat-box">
+                <div class="stat-icon">🚗</div>
+                <div class="stat-number" id="totalCars">0</div>
+                <div class="stat-label">Voitures Disponibles</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number" id="avgPrice">0</div>
+                <div class="stat-label">Prix Moyen</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number" id="newestYear">2024</div>
+                <div class="stat-label">Année la Plus Récente</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">⏰</div>
+                <div class="stat-number" id="lastUpdatedTime">-</div>
+                <div class="stat-label">Dernière Mise à Jour</div>
             </div>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Find Your Dream Car</h1>
-                <p>Premium selection of luxury & family cars at unbeatable prices</p>
-                <a href="inventory.html" class="btn-primary">
-                    <i class="fas fa-search"></i> Browse Inventory
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Cars - HARDCODED -->
-    <section class="featured-cars">
-        <div class="container">
-            <h2 class="section-title">Featured Cars</h2>
-            <div class="cars-grid">
-                <!-- Car 1 -->
-                <div class="car-card">
-                    <div class="car-media">
-                        <img src="assets/car1.jpg" alt="Toyota Camry">
-                    </div>
-                    <div class="car-info">
-                        <h3>Toyota Camry</h3>
-                        <div class="car-details">
-                            <span><i class="fas fa-calendar"></i> 2023</span>
-                            <span><i class="fas fa-tachometer-alt"></i> 15,000 km</span>
-                            <span><i class="fas fa-cog"></i> Automatic</span>
-                        </div>
-                        <div class="car-price">25.5 M</div>
-                        <a href="inventory.html" class="btn-view">
-                            <i class="fas fa-eye"></i> View Details
-                        </a>
-                    </div>
+        
+        <!-- Filter Section -->
+        <section id="filterSection" class="filter-section">
+            <h3>🔍 Filtrer les Voitures</h3>
+            
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Recherche</label>
+                    <input type="text" id="searchInput" class="filter-input" placeholder="Marque, modèle, couleur, description...">
                 </div>
                 
-                <!-- Car 2 -->
-                <div class="car-card">
-                    <div class="car-media">
-                        <img src="assets/car2.jpg" alt="BMW X5">
-                    </div>
-                    <div class="car-info">
-                        <h3>BMW X5</h3>
-                        <div class="car-details">
-                            <span><i class="fas fa-calendar"></i> 2022</span>
-                            <span><i class="fas fa-tachometer-alt"></i> 25,000 km</span>
-                            <span><i class="fas fa-cog"></i> Automatic</span>
-                        </div>
-                        <div class="car-price">45.0 M</div>
-                        <a href="inventory.html" class="btn-view">
-                            <i class="fas fa-eye"></i> View Details
-                        </a>
-                    </div>
+                <div class="filter-group">
+                    <label class="filter-label">Marque</label>
+                    <select id="makeFilter" class="filter-select">
+                        <option value="">Toutes les Marques</option>
+                    </select>
                 </div>
                 
-                <!-- Add more cars as needed -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact CTA -->
-    <section class="contact-cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Find Your Perfect Car?</h2>
-                <p>Contact us today for more information</p>
-                <div class="cta-buttons">
-                    <a href="tel:+1234567890" class="btn-primary">
-                        <i class="fas fa-phone"></i> Call Now
-                    </a>
-                    <a href="https://wa.me/1234567890" class="btn-secondary">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
+                <div class="filter-group">
+                    <label class="filter-label">Année</label>
+                    <select id="yearFilter" class="filter-select">
+                        <option value="">Toutes les Années</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Couleur</label>
+                    <select id="colorFilter" class="filter-select">
+                        <option value="">Toutes les Couleurs</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Moteur</label>
+                    <select id="engineFilter" class="filter-select">
+                        <option value="">Tous les Moteurs</option>
+                        <option value="Essence">Essence</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Hybride">Hybride</option>
+                        <option value="Electrique">Électrique</option>
+                        <option value="1.0L">1.0L</option>
+                        <option value="1.5L">1.5L</option>
+                        <option value="2.0L">2.0L</option>
+                        <option value="2.5L">2.5L</option>
+                        <option value="3.0L">3.0L</option>
+                        <option value="V6">V6</option>
+                        <option value="V8">V8</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Boîte Vitesse</label>
+                    <select id="transmissionFilter" class="filter-select">
+                        <option value="">Toutes les Boîtes</option>
+                        <option value="Manuelle">Manuelle</option>
+                        <option value="Automatique">Automatique</option>
+                        <option value="Semi-automatique">Semi-automatique</option>
+                        <option value="CVT">CVT</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Kilométrage Max</label>
+                    <select id="mileageFilter" class="filter-select">
+                        <option value="">Tous</option>
+                        <option value="0-50000">Moins de 50,000 km</option>
+                        <option value="50000-100000">50,000 - 100,000 km</option>
+                        <option value="100000-150000">100,000 - 150,000 km</option>
+                        <option value="150000-200000">150,000 - 200,000 km</option>
+                        <option value="200000-5000000">Plus de 200,000 km</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Gamme de Prix</label>
+                    <select id="priceFilter" class="filter-select">
+                        <option value="">Tous les Prix</option>
+                        <option value="0-2000000">Moins de M 2,000,000</option>
+                        <option value="2000000-5000000">M 2M - M 5M</option>
+                        <option value="5000000-10000000">M 5M - M 10M</option>
+                        <option value="10000000-50000000">M 10M - M 50M</option>
+                        <option value="50000000-1000000000">Plus de M 50M</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Origine</label>
+                    <select id="originFilter" class="filter-select">
+                        <option value="">Toutes les Origines</option>
+                        <option value="France">France</option>
+                        <option value="Allemagne">Allemagne</option>
+                        <option value="Japon">Japon</option>
+                        <option value="USA">USA</option>
+                        <option value="Corée">Corée</option>
+                        <option value="Chine">Chine</option>
+                        <option value="Algérie">Algérie</option>
+                    </select>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="index.html" class="logo">
-                        <i class="fas fa-car"></i>
-                        <span>Khaled Cars</span>
-                    </a>
-                    <p>Premium car dealership offering the best selection of luxury and family vehicles.</p>
-                </div>
-                <div class="footer-col">
-                    <h3>Contact Info</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Your Address Here</p>
-                    <p><i class="fas fa-phone"></i> (123) 456-7890</p>
-                    <p><i class="fas fa-envelope"></i> info@khaledcars.com</p>
-                </div>
+            
+            <div class="filter-controls">
+                <button onclick="resetFilters()" class="btn btn-secondary" style="padding: 10px 20px;">
+                    🔄 Réinitialiser les Filtres
+                </button>
+                <button onclick="sortByPriceHighToLow()" class="btn" style="background: #9b59b6; color: white; padding: 10px 20px;">
+                    💰 Prix: Élevé à Bas
+                </button>
+                <button onclick="sortByYearNewToOld()" class="btn" style="background: #1abc9c; color: white; padding: 10px 20px;">
+                    📅 Année: Récente à Ancienne
+                </button>
+                <button onclick="sortByMileageLowToHigh()" class="btn" style="background: #e67e22; color: white; padding: 10px 20px;">
+                    🛣️ Kilométrage: Bas à Élevé
+                </button>
+            </div>
+        </section>
+        
+        <!-- Cars Display -->
+        <div id="carsContainer">
+            <div class="no-cars">
+                <div class="no-cars-icon">🚗</div>
+                <h3>Aucune Voiture Disponible</h3>
+                <p>Veuillez mettre à jour l'inventaire en utilisant les Contrôles Admin ci-dessus.</p>
+                <p style="margin-top: 20px;">
+                    <button onclick="showPasswordModal()" class="btn btn-primary" style="margin-top: 10px;">
+                        ⚙️ Mettre à jour l'Inventaire
+                    </button>
+                </p>
             </div>
         </div>
-    </footer>
+        
+        <!-- Footer Contacts -->
+        <section class="footer-contacts">
+            <h3>📞 Contactez-nous pour Plus d'Informations</h3>
+            <p style="margin-bottom: 25px; color: #ecf0f1; max-width: 600px; margin: 0 auto 25px;">
+                Intéressé par l'une de nos voitures? Contactez-nous directement pour des essais routiers, détails de prix ou toute question!
+            </p>
+            
+            <div class="contact-buttons">
+                <a href="tel:+213549883720" class="contact-button phone">
+                    📞 Appeler Maintenant
+                    <span style="font-size: 0.9rem; opacity: 0.9;">+213 549 88 37 20</span>
+                </a>
+                <a href="https://wa.me/213549883720" target="_blank" class="contact-button whatsapp">
+                    💬 Chat WhatsApp
+                    <span style="font-size: 0.9rem; opacity: 0.9;">+213 549 88 37 20</span>
+                </a>
+            </div>
+            
+            <p style="margin-top: 25px; font-size: 0.9rem; color: #bdc3c7;">
+                Nous sommes disponibles 7 jours sur 7, de 9h00 à 20h00
+            </p>
+        </section>
+        
+        <div class="last-updated" id="lastUpdatedText">
+            Inventaire non encore chargé. Veuillez mettre à jour en utilisant les Contrôles Admin.
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notificationMessage"></span>
+    </div>
 
     <script>
-        // Simple mobile menu toggle
-        document.querySelector('.menu-toggle')?.addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
+        // Password protection for admin controls
+        const ADMIN_PASSWORD = "admin";
+        let isAdminAuthenticated = localStorage.getItem('displayAdminAuth') === 'true';
+        
+        // Car data storage
+        let carData = {
+            metadata: {
+                exportedAt: null,
+                totalCars: 0,
+                exportedCars: 0,
+                currency: "Algerian Dinar (M)",
+                language: "Français"
+            },
+            cars: []
+        };
+        
+        // Current filtered cars
+        let filteredCars = [];
+        
+        // Filter options
+        let availableMakes = new Set();
+        let availableYears = new Set();
+        let availableColors = new Set();
+        let availableEngines = new Set();
+        let availableTransmissions = new Set();
+        let availableOrigins = new Set();
+        
+        // DOM Elements
+        const passwordModal = document.getElementById('passwordModal');
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordError = document.getElementById('passwordError');
+        const updateSection = document.getElementById('updateSection');
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load cars from localStorage on page load
+            loadFromLocalStorage();
+            
+            // Setup event listeners for filters
+            document.getElementById('searchInput').addEventListener('input', filterCars);
+            document.getElementById('makeFilter').addEventListener('change', filterCars);
+            document.getElementById('yearFilter').addEventListener('change', filterCars);
+            document.getElementById('colorFilter').addEventListener('change', filterCars);
+            document.getElementById('engineFilter').addEventListener('change', filterCars);
+            document.getElementById('transmissionFilter').addEventListener('change', filterCars);
+            document.getElementById('mileageFilter').addEventListener('change', filterCars);
+            document.getElementById('priceFilter').addEventListener('change', filterCars);
+            document.getElementById('originFilter').addEventListener('change', filterCars);
+            
+            // Setup password input
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            
+            // Try to auto-load from URL parameters
+            tryAutoLoadFromURL();
         });
+        
+        // Show password modal
+        function showPasswordModal() {
+            passwordModal.style.display = 'flex';
+            passwordInput.value = '';
+            passwordError.style.display = 'none';
+            passwordInput.focus();
+        }
+        
+        // Close password modal
+        function closePasswordModal() {
+            passwordModal.style.display = 'none';
+            passwordInput.value = '';
+            passwordError.style.display = 'none';
+        }
+        
+        // Check password
+        function checkPassword() {
+            const password = passwordInput.value.trim();
+            
+            if (password === ADMIN_PASSWORD) {
+                localStorage.setItem('displayAdminAuth', 'true');
+                isAdminAuthenticated = true;
+                closePasswordModal();
+                showUpdateSection();
+                showNotification('Accès admin accordé!', 'success', 3000);
+            } else {
+                passwordError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                setTimeout(() => {
+                    passwordError.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // Show update section
+        function showUpdateSection() {
+            updateSection.style.display = 'block';
+            
+            // Scroll to update section
+            setTimeout(() => {
+                updateSection.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('jsonInput').focus();
+            }, 100);
+            
+            // If already has data in textarea, keep it
+            const jsonInput = document.getElementById('jsonInput');
+            if (!jsonInput.value.trim()) {
+                // Try to load from localStorage
+                const savedData = localStorage.getItem('carDisplayData');
+                if (savedData) {
+                    try {
+                        const data = JSON.parse(savedData);
+                        jsonInput.value = JSON.stringify(data, null, 2);
+                    } catch (e) {
+                        console.error('Error loading saved data to textarea:', e);
+                    }
+                }
+            }
+        }
+        
+        // Close update section
+        function closeUpdateSection() {
+            updateSection.style.display = 'none';
+        }
+        
+        // Load from localStorage
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('carDisplayData');
+            
+            if (savedData) {
+                try {
+                    carData = JSON.parse(savedData);
+                    filteredCars = [...carData.cars];
+                    updateFilters();
+                    renderCars();
+                    
+                    if (carData.cars.length > 0) {
+                        showNotification(`${carData.cars.length} voitures chargées depuis les données sauvegardées`, 'success', 3000);
+                    }
+                } catch (e) {
+                    console.error('Error loading saved data:', e);
+                    showNotification('Erreur de chargement des données sauvegardées. Veuillez mettre à jour l\'inventaire.', 'error', 5000);
+                }
+            }
+        }
+        
+        // Try to auto-load from URL parameters
+        // Enhanced auto-load function
+function tryAutoLoadFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataParam = urlParams.get('data');
+    
+    if (dataParam) {
+        try {
+            // Try to decode base64 data from URL
+            const decodedData = decodeURIComponent(atob(dataParam));
+            const jsonData = JSON.parse(decodedData);
+            
+            // Load the data
+            loadExternalData(jsonData);
+            showNotification(`✅ ${jsonData.cars.length} voitures chargées depuis l'URL`, 'success', 4000);
+            
+            // Update page title
+            document.title = `Voitures Disponibles (${jsonData.cars.length})`;
+            
+            // Clean URL (optional)
+            // window.history.replaceState({}, document.title, window.location.pathname);
+            
+        } catch (e) {
+            console.error('Error loading from URL:', e);
+            showNotification('Erreur de chargement depuis URL', 'error', 4000);
+        }
+    } else {
+        // Try to load from localStorage or default
+        loadFromLocalStorage();
+    }
+}
+        
+        // Load external data
+        function loadExternalData(jsonData) {
+            if (!jsonData.cars || !Array.isArray(jsonData.cars)) {
+                throw new Error('Format de données invalide');
+            }
+            
+            carData = jsonData;
+            filteredCars = [...carData.cars];
+            
+            // Save to localStorage
+            localStorage.setItem('carDisplayData', JSON.stringify(carData));
+            
+            // Update UI
+            updateFilters();
+            renderCars();
+            
+            // Update textarea if update section is open
+            if (updateSection.style.display === 'block') {
+                document.getElementById('jsonInput').value = JSON.stringify(carData, null, 2);
+            }
+        }
+        
+        // Load car data from JSON input
+        function loadCarData() {
+            const jsonInput = document.getElementById('jsonInput').value.trim();
+            
+            if (!jsonInput) {
+                showNotification('Veuillez d\'abord coller les données JSON', 'error', 4000);
+                return;
+            }
+            
+            try {
+                const newData = JSON.parse(jsonInput);
+                
+                // Validate data structure
+                if (!newData.cars || !Array.isArray(newData.cars)) {
+                    throw new Error('Format JSON invalide: Tableau "cars" attendu');
+                }
+                
+                // Load the data
+                loadExternalData(newData);
+                
+                showNotification(`${carData.cars.length} voitures chargées avec succès!`, 'success', 5000);
+                
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error', 5000);
+                console.error('JSON Parse Error:', error);
+            }
+        }
+        
+        // Load sample data
+        function loadSampleData() {
+            const sampleData = {
+                metadata: {
+                    exportedAt: new Date().toISOString(),
+                    totalCars: 4,
+                    exportedCars: 4,
+                    currency: "Algerian Dinar (M)",
+                    language: "Français"
+                },
+                cars: [
+                    {
+                        make: 'Toyota',
+                        model: 'Camry',
+                        year: 2023,
+                        version: 'Limited',
+                        color: 'Argent',
+                        kilometrage: 50000,
+                        moteur: '2.5L Essence',
+                        boite_vitesse: 'Automatique',
+                        prix: 5500000,
+                        origine: 'Japon',
+                        image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&h=300&fit=crop',
+                        description: 'Excellente condition avec kilométrage bas. Inclut système audio premium et sièges en cuir. Parfait pour usage familial.',
+                        status: 'Disponible'
+                    },
+                    {
+                        make: 'Ford',
+                        model: 'Mustang',
+                        year: 2022,
+                        version: 'GT',
+                        color: 'Rouge',
+                        kilometrage: 30000,
+                        moteur: 'V8 5.0L',
+                        boite_vitesse: 'Manuelle',
+                        prix: 8500000,
+                        origine: 'USA',
+                        image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=400&h=300&fit=crop',
+                        description: 'Modèle GT avec pack premium. Sièges chauffants, système de navigation, toit ouvrant et son premium.',
+                        status: 'Disponible'
+                    },
+                    {
+                        make: 'Mercedes',
+                        model: 'Classe E',
+                        year: 2023,
+                        version: 'AMG Line',
+                        color: 'Noir',
+                        kilometrage: 25000,
+                        moteur: '3.0L Diesel',
+                        boite_vitesse: 'Automatique 9G-TRONIC',
+                        prix: 12000000,
+                        origine: 'Allemagne',
+                        image: 'https://images.unsplash.com/photo-1563720223485-8d6d5c5c8c8d?w=400&h=300&fit=crop',
+                        description: 'Berline de luxe avec toutes les options. Conduite autonome, intérieur cuir, système audio Burmester.',
+                        status: 'Disponible'
+                    },
+                    {
+                        make: 'Renault',
+                        model: 'Clio',
+                        year: 2022,
+                        version: 'Intens',
+                        color: 'Blanc',
+                        kilometrage: 45000,
+                        moteur: '1.0L TCe',
+                        boite_vitesse: 'Manuelle',
+                        prix: 3200000,
+                        origine: 'France',
+                        image: 'https://images.unsplash.com/photo-1549927681-0b673b8243ab?w=400&h=300&fit=crop',
+                        description: 'Citadine économique en excellent état. Faible consommation, idéale pour la ville.',
+                        status: 'Disponible'
+                    }
+                ]
+            };
+            
+            document.getElementById('jsonInput').value = JSON.stringify(sampleData, null, 2);
+            loadCarData();
+        }
+        
+        // Clear all data
+        function clearAllData() {
+            if (confirm('Effacer toutes les voitures affichées et les données?')) {
+                carData = {
+                    metadata: {
+                        exportedAt: null,
+                        totalCars: 0,
+                        exportedCars: 0,
+                        currency: "Algerian Dinar (M)",
+                        language: "Français"
+                    },
+                    cars: []
+                };
+                filteredCars = [];
+                localStorage.removeItem('carDisplayData');
+                document.getElementById('jsonInput').value = '';
+                renderCars();
+                showNotification('Toutes les données effacées', 'info', 3000);
+            }
+        }
+        
+        // Update filters based on current data
+        function updateFilters() {
+            // Reset filter sets
+            availableMakes.clear();
+            availableYears.clear();
+            availableColors.clear();
+            availableEngines.clear();
+            availableTransmissions.clear();
+            availableOrigins.clear();
+            
+            // Populate filter sets
+            carData.cars.forEach(car => {
+                availableMakes.add(car.make);
+                availableYears.add(car.year);
+                availableColors.add(car.color);
+                if (car.moteur) availableEngines.add(car.moteur);
+                if (car.boite_vitesse) availableTransmissions.add(car.boite_vitesse);
+                if (car.origine) availableOrigins.add(car.origine);
+            });
+            
+            // Update filter dropdowns
+            updateFilterDropdowns();
+            
+            // Show/hide filter section
+            const filterSection = document.getElementById('filterSection');
+            const statsBar = document.getElementById('statsBar');
+            
+            if (carData.cars.length > 0) {
+                filterSection.style.display = 'block';
+                statsBar.style.display = 'grid';
+            } else {
+                filterSection.style.display = 'none';
+                statsBar.style.display = 'none';
+            }
+        }
+        
+        // Update filter dropdown options
+        function updateFilterDropdowns() {
+            const makeFilter = document.getElementById('makeFilter');
+            const yearFilter = document.getElementById('yearFilter');
+            const colorFilter = document.getElementById('colorFilter');
+            const engineFilter = document.getElementById('engineFilter');
+            const transmissionFilter = document.getElementById('transmissionFilter');
+            const originFilter = document.getElementById('originFilter');
+            
+            // Clear existing options (keeping first)
+            while (makeFilter.options.length > 1) makeFilter.remove(1);
+            while (yearFilter.options.length > 1) yearFilter.remove(1);
+            while (colorFilter.options.length > 1) colorFilter.remove(1);
+            while (engineFilter.options.length > 1) engineFilter.remove(1);
+            while (transmissionFilter.options.length > 1) transmissionFilter.remove(1);
+            while (originFilter.options.length > 1) originFilter.remove(1);
+            
+            // Add makes
+            Array.from(availableMakes).sort().forEach(make => {
+                const option = new Option(make, make);
+                makeFilter.add(option);
+            });
+            
+            // Add years (descending)
+            Array.from(availableYears).sort((a, b) => b - a).forEach(year => {
+                const option = new Option(year, year);
+                yearFilter.add(option);
+            });
+            
+            // Add colors
+            Array.from(availableColors).sort().forEach(color => {
+                const option = new Option(color, color);
+                colorFilter.add(option);
+            });
+            
+            // Add engines
+            Array.from(availableEngines).sort().forEach(engine => {
+                const option = new Option(engine, engine);
+                engineFilter.add(option);
+            });
+            
+            // Add transmissions
+            Array.from(availableTransmissions).sort().forEach(transmission => {
+                const option = new Option(transmission, transmission);
+                transmissionFilter.add(option);
+            });
+            
+            // Add origins
+            Array.from(availableOrigins).sort().forEach(origin => {
+                const option = new Option(origin, origin);
+                originFilter.add(option);
+            });
+        }
+        
+        // Filter cars based on current filters
+        function filterCars() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const makeFilter = document.getElementById('makeFilter').value;
+            const yearFilter = document.getElementById('yearFilter').value;
+            const colorFilter = document.getElementById('colorFilter').value;
+            const engineFilter = document.getElementById('engineFilter').value;
+            const transmissionFilter = document.getElementById('transmissionFilter').value;
+            const mileageFilter = document.getElementById('mileageFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            const originFilter = document.getElementById('originFilter').value;
+            
+            filteredCars = carData.cars.filter(car => {
+                // Text search
+                if (searchTerm) {
+                    const searchable = `${car.make} ${car.model} ${car.version || ''} ${car.color} ${car.description || ''}`.toLowerCase();
+                    if (!searchable.includes(searchTerm)) return false;
+                }
+                
+                // Make filter
+                if (makeFilter && car.make !== makeFilter) return false;
+                
+                // Year filter
+                if (yearFilter && car.year.toString() !== yearFilter) return false;
+                
+                // Color filter
+                if (colorFilter && car.color !== colorFilter) return false;
+                
+                // Engine filter
+                if (engineFilter && car.moteur !== engineFilter) return false;
+                
+                // Transmission filter
+                if (transmissionFilter && car.boite_vitesse !== transmissionFilter) return false;
+                
+                // Mileage filter
+                if (mileageFilter && car.kilometrage) {
+                    const [min, max] = mileageFilter.split('-').map(Number);
+                    if (max && (car.kilometrage < min || car.kilometrage > max)) return false;
+                    if (!max && car.kilometrage < min) return false;
+                }
+                
+                // Price filter
+                if (priceFilter) {
+                    const [min, max] = priceFilter.split('-').map(Number);
+                    if (max && (car.prix < min || car.prix > max)) return false;
+                    if (!max && car.prix < min) return false;
+                }
+                
+                // Origin filter
+                if (originFilter && car.origine !== originFilter) return false;
+                
+                return true;
+            });
+            
+            renderCars();
+        }
+        
+        // Reset all filters
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('makeFilter').value = '';
+            document.getElementById('yearFilter').value = '';
+            document.getElementById('colorFilter').value = '';
+            document.getElementById('engineFilter').value = '';
+            document.getElementById('transmissionFilter').value = '';
+            document.getElementById('mileageFilter').value = '';
+            document.getElementById('priceFilter').value = '';
+            document.getElementById('originFilter').value = '';
+            filteredCars = [...carData.cars];
+            renderCars();
+            showNotification('Filtres réinitialisés', 'info', 2000);
+        }
+        
+        // Sort by price high to low
+        function sortByPriceHighToLow() {
+            filteredCars.sort((a, b) => b.prix - a.prix);
+            renderCars();
+            showNotification('Trié par prix: Élevé à Bas', 'info', 2000);
+        }
+        
+        // Sort by year new to old
+        function sortByYearNewToOld() {
+            filteredCars.sort((a, b) => b.year - a.year);
+            renderCars();
+            showNotification('Trié par année: Récente à Ancienne', 'info', 2000);
+        }
+        
+        // Sort by mileage low to high
+        function sortByMileageLowToHigh() {
+            filteredCars.sort((a, b) => {
+                const aMileage = a.kilometrage || Infinity;
+                const bMileage = b.kilometrage || Infinity;
+                return aMileage - bMileage;
+            });
+            renderCars();
+            showNotification('Trié par kilométrage: Bas à Élevé', 'info', 2000);
+        }
+        
+        // Render cars to the page
+        function renderCars() {
+            const carsContainer = document.getElementById('carsContainer');
+            const lastUpdatedText = document.getElementById('lastUpdatedText');
+            
+            // Update last updated text
+            if (carData.metadata.exportedAt) {
+                const date = new Date(carData.metadata.exportedAt);
+                lastUpdatedText.textContent = `Dernière mise à jour: ${date.toLocaleDateString('fr-FR')} à ${date.toLocaleTimeString('fr-FR')}`;
+            } else {
+                lastUpdatedText.textContent = 'Inventaire non encore mis à jour';
+            }
+            
+            // Update statistics
+            updateStatistics();
+            
+            // Render cars
+            if (filteredCars.length === 0) {
+                carsContainer.innerHTML = `
+                    <div class="no-cars">
+                        <div class="no-cars-icon">🔍</div>
+                        <h3>Aucune Voiture ne Correspond à Vos Filtres</h3>
+                        <p>${carData.cars.length > 0 ? 'Essayez d\'ajuster vos critères de recherche ou réinitialisez les filtres.' : 'Veuillez d\'abord mettre à jour l\'inventaire.'}</p>
+                        <p style="margin-top: 20px;">
+                            ${carData.cars.length > 0 ? 
+                                `<button onclick="resetFilters()" class="btn btn-primary" style="margin-top: 10px;">
+                                    Réinitialiser les Filtres
+                                </button>` :
+                                `<button onclick="showPasswordModal()" class="btn btn-primary" style="margin-top: 10px;">
+                                    ⚙️ Mettre à jour l'Inventaire
+                                </button>`
+                            }
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let carsHTML = '<div class="cars-container">';
+            
+            filteredCars.forEach(car => {
+                carsHTML += `
+                    <div class="car-card">
+                        <div class="car-image-container">
+                            <img src="${car.image}" alt="${car.make} ${car.model}" class="car-image"
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=400&h=300&fit=crop';">
+                            <div class="status-badge">Disponible</div>
+                        </div>
+                        <div class="car-info">
+                            <div class="car-header">
+                                <div class="car-title">
+                                    <div class="car-make">${car.make}</div>
+                                    <div class="car-model">${car.model} ${car.version ? `- ${car.version}` : ''}</div>
+                                    ${car.origine ? `<div class="car-origin">Origine: ${car.origine}</div>` : ''}
+                                </div>
+                                <div class="car-price">${car.prix.toLocaleString()}</div>
+                            </div>
+                            
+                            <div class="car-specs">
+                                <div class="spec-item">
+                                    <div class="spec-value">${car.year}</div>
+                                    <div class="spec-label">Année</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-value">${car.color}</div>
+                                    <div class="spec-label">Couleur</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-value">${car.kilometrage ? car.kilometrage.toLocaleString() + ' km' : '---'}</div>
+                                    <div class="spec-label">Kilométrage</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-value">${car.moteur || '---'}</div>
+                                    <div class="spec-label">Moteur</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-value">${car.boite_vitesse || '---'}</div>
+                                    <div class="spec-label">Boîte Vitesse</div>
+                                </div>
+                                <div class="spec-item">
+                                    <div class="spec-value">${getCarType(car.make)}</div>
+                                    <div class="spec-label">Type</div>
+                                </div>
+                            </div>
+                            
+                            ${car.description ? `
+                            <div class="car-description">
+                                ${car.description}
+                            </div>
+                            ` : ''}
+                            
+                            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                                <a href="tel:+213549883720" class="car-contact-btn">
+                                    📞 Appeler pour cette voiture
+                                </a>
+                                <a href="https://wa.me/213549883720?text=Bonjour! Je suis intéressé par la ${car.make} ${car.model}${car.version ? ' ' + car.version : ''} (${car.year}) pour M ${car.prix.toLocaleString()}. ${car.kilometrage ? 'Kilométrage: ' + car.kilometrage.toLocaleString() + ' km. ' : ''}${car.moteur ? 'Moteur: ' + car.moteur + '. ' : ''}${car.boite_vitesse ? 'Boîte: ' + car.boite_vitesse + '. ' : ''}${car.color ? 'Couleur: ' + car.color + '. ' : ''}" 
+                                   target="_blank" 
+                                   class="car-contact-btn whatsapp">
+                                    💬 WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            carsHTML += '</div>';
+            carsContainer.innerHTML = carsHTML;
+        }
+        
+        // Update statistics
+        function updateStatistics() {
+            if (filteredCars.length === 0) {
+                document.getElementById('totalCars').textContent = '0';
+                document.getElementById('avgPrice').textContent = '0';
+                document.getElementById('newestYear').textContent = '2024';
+                document.getElementById('lastUpdatedTime').textContent = '-';
+                return;
+            }
+            
+            const totalCars = filteredCars.length;
+            const avgPrice = filteredCars.reduce((sum, car) => sum + car.prix, 0) / totalCars;
+            const newestYear = Math.max(...filteredCars.map(car => car.year));
+            const avgMileage = filteredCars.filter(c => c.kilometrage).reduce((sum, car) => sum + car.kilometrage, 0) / filteredCars.filter(c => c.kilometrage).length;
+            
+            document.getElementById('totalCars').textContent = totalCars;
+            document.getElementById('avgPrice').textContent = Math.round(avgPrice).toLocaleString();
+            document.getElementById('newestYear').textContent = newestYear;
+            
+            if (carData.metadata.exportedAt) {
+                const date = new Date(carData.metadata.exportedAt);
+                document.getElementById('lastUpdatedTime').textContent = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            }
+        }
+        
+        // Helper function to get car type
+        function getCarType(make) {
+            const luxury = ['Mercedes', 'BMW', 'Audi', 'Lexus', 'Porsche', 'Jaguar'];
+            const sports = ['Ford', 'Chevrolet', 'Dodge', 'Ferrari', 'Lamborghini'];
+            const economy = ['Toyota', 'Honda', 'Hyundai', 'Kia', 'Nissan', 'Renault', 'Peugeot'];
+            
+            if (luxury.includes(make)) return 'Luxe';
+            if (sports.includes(make)) return 'Sport';
+            if (economy.includes(make)) return 'Économique';
+            return 'Standard';
+        }
+        
+        // View JSON structure
+        function viewJsonStructure() {
+            const sampleStructure = {
+                "metadata": {
+                    "exportedAt": "2024-01-15T10:30:00.000Z",
+                    "totalCars": 5,
+                    "exportedCars": 3,
+                    "currency": "Algerian Dinar (M)",
+                    "language": "Français"
+                },
+                "cars": [
+                    {
+                        "make": "Toyota",
+                        "model": "Camry",
+                        "year": 2023,
+                        "version": "Limited",
+                        "color": "Argent",
+                        "kilometrage": 50000,
+                        "moteur": "2.5L Essence",
+                        "boite_vitesse": "Automatique",
+                        "prix": 5500000,
+                        "origine": "Japon",
+                        "image": "data:image/jpeg;base64,... OR https://...",
+                        "description": "Description de la voiture ici",
+                        "status": "Disponible"
+                    }
+                ]
+            };
+            
+            document.getElementById('jsonInput').value = JSON.stringify(sampleStructure, null, 2);
+            showNotification('Structure JSON chargée dans la zone de texte', 'info', 4000);
+        }
+        
+        // Save current data
+        function saveCurrentData() {
+            if (carData.cars.length === 0) {
+                showNotification('Aucune donnée à sauvegarder', 'error', 3000);
+                return;
+            }
+            
+            const dataStr = JSON.stringify(carData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `inventaire-voitures-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Données sauvegardées en fichier JSON', 'success', 3000);
+        }
+        
+        // Show notification
+        function showNotification(message, type = 'info', duration = 3000) {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            notificationMessage.textContent = message;
+            notification.className = `notification notification-${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, duration);
+        }
+        
+        // Make functions globally available
+        window.showPasswordModal = showPasswordModal;
+        window.closePasswordModal = closePasswordModal;
+        window.checkPassword = checkPassword;
+        window.loadCarData = loadCarData;
+        window.loadSampleData = loadSampleData;
+        window.clearAllData = clearAllData;
+        window.closeUpdateSection = closeUpdateSection;
+        window.viewJsonStructure = viewJsonStructure;
+        window.saveCurrentData = saveCurrentData;
+        window.resetFilters = resetFilters;
+        window.sortByPriceHighToLow = sortByPriceHighToLow;
+        window.sortByYearNewToOld = sortByYearNewToOld;
+        window.sortByMileageLowToHigh = sortByMileageLowToHigh;
     </script>
 </body>
 </html>
