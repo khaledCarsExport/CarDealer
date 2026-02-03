@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "brand": "Toyota",
+    "model": "Camry",
+    "year": 2023,
+    "price": 25.5,
+    "kilometrage": 15000,
+    "boite": "Automatic",
+    "version": "LE",
+    "description": "Excellent condition, one owner, full service history",
+    "image": "assets/default-car.jpg"
+  },
+  {
+    "id": "2",
+    "brand": "BMW",
+    "model": "X5",
+    "year": 2022,
+    "price": 45,
+    "kilometrage": 25000,
+    "boite": "Automatic",
+    "version": "xDrive40i",
+    "description": "Luxury SUV with panoramic roof, leather seats",
+    "image": "assets/default-car.jpg"
+  },
+  {
+    "id": "3",
+    "brand": "Mercedes",
+    "model": "C-Class",
+    "year": 2021,
+    "price": 35,
+    "kilometrage": 30000,
+    "boite": "Automatic",
+    "version": "AMG Line",
+    "description": "Premium sedan, low mileage, excellent condition",
+    "image": "assets/default-car.jpg"
+  }
+]
