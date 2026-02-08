@@ -1,564 +1,446 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Khaled Cars</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>لوحة التحكم - عرض السيارات</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --light: #f5f5f5;
+            --text: #333;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Login Screen */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            animation: slideIn 0.5s ease;
+        }
+
+        .login-box h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--accent), #ff6b7a);
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-back {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: var(--primary);
+        }
+
+        .error {
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #ffebee;
+            border-radius: 6px;
+            display: none;
+        }
+
+        /* Admin Panel */
+        .admin-container {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .admin-header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .btn-logout {
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .admin-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .admin-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.5rem;
+        }
+
+        .textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            padding: 0.75rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #ff6b7a);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+        }
+
+        .success {
+            color: #2e7d32;
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-right: 4px solid #1976d2;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            color: #1565c0;
+            font-size: 0.9rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-car"></i>
-                <span>Khaled Cars</span>
-            </a>
-           <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="inventory.html">Inventory</a>
-    <!-- "Sell Your Car" and "Admin" links removed -->
-    <a href="tel:+1234567890" class="btn-call">
-        <i class="fas fa-phone"></i> Call Now
-    </a>
-</div>
-    </nav>
-
-    <!-- Admin Dashboard -->
-    <section class="admin-dashboard">
-        <div class="container">
-            <div class="admin-header">
-                <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
-                <div class="admin-actions">
-                    <button class="btn-refresh" onclick="loadDashboard()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                    <button class="btn-logout" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </div>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1>🔐 لوحة التحكم</h1>
+            <div class="error" id="errorMsg"></div>
+            <div class="form-group">
+                <label for="password">كلمة المرور</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور">
             </div>
-            
-            <div class="dashboard-grid">
-                <!-- Stats Cards -->
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-car"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalCars">0</h3>
-                        <p>Total Cars</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="activeListings">0</h3>
-                        <p>Active Listings</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-image"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalImages">0</h3>
-                        <p>Total Images</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="totalValue">0 M</h3>
-                        <p>Total Inventory Value</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Car Management -->
-            <div class="admin-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-list"></i> Car Management</h2>
-                    <button class="btn-add" onclick="showAddForm()">
-                        <i class="fas fa-plus"></i> Add New Car
-                    </button>
-                </div>
-                
-                <!-- Add/Edit Form (Hidden by default) -->
-                <div class="admin-form" id="adminForm" style="display: none;">
-                    <h3 id="formTitle">Add New Car</h3>
-                    <form id="adminCarForm">
-                        <input type="hidden" id="carId">
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="adminBrand">Brand *</label>
-                                <input type="text" id="adminBrand" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="adminModel">Model *</label>
-                                <input type="text" id="adminModel" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="adminYear">Year *</label>
-                                <input type="number" id="adminYear" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="adminPrice">Price (M) *</label>
-                                <input type="number" id="adminPrice" step="0.01" required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="adminKilometrage">Kilometrage *</label>
-                                <input type="number" id="adminKilometrage" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="adminBoite">Transmission *</label>
-                                <select id="adminBoite" required>
-                                    <option value="">Select</option>
-                                    <option value="Automatic">Automatic</option>
-                                    <option value="Manual">Manual</option>
-                                    <option value="CVT">CVT</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="adminVersion">Version *</label>
-                            <input type="text" id="adminVersion" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="adminDescription">Description</label>
-                            <textarea id="adminDescription" rows="3"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Upload Media</label>
-                            <div class="file-upload-admin" onclick="document.getElementById('adminMediaInput').click()">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click to upload images & videos</p>
-                                <input type="file" id="adminMediaInput" multiple accept="image/*,video/*" onchange="handleAdminMediaUpload(event)">
-                            </div>
-                            <div class="admin-media-preview" id="adminMediaPreview"></div>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="submit" class="btn-save" id="adminSubmitBtn">
-                                <i class="fas fa-save"></i> Save Car
-                            </button>
-                            <button type="button" class="btn-cancel" onclick="hideAdminForm()">
-                                <i class="fas fa-times"></i> Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Cars Table -->
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Image</th>
-                                <th>Car Details</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminCarsTable">
-                            <!-- Cars will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <button class="btn btn-login" onclick="login()">دخول</button>
+            <button class="btn btn-back" onclick="goHome()">العودة للرئيسية</button>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="index.html" class="logo">
-                        <i class="fas fa-car"></i>
-                        <span>Khaled Cars</span>
-                    </a>
-                    <p>Premium car dealership offering the best selection of luxury and family vehicles.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h3>Quick Links</h3>
-                    <a href="index.html">Home</a>
-                    <a href="inventory.html">Inventory</a>
-                    <a href="add-car.html">Sell Your Car</a>
-                    <a href="admin.html">Admin Login</a>
-                </div>
-                <div class="footer-col">
-                    <h3>Contact Info</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Ramdan Djamel ,Skikda</p>
-                    <p><i class="fas fa-phone"></i> (213) 549883720</p>
-                    <p><i class="fas fa-envelope"></i> khaledcarsexport.skikda@gmail.com</p>
-                    <p><i class="fas fa-clock"></i> Mon-Sat: 9AM-7PM</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Khaled Cars. All rights reserved. | Admin Dashboard</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Modal Gallery -->
-    <div class="modal" id="galleryModal">
-        <button class="modal-close" onclick="closeModal()">&times;</button>
-        <button class="modal-nav prev" onclick="prevModalMedia()">❮</button>
-        <div class="modal-content">
-            <img id="modalImage" class="modal-media" style="display: none;">
-            <video id="modalVideo" class="modal-media" controls style="display: none;"></video>
-        </div>
-        <button class="modal-nav next" onclick="nextModalMedia()">❯</button>
-        <div class="modal-counter" id="modalCounter"></div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Admin Panel -->
+    <div class="admin-container" id="adminContainer">
+        <div class="admin-header">
+            <h1>🔧 لوحة التحكم</h1>
+            <button class="btn-logout" onclick="logout()">تسجيل الخروج</button>
+        </div>
+
+        <div class="admin-content">
+            <!-- Import Section -->
+            <div class="admin-section">
+                <h2>📥 استيراد البيانات</h2>
+                <div class="info-box">
+                    الصق كود car.json هنا لاستيراد البيانات
+                </div>
+                <div class="success" id="importSuccess">تم استيراد البيانات بنجاح! ✓</div>
+                <textarea id="importJson" placeholder='أدخل كود JSON هنا...
+مثال:
+{
+  "cars": [
+    {
+      "id": "1",
+      "name": "تويوتا كامري",
+      "type": "سيدان",
+      "year": 2024,
+      "mileage": 5000,
+      "price": 150000,
+      "maxSpeed": 200,
+      "image": "data:image/png;base64,..."
+    }
+  ]
+}'></textarea>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="importData()">استيراد</button>
+                    <button class="btn btn-secondary" onclick="clearImport()">مسح</button>
+                </div>
+            </div>
+
+            <!-- Export Section -->
+            <div class="admin-section">
+                <h2>📤 تصدير البيانات</h2>
+                <div class="info-box">
+                    انسخ الكود أدناه واحفظه في ملف car.json
+                </div>
+                <div class="success" id="exportSuccess">تم نسخ البيانات! ✓</div>
+                <textarea id="exportJson" readonly placeholder="سيظهر الكود هنا..."></textarea>
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="copyToClipboard()">نسخ</button>
+                    <button class="btn btn-secondary" onclick="downloadJson()">تحميل</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-// Check if authenticated (only for online version)
-if (!window.location.hostname.includes('localhost') && 
-    !window.location.hostname.includes('127.0.0.1')) {
-    
-    if (!localStorage.getItem('adminAuthenticated')) {
-        window.location.href = 'admin-login.html';
-    }
-}
-        // Admin dashboard functionality
-        let adminCars = [];
-        let adminUploadedMedia = [];
-        
-        async function loadDashboard() {
-            try {
-                const response = await fetch('/api/cars');
-                adminCars = await response.json();
-                updateStats();
-                updateCarsTable();
-            } catch (error) {
-                console.error('Error loading dashboard:', error);
-                showStatus('Error loading dashboard data', 'error');
+        const CORRECT_PASSWORD = 'SS230576ss';
+
+        function login() {
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (password === CORRECT_PASSWORD) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                showAdminPanel();
+                loadExportData();
+            } else {
+                errorMsg.textContent = '❌ كلمة المرور غير صحيحة';
+                errorMsg.style.display = 'block';
+                document.getElementById('password').value = '';
             }
         }
-        
-        function updateStats() {
-            // Total cars
-            document.getElementById('totalCars').textContent = adminCars.length;
-            
-            // Active listings (all cars for now)
-            document.getElementById('activeListings').textContent = adminCars.length;
-            
-            // Total images
-            const totalImages = adminCars.reduce((sum, car) => 
-                sum + (car.media ? car.media.length : 0), 0);
-            document.getElementById('totalImages').textContent = totalImages;
-            
-            // Total inventory value
-            const totalValue = adminCars.reduce((sum, car) => sum + (car.price || 0), 0);
-            document.getElementById('totalValue').textContent = totalValue.toFixed(2);
+
+        function showAdminPanel() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('adminContainer').style.display = 'block';
         }
-        
-        function updateCarsTable() {
-            const tbody = document.getElementById('adminCarsTable');
-            
-            if (adminCars.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="no-data">
-                            <i class="fas fa-car"></i>
-                            <p>No cars in inventory</p>
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            tbody.innerHTML = adminCars.map(car => `
-                <tr>
-                    <td>
-                        ${car.media && car.media.length > 0 ? 
-                            `<img src="${car.media[0].url}" alt="${car.brand} ${car.model}" 
-                                  onclick="openCarGallery('${car.id}')" class="table-image">` :
-                            `<div class="no-table-image"><i class="fas fa-car"></i></div>`
-                        }
-                    </td>
-                    <td>
-                        <div class="car-details-cell">
-                            <strong>${car.brand} ${car.model}</strong>
-                            <div class="car-meta">
-                                <span><i class="fas fa-calendar"></i> ${car.year}</span>
-                                <span><i class="fas fa-tachometer-alt"></i> ${car.kilometrage.toLocaleString()} km</span>
-                                <span><i class="fas fa-cog"></i> ${car.boite}</span>
-                            </div>
-                            ${car.version ? `<div class="car-version">${car.version}</div>` : ''}
-                        </div>
-                    </td>
-                    <td class="price-cell">${car.price} M</td>
-                    <td>
-                        <span class="status-badge active">Active</span>
-                    </td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="btn-table btn-edit" onclick="editAdminCar('${car.id}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-table btn-delete" onclick="deleteAdminCar('${car.id}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                            <button class="btn-table btn-view" onclick="openCarGallery('${car.id}')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-        
-        function showAddForm() {
-            document.getElementById('adminForm').style.display = 'block';
-            document.getElementById('formTitle').textContent = 'Add New Car';
-            document.getElementById('adminCarForm').reset();
-            document.getElementById('adminMediaPreview').innerHTML = '';
-            adminUploadedMedia = [];
-            document.getElementById('adminSubmitBtn').innerHTML = '<i class="fas fa-plus"></i> Add Car';
-        }
-        
-        function hideAdminForm() {
-            document.getElementById('adminForm').style.display = 'none';
-        }
-        
-        function handleAdminMediaUpload(event) {
-            const files = event.target.files;
-            const preview = document.getElementById('adminMediaPreview');
-            
-            for (let file of files) {
-                if (file.size > 150 * 1024 * 1024) {
-                    showStatus(`File ${file.name} is too large (max 150MB)`, 'error');
-                    continue;
-                }
-                
-                adminUploadedMedia.push(file);
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewItem = document.createElement('div');
-                    previewItem.className = 'admin-preview-item';
-                    
-                    if (file.type.startsWith('image/')) {
-                        previewItem.innerHTML = `
-                            <img src="${e.target.result}" alt="${file.name}">
-                            <button class="remove-admin-preview" onclick="removeAdminMedia('${file.name}')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        `;
-                    } else {
-                        previewItem.innerHTML = `
-                            <video src="${e.target.result}" alt="${file.name}"></video>
-                            <button class="remove-admin-preview" onclick="removeAdminMedia('${file.name}')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        `;
-                    }
-                    
-                    preview.appendChild(previewItem);
-                };
-                reader.readAsDataURL(file);
-            }
-            
-            event.target.value = '';
-        }
-        
-        function removeAdminMedia(fileName) {
-            adminUploadedMedia = adminUploadedMedia.filter(file => file.name !== fileName);
-            const items = document.querySelectorAll('.admin-preview-item');
-            items.forEach(item => {
-                const media = item.querySelector('img, video');
-                if (media && media.alt === fileName) {
-                    item.remove();
-                }
-            });
-        }
-        
-        async function editAdminCar(id) {
-            try {
-                const response = await fetch(`/api/cars/${id}`);
-                const car = await response.json();
-                
-                if (car) {
-                    document.getElementById('adminForm').style.display = 'block';
-                    document.getElementById('formTitle').textContent = 'Edit Car';
-                    document.getElementById('carId').value = car.id;
-                    document.getElementById('adminBrand').value = car.brand;
-                    document.getElementById('adminModel').value = car.model;
-                    document.getElementById('adminYear').value = car.year;
-                    document.getElementById('adminPrice').value = car.price;
-                    document.getElementById('adminKilometrage').value = car.kilometrage;
-                    document.getElementById('adminBoite').value = car.boite;
-                    document.getElementById('adminVersion').value = car.version;
-                    document.getElementById('adminDescription').value = car.description || '';
-                    
-                    document.getElementById('adminSubmitBtn').innerHTML = '<i class="fas fa-save"></i> Update Car';
-                    
-                    adminUploadedMedia = [];
-                    document.getElementById('adminMediaPreview').innerHTML = '';
-                    
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            } catch (error) {
-                console.error('Error loading car for edit:', error);
-                showStatus('Error loading car data', 'error');
-            }
-        }
-        
-        async function deleteAdminCar(id) {
-            if (!confirm('Are you sure you want to delete this car? This action cannot be undone.')) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/cars/${id}`, {
-                    method: 'DELETE'
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showStatus('Car deleted successfully', 'success');
-                    loadDashboard();
-                } else {
-                    showStatus(result.error || 'Error deleting car', 'error');
-                }
-            } catch (error) {
-                console.error('Error deleting car:', error);
-                showStatus('Error deleting car', 'error');
-            }
-        }
-        
-        async function handleAdminSubmit(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    console.log('📤 Admin form submission started');
-    
-    const carData = {
-        brand: document.getElementById('adminBrand').value,
-        model: document.getElementById('adminModel').value,
-        year: parseInt(document.getElementById('adminYear').value),
-        price: parseFloat(document.getElementById('adminPrice').value),
-        kilometrage: parseInt(document.getElementById('adminKilometrage').value),
-        boite: document.getElementById('adminBoite').value,
-        version: document.getElementById('adminVersion').value,
-        description: document.getElementById('adminDescription').value
-    };
-    
-    console.log('Admin car data:', carData);
-    console.log('Admin uploaded media count:', adminUploadedMedia.length);
-    
-    const formData = new FormData();
-    
-    // Add car data as JSON string
-    formData.append('carData', JSON.stringify(carData));
-    
-    // Also add individual fields as backup
-    for (const key in carData) {
-        formData.append(key, carData[key]);
-    }
-    
-    // Add media files
-    if (adminUploadedMedia.length > 0) {
-        console.log('Adding admin media files to FormData');
-        adminUploadedMedia.forEach((file, index) => {
-            console.log(`Admin File ${index + 1}:`, file.name, file.size, file.type);
-            formData.append('media', file);
-        });
-    }
-    
-    const carId = document.getElementById('carId').value;
-    const url = carId ? `/api/cars/${carId}` : '/api/cars';
-    const method = carId ? 'PUT' : 'POST';
-    
-    console.log(`Sending to: ${url} with method: ${method}`);
-    
-    const submitBtn = document.getElementById('adminSubmitBtn');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-    submitBtn.disabled = true;
-    
-    try {
-        const response = await fetch(url, {
-            method: method,
-            body: formData
-        });
-        
-        console.log('Admin response status:', response.status);
-        
-        const result = await response.json();
-        console.log('Admin server response:', result);
-        
-        if (result.success) {
-            showStatus(carId ? 'Car updated successfully!' : 'Car added successfully!', 'success');
-            console.log('✅ Admin operation successful');
-            
-            // Hide form and refresh dashboard
-            hideAdminForm();
-            loadDashboard();
-            
-            // Clear form data
-            document.getElementById('adminCarForm').reset();
-            document.getElementById('adminMediaPreview').innerHTML = '';
-            adminUploadedMedia = [];
-            document.getElementById('carId').value = '';
-            
-        } else {
-            showStatus(result.error || 'Error saving car', 'error');
-            console.error('❌ Admin server error:', result);
-        }
-    } catch (error) {
-        console.error('❌ Admin network error:', error);
-        showStatus('Network error. Please try again.', 'error');
-    } finally {
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-    }
-}
+
         function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                window.location.href = 'index.html';
+            localStorage.removeItem('adminLoggedIn');
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('adminContainer').style.display = 'none';
+            document.getElementById('password').value = '';
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        function importData() {
+            try {
+                const jsonText = document.getElementById('importJson').value;
+                const data = JSON.parse(jsonText);
+
+                if (!data.cars || !Array.isArray(data.cars)) {
+                    alert('❌ صيغة JSON غير صحيحة. يجب أن تحتوي على مفتاح "cars" يحتوي على مصفوفة');
+                    return;
+                }
+
+                localStorage.setItem('carsData', JSON.stringify(data.cars));
+                document.getElementById('importSuccess').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('importSuccess').style.display = 'none';
+                }, 3000);
+
+                loadExportData();
+            } catch (error) {
+                alert('❌ خطأ في صيغة JSON: ' + error.message);
             }
         }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            loadDashboard();
-            document.getElementById('adminCarForm').addEventListener('submit', handleAdminSubmit);
+
+        function clearImport() {
+            document.getElementById('importJson').value = '';
+        }
+
+        function loadExportData() {
+            const carsData = localStorage.getItem('carsData');
+            if (carsData) {
+                const cars = JSON.parse(carsData);
+                const exportJson = {
+                    cars: cars
+                };
+                document.getElementById('exportJson').value = JSON.stringify(exportJson, null, 2);
+            }
+        }
+
+        function copyToClipboard() {
+            const exportJson = document.getElementById('exportJson');
+            exportJson.select();
+            document.execCommand('copy');
             
-            // Mobile menu toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-            
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
+            document.getElementById('exportSuccess').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('exportSuccess').style.display = 'none';
+            }, 3000);
+        }
+
+        function downloadJson() {
+            const exportJson = document.getElementById('exportJson').value;
+            if (!exportJson) {
+                alert('لا توجد بيانات للتحميل');
+                return;
+            }
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(exportJson));
+            element.setAttribute('download', 'car.json');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Check if already logged in
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                showAdminPanel();
+                loadExportData();
+            }
+        });
+
+        // Allow Enter key to login
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && document.getElementById('loginContainer').style.display !== 'none') {
+                login();
+            }
         });
     </script>
 </body>
