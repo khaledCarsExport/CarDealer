@@ -6,6 +6,11 @@
     <title>Khaled Cars Export | سيارات جديدة ومستعملة من أوروبا و الصين إلى الجزائر</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
     <meta name="description" content="استيراد سيارات جديدة ومستعملة من أوروبا والصين إلى الجزائر - سكيكدة">
+      
+    <!-- هذه السطور الجديدة لمنع التخزين المؤقت -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     
     <style>
         :root {
@@ -1109,7 +1114,7 @@
     <div class="algeria-flag-background"></div>
     
     <!-- زر الاتصال للهواتف -->
-    <a href="https://wa.me/213559369237" class="mobile-contact-btn" target="_blank" aria-label="تواصل عبر واتساب">
+    <a href="https://wa.me/213549883720" class="mobile-contact-btn" target="_blank" aria-label="تواصل عبر واتساب">
         📞
     </a>
     
@@ -1151,9 +1156,6 @@
     
     <!-- المحتوى الرئيسي -->
     <main class="container">
-        <!-- قسم البطل - أصغر -->
-        
-        
         <!-- نظام الفلترة -->
         <section class="filter-section" id="filter">
             <h2 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.3rem;">🔍 البحث في السيارات</h2>
@@ -1261,8 +1263,6 @@
     
     <!-- الفوتر - أصغر -->
     <footer class="footer">
-       
-        
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Khaled Cars Export</h3>
@@ -1270,7 +1270,7 @@
                     متخصصون في استيراد السيارات الجديدة والمستعملة من أوروبا والصين إلى الجزائر
                 </p>
                 <div style="display: flex; gap: 8px; margin-top: 0.8rem;">
-                    <a href="https://wa.me/213559369237" class="filter-btn" style="padding: 6px 12px; font-size: 0.85rem; background: #25D366; text-decoration: none;" target="_blank">
+                    <a href="https://wa.me/213549883720" class="filter-btn" style="padding: 6px 12px; font-size: 0.85rem; background: #25D366; text-decoration: none;" target="_blank">
                         📞 تواصل عبر واتساب
                     </a>
                 </div>
@@ -1550,11 +1550,10 @@
                 fuel: "gasoline",
                 transmission: "يدوي",
                 mileage: 24245,
-                image: "https://i.ibb.co/sdwyPS4Q/2.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 features: "السعر لا يشمل مصاريف الجمركة",
                 description: ""
-            },
-            
+            }
         ];
         
         let cars = [];
@@ -1584,6 +1583,8 @@
             displayCars();
             
             console.log("✅ التطبيق جاهز!");
+            console.log(`📊 عدد السيارات: ${cars.length}`);
+            console.log(`🏷️ عدد الماركات: ${brands.length}`);
             showAlert("مرحباً بك في Khaled Cars Export", "info");
         }
         
@@ -1596,19 +1597,20 @@
                     if (Array.isArray(parsedCars) && parsedCars.length > 0) {
                         cars = parsedCars;
                         console.log(`📁 تم تحميل ${cars.length} سيارة من التخزين المحلي`);
-                    } else {
-                        cars = [...defaultCars];
-                        saveCarsToStorage();
-                        console.log("📁 تم تحميل البيانات الافتراضية للسيارات");
+                        return;
                     }
-                } else {
-                    cars = [...defaultCars];
-                    saveCarsToStorage();
-                    console.log("📁 تم إنشاء بيانات السيارات الافتراضية");
                 }
+                
+                // إذا لم تكن هناك بيانات أو كانت فارغة، نستخدم البيانات الافتراضية
+                console.log("📁 لا توجد بيانات مخزنة، جاري استخدام البيانات الافتراضية...");
+                cars = [...defaultCars];
+                saveCarsToStorage();
+                console.log("📁 تم إنشاء بيانات السيارات الافتراضية");
+                
             } catch (error) {
                 console.error("❌ خطأ في تحميل السيارات:", error);
                 cars = [...defaultCars];
+                saveCarsToStorage();
             }
         }
         
@@ -1621,19 +1623,20 @@
                     if (Array.isArray(parsedBrands) && parsedBrands.length > 0) {
                         brands = parsedBrands;
                         console.log(`🏷️ تم تحميل ${brands.length} ماركة من التخزين المحلي`);
-                    } else {
-                        brands = [...defaultBrands];
-                        saveBrandsToStorage();
-                        console.log("🏷️ تم تحميل الماركات الافتراضية");
+                        return;
                     }
-                } else {
-                    brands = [...defaultBrands];
-                    saveBrandsToStorage();
-                    console.log("🏷️ تم إنشاء الماركات الافتراضية");
                 }
+                
+                // إذا لم تكن هناك بيانات أو كانت فارغة، نستخدم البيانات الافتراضية
+                console.log("🏷️ لا توجد ماركات مخزنة، جاري استخدام الماركات الافتراضية...");
+                brands = [...defaultBrands];
+                saveBrandsToStorage();
+                console.log("🏷️ تم إنشاء الماركات الافتراضية");
+                
             } catch (error) {
                 console.error("❌ خطأ في تحميل الماركات:", error);
                 brands = [...defaultBrands];
+                saveBrandsToStorage();
             }
         }
         
@@ -1683,10 +1686,12 @@
         // إعداد الأحداث
         function setupEventListeners() {
             // فلترة السيارات
-            document.getElementById('applyFilter').addEventListener('click', filterCars);
+            const applyFilterBtn = document.getElementById('applyFilter');
+            if (applyFilterBtn) applyFilterBtn.addEventListener('click', filterCars);
             
             // إدارة النموذج
-            document.getElementById('carForm').addEventListener('submit', handleCarFormSubmit);
+            const carForm = document.getElementById('carForm');
+            if (carForm) carForm.addEventListener('submit', handleCarFormSubmit);
             
             // رفع الصور
             const imageUpload = document.getElementById('imageUpload');
@@ -1695,11 +1700,15 @@
             }
             
             // زر الإدارة المخفي - يطلب كلمة المرور
-            document.getElementById('adminToggle').addEventListener('click', showPasswordModal);
+            const adminToggle = document.getElementById('adminToggle');
+            if (adminToggle) adminToggle.addEventListener('click', showPasswordModal);
             
             // إغلاق لوحة الإدارة
-            document.getElementById('closeAdmin').addEventListener('click', closeAdminPanel);
-            document.getElementById('adminOverlay').addEventListener('click', closeAdminPanel);
+            const closeAdmin = document.getElementById('closeAdmin');
+            if (closeAdmin) closeAdmin.addEventListener('click', closeAdminPanel);
+            
+            const adminOverlay = document.getElementById('adminOverlay');
+            if (adminOverlay) adminOverlay.addEventListener('click', closeAdminPanel);
             
             // تبويبات الإدارة
             document.querySelectorAll('.admin-tab').forEach(tab => {
@@ -1710,12 +1719,17 @@
             });
             
             // كلمة المرور
-            document.getElementById('submitPassword').addEventListener('click', checkPassword);
-            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
-                }
-            });
+            const submitPassword = document.getElementById('submitPassword');
+            if (submitPassword) submitPassword.addEventListener('click', checkPassword);
+            
+            const passwordInput = document.getElementById('passwordInput');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
             
             // نوع المحرك المخصص
             const engineSelect = document.getElementById('carEngineSelect');
@@ -1734,24 +1748,36 @@
             }
             
             // إضافة ماركة جديدة - الفلتر الرئيسي
-            document.getElementById('addBrandBtn').addEventListener('click', function() {
-                showAddBrandModal('main');
-            });
+            const addBrandBtn = document.getElementById('addBrandBtn');
+            if (addBrandBtn) {
+                addBrandBtn.addEventListener('click', function() {
+                    showAddBrandModal('main');
+                });
+            }
             
             // إضافة ماركة جديدة - لوحة الإدارة
-            document.getElementById('addBrandBtnAdmin').addEventListener('click', function() {
-                showAddBrandModal('admin');
-            });
+            const addBrandBtnAdmin = document.getElementById('addBrandBtnAdmin');
+            if (addBrandBtnAdmin) {
+                addBrandBtnAdmin.addEventListener('click', function() {
+                    showAddBrandModal('admin');
+                });
+            }
             
             // البحث في الماركات - الفلتر الرئيسي
-            document.getElementById('filterBrand').addEventListener('input', function() {
-                showBrandSuggestions(this.value, 'main');
-            });
+            const filterBrand = document.getElementById('filterBrand');
+            if (filterBrand) {
+                filterBrand.addEventListener('input', function() {
+                    showBrandSuggestions(this.value, 'main');
+                });
+            }
             
             // البحث في الماركات - لوحة الإدارة
-            document.getElementById('carBrand').addEventListener('input', function() {
-                showBrandSuggestions(this.value, 'admin');
-            });
+            const carBrand = document.getElementById('carBrand');
+            if (carBrand) {
+                carBrand.addEventListener('input', function() {
+                    showBrandSuggestions(this.value, 'admin');
+                });
+            }
             
             // السعر اليدوي - إظهار/إخفاء حقل الإدخال
             const priceSelect = document.getElementById('filterPrice');
@@ -1762,10 +1788,10 @@
                     
                     if (this.value === 'custom') {
                         customPriceGroup.style.display = 'block';
-                        customPriceInput.focus();
+                        if (customPriceInput) customPriceInput.focus();
                     } else {
                         customPriceGroup.style.display = 'none';
-                        customPriceInput.value = '';
+                        if (customPriceInput) customPriceInput.value = '';
                     }
                 });
             }
@@ -1773,27 +1799,37 @@
         
         // عرض نافذة كلمة المرور
         function showPasswordModal() {
-            document.getElementById('passwordModal').classList.add('active');
-            document.getElementById('passwordInput').focus();
-            document.getElementById('passwordError').textContent = '';
+            const modal = document.getElementById('passwordModal');
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            
+            if (modal) modal.classList.add('active');
+            if (passwordInput) {
+                passwordInput.focus();
+                passwordInput.value = '';
+            }
+            if (passwordError) passwordError.textContent = '';
         }
         
         // التحقق من كلمة المرور
         function checkPassword() {
             const passwordInput = document.getElementById('passwordInput');
             const passwordError = document.getElementById('passwordError');
-            const enteredPassword = passwordInput.value.trim();
+            const enteredPassword = passwordInput ? passwordInput.value.trim() : '';
             
             if (enteredPassword === ADMIN_PASSWORD) {
                 isAdminAuthenticated = true;
-                document.getElementById('passwordModal').classList.remove('active');
-                passwordInput.value = '';
+                const modal = document.getElementById('passwordModal');
+                if (modal) modal.classList.remove('active');
+                if (passwordInput) passwordInput.value = '';
                 toggleAdminPanel();
                 showAlert("تم التحقق من الهوية بنجاح ✓", "success");
             } else {
-                passwordError.textContent = "كلمة المرور غير صحيحة";
-                passwordInput.focus();
-                passwordInput.select();
+                if (passwordError) passwordError.textContent = "كلمة المرور غير صحيحة";
+                if (passwordInput) {
+                    passwordInput.focus();
+                    passwordInput.select();
+                }
             }
         }
         
@@ -1802,8 +1838,8 @@
             const suggestionsId = type === 'main' ? 'brandSuggestions' : 'brandSuggestionsAdmin';
             const suggestionsContainer = document.getElementById(suggestionsId);
             
-            if (!searchTerm.trim()) {
-                suggestionsContainer.style.display = 'none';
+            if (!suggestionsContainer || !searchTerm.trim()) {
+                if (suggestionsContainer) suggestionsContainer.style.display = 'none';
                 return;
             }
             
@@ -1871,13 +1907,14 @@
             
             // إخفاء الاقتراحات
             const suggestionsId = type === 'main' ? 'brandSuggestions' : 'brandSuggestionsAdmin';
-            document.getElementById(suggestionsId).style.display = 'none';
+            const suggestionsContainer = document.getElementById(suggestionsId);
+            if (suggestionsContainer) suggestionsContainer.style.display = 'none';
         }
         
         // إضافة ماركة جديدة
         function addNewBrand() {
             const newBrandInput = document.getElementById('newBrandName');
-            const brandName = newBrandInput.value.trim();
+            const brandName = newBrandInput ? newBrandInput.value.trim() : '';
             
             if (!brandName) {
                 showAlert("يرجى إدخال اسم الماركة", "error");
@@ -1894,7 +1931,7 @@
             updateBrandsLists();
             loadBrandsList();
             
-            newBrandInput.value = '';
+            if (newBrandInput) newBrandInput.value = '';
             showAlert(`تم إضافة الماركة "${brandName}" بنجاح ✓`, "success");
         }
         
@@ -1923,6 +1960,7 @@
         // تحميل قائمة الماركات للإدارة
         function loadBrandsList() {
             const container = document.getElementById('brandsList');
+            if (!container) return;
             
             if (brands.length === 0) {
                 container.innerHTML = `
@@ -1980,538 +2018,578 @@
             });
             
             html += `
-                        </tbody>
-                    </table>
-                    <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
-                        العدد الإجمالي: ${brands.length} ماركة
+                </tbody>
+            </table>
+            <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
+                العدد الإجمالي: ${brands.length} ماركة
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+// تعديل ماركة
+function editBrand(index) {
+    const oldBrandName = brands[index];
+    const newBrandName = prompt("أدخل الاسم الجديد للماركة:", oldBrandName);
+    
+    if (!newBrandName || !newBrandName.trim() || newBrandName === oldBrandName) return;
+    
+    const trimmedBrand = newBrandName.trim();
+    
+    if (brands.includes(trimmedBrand) && brands.indexOf(trimmedBrand) !== index) {
+        showAlert("هذه الماركة موجودة بالفعل", "error");
+        return;
+    }
+    
+    // تحديث جميع السيارات التي تستخدم هذه الماركة
+    cars.forEach(car => {
+        if (car.brand === oldBrandName) {
+            car.brand = trimmedBrand;
+        }
+    });
+    
+    // تحديث الماركة في القائمة
+    brands[index] = trimmedBrand;
+    
+    // حفظ التغييرات
+    saveCarsToStorage();
+    saveBrandsToStorage();
+    updateBrandsLists();
+    loadBrandsList();
+    
+    showAlert(`تم تحديث الماركة من "${oldBrandName}" إلى "${trimmedBrand}" بنجاح ✓`, "success");
+}
+
+// حذف ماركة
+function deleteBrand(index) {
+    const brandName = brands[index];
+    const carsCount = cars.filter(car => car.brand === brandName).length;
+    
+    if (carsCount > 0) {
+        showAlert(`لا يمكن حذف الماركة "${brandName}" لأنها مستخدمة في ${carsCount} سيارة`, "error");
+        return;
+    }
+    
+    if (!confirm(`هل أنت متأكد من حذف الماركة "${brandName}"؟`)) {
+        return;
+    }
+    
+    brands.splice(index, 1);
+    saveBrandsToStorage();
+    updateBrandsLists();
+    loadBrandsList();
+    
+    showAlert(`تم حذف الماركة "${brandName}" بنجاح ✓`, "success");
+}
+
+// عرض السيارات
+function displayCars(filteredCars = null) {
+    const carsToShow = filteredCars || cars;
+    const carsGrid = document.getElementById('carsGrid');
+    const noCarsMessage = document.getElementById('noCarsMessage');
+    const carsCount = document.getElementById('carsCount');
+    
+    if (!carsGrid || !carsCount) return;
+    
+    // تحديث العداد
+    carsCount.textContent = `${carsToShow.length} سيارة`;
+    
+    if (carsToShow.length === 0) {
+        carsGrid.innerHTML = '';
+        if (noCarsMessage) noCarsMessage.style.display = 'block';
+        return;
+    }
+    
+    if (noCarsMessage) noCarsMessage.style.display = 'none';
+    
+    // إنشاء بطاقات السيارات
+    let carsHTML = '';
+    
+    carsToShow.forEach(car => {
+        const fuelName = getFuelName(car.fuel);
+        const transmissionName = getTransmissionName(car.transmission);
+        const features = car.features ? car.features.split(',').slice(0, 3) : [];
+        
+        carsHTML += `
+            <div class="car-card">
+                <div class="car-image-container">
+                    <img src="${car.image}" alt="${car.title}" class="car-image" onerror="this.src='https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                    <div class="car-badge ${car.type === 'new' ? '' : 'used'}">
+                        ${car.type === 'new' ? 'جديد' : 'مستعمل'}
                     </div>
                 </div>
-            `;
-            
-            container.innerHTML = html;
-        }
-        
-        // تعديل ماركة
-        function editBrand(index) {
-            const oldBrandName = brands[index];
-            const newBrandName = prompt("أدخل الاسم الجديد للماركة:", oldBrandName);
-            
-            if (!newBrandName || !newBrandName.trim() || newBrandName === oldBrandName) return;
-            
-            const trimmedBrand = newBrandName.trim();
-            
-            if (brands.includes(trimmedBrand) && brands.indexOf(trimmedBrand) !== index) {
-                showAlert("هذه الماركة موجودة بالفعل", "error");
-                return;
-            }
-            
-            // تحديث جميع السيارات التي تستخدم هذه الماركة
-            cars.forEach(car => {
-                if (car.brand === oldBrandName) {
-                    car.brand = trimmedBrand;
-                }
-            });
-            
-            // تحديث الماركة في القائمة
-            brands[index] = trimmedBrand;
-            
-            // حفظ التغييرات
-            saveCarsToStorage();
-            saveBrandsToStorage();
-            updateBrandsLists();
-            loadBrandsList();
-            
-            showAlert(`تم تحديث الماركة من "${oldBrandName}" إلى "${trimmedBrand}" بنجاح ✓`, "success");
-        }
-        
-        // حذف ماركة
-        function deleteBrand(index) {
-            const brandName = brands[index];
-            const carsCount = cars.filter(car => car.brand === brandName).length;
-            
-            if (carsCount > 0) {
-                showAlert(`لا يمكن حذف الماركة "${brandName}" لأنها مستخدمة في ${carsCount} سيارة`, "error");
-                return;
-            }
-            
-            if (!confirm(`هل أنت متأكد من حذف الماركة "${brandName}"؟`)) {
-                return;
-            }
-            
-            brands.splice(index, 1);
-            saveBrandsToStorage();
-            updateBrandsLists();
-            loadBrandsList();
-            
-            showAlert(`تم حذف الماركة "${brandName}" بنجاح ✓`, "success");
-        }
-        
-        // عرض السيارات
-        function displayCars(filteredCars = null) {
-            const carsToShow = filteredCars || cars;
-            const carsGrid = document.getElementById('carsGrid');
-            const noCarsMessage = document.getElementById('noCarsMessage');
-            const carsCount = document.getElementById('carsCount');
-            
-            // تحديث العداد
-            carsCount.textContent = `${carsToShow.length} سيارة`;
-            
-            if (carsToShow.length === 0) {
-                carsGrid.innerHTML = '';
-                noCarsMessage.style.display = 'block';
-                return;
-            }
-            
-            noCarsMessage.style.display = 'none';
-            
-            // إنشاء بطاقات السيارات
-            let carsHTML = '';
-            
-            carsToShow.forEach(car => {
-                const fuelName = getFuelName(car.fuel);
-                const transmissionName = getTransmissionName(car.transmission);
-                const features = car.features ? car.features.split(',').slice(0, 3) : [];
                 
-                carsHTML += `
-                    <div class="car-card">
-                        <div class="car-image-container">
-                            <img src="${car.image}" alt="${car.title}" class="car-image">
-                            <div class="car-badge ${car.type === 'new' ? '' : 'used'}">
-                                ${car.type === 'new' ? 'جديد' : 'مستعمل'}
-                            </div>
-                        </div>
-                        
-                        <div class="car-info">
-                            <h3 class="car-title">${car.title}</h3>
-                            
-                            <div class="car-specs">
-                                <span class="car-spec-item">
-                                    <span>🏷️</span> ${car.brand}
-                                </span>
-                                <span class="car-spec-item">
-                                    <span>📅</span> ${car.year}
-                                </span>
-                                <span class="car-spec-item">
-                                    <span>⚙️</span> ${car.engine}
-                                </span>
-                                <span class="car-spec-item">
-                                    <span>⛽</span> ${fuelName}
-                                </span>
-                                <span class="car-spec-item">
-                                    <span>🔧</span> ${transmissionName}
-                                </span>
-                            </div>
-                            
-                            <div class="car-price">
-                                ${car.price.toFixed(1)}
-                                <span class="car-price-unit">مليون</span>
-                            </div>
-                            
-                            ${car.mileage ? `
-                                <div class="car-specs">
-                                    <span class="car-spec-item">
-                                        <span>🛣️</span> ${car.mileage.toLocaleString('ar-DZ')} كم
-                                    </span>
-                                </div>
-                            ` : ''}
-                            
-                            ${features.length > 0 ? `
-                                <div class="car-features">
-                                    ${features.map(feature => `
-                                        <span class="feature-tag">${feature.trim()}</span>
-                                    `).join('')}
-                                </div>
-                            ` : ''}
-                            
-                            <div class="car-actions">
-                                <button class="btn btn-details" onclick="showCarDetails('${car.id}')">
-                                    <span>📋</span> التفاصيل
-                                </button>
-                                <a href="https://wa.me/213559369237?text=${encodeURIComponent(`أهلاً، أنا مهتم بالسيارة: ${car.title} (${car.price.toFixed(1)} مليون)`)}" 
-                                   class="btn btn-whatsapp" target="_blank">
-                                    <span>📞</span> واتساب
-                                </a>
-                            </div>
-                        </div>
+                <div class="car-info">
+                    <h3 class="car-title">${car.title}</h3>
+                    
+                    <div class="car-specs">
+                        <span class="car-spec-item">
+                            <span>🏷️</span> ${car.brand}
+                        </span>
+                        <span class="car-spec-item">
+                            <span>📅</span> ${car.year}
+                        </span>
+                        <span class="car-spec-item">
+                            <span>⚙️</span> ${car.engine}
+                        </span>
+                        <span class="car-spec-item">
+                            <span>⛽</span> ${fuelName}
+                        </span>
+                        <span class="car-spec-item">
+                            <span>🔧</span> ${transmissionName}
+                        </span>
                     </div>
-                `;
-            });
-            
-            carsGrid.innerHTML = carsHTML;
-        }
-        
-        // فلترة السيارات
-        function filterCars() {
-            const typeFilter = document.getElementById('filterType').value;
-            const brandFilter = document.getElementById('filterBrand').value;
-            const engineFilter = document.getElementById('filterEngine').value;
-            const priceSelect = document.getElementById('filterPrice').value;
-            const customPriceInput = document.getElementById('customPriceInput');
-            
-            let priceFilter = null;
-            
-            // تحديد قيمة السعر بناءً على الاختيار
-            if (priceSelect === 'custom' && customPriceInput.value) {
-                priceFilter = parseFloat(customPriceInput.value);
-            } else if (priceSelect && priceSelect !== '') {
-                priceFilter = parseFloat(priceSelect);
-            }
-            
-            const filteredCars = cars.filter(car => {
-                if (typeFilter && car.type !== typeFilter) return false;
-                if (brandFilter && car.brand !== brandFilter) return false;
-                if (engineFilter && engineFilter !== 'other' && !car.engine.includes(engineFilter)) return false;
-                if (priceFilter !== null && car.price > priceFilter) return false;
-                return true;
-            });
-            
-            displayCars(filteredCars);
-            
-            if (filteredCars.length === 0 && (typeFilter || brandFilter || engineFilter || priceFilter !== null)) {
-                showAlert("لا توجد سيارات تطابق معايير البحث", "info");
-            }
-        }
-        
-        // معالجة رفع الصورة
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            // التحقق من نوع الملف
-            if (!file.type.startsWith('image/')) {
-                showAlert("يرجى اختيار ملف صورة فقط (JPEG, PNG, GIF)", "error");
-                return;
-            }
-            
-            // التحقق من حجم الملف (5MB كحد أقصى)
-            if (file.size > 5 * 1024 * 1024) {
-                showAlert("حجم الصورة كبير جداً (الحد الأقصى 5MB)", "error");
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.getElementById('imagePreview');
-                preview.innerHTML = `<img src="${e.target.result}" alt="معاينة الصورة">`;
-                uploadedImage = e.target.result;
-                showAlert("تم تحميل الصورة بنجاح ✓", "success");
-            };
-            
-            reader.onerror = function() {
-                showAlert("حدث خطأ في تحميل الصورة", "error");
-            };
-            
-            reader.readAsDataURL(file);
-        }
-        
-        // معالجة نموذج السيارة
-        function handleCarFormSubmit(event) {
-            event.preventDefault();
-            
-            // التحقق من كلمة المرور أولاً
-            if (!isAdminAuthenticated) {
-                showAlert("يجب التحقق من الهوية أولاً", "error");
-                showPasswordModal();
-                return;
-            }
-            
-            // جمع البيانات
-            const engineSelect = document.getElementById('carEngineSelect');
-            const engineCustom = document.getElementById('carEngineCustom');
-            const engineValue = engineSelect.value === 'custom' ? 
-                (engineCustom.value.trim() || 'غير محدد') : 
-                (engineSelect.options[engineSelect.selectedIndex].text);
-            
-            const carData = {
-                id: editMode ? currentEditId : 'car_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-                title: document.getElementById('carTitle').value.trim(),
-                brand: document.getElementById('carBrand').value,
-                type: document.getElementById('carType').value,
-                engine: engineValue,
-                price: parseFloat(document.getElementById('carPrice').value),
-                year: parseInt(document.getElementById('carYear').value),
-                fuel: document.getElementById('carFuel').value,
-                transmission: document.getElementById('carTransmission').value,
-                mileage: document.getElementById('carMileage').value ? parseInt(document.getElementById('carMileage').value) : null,
-                image: uploadedImage || "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                features: document.getElementById('carFeatures').value.trim(),
-                description: document.getElementById('carDescription').value.trim(),
-                createdAt: new Date().toISOString()
-            };
-            
-            // التحقق من البيانات
-            if (!carData.title || !carData.brand || !carData.type || !carData.engine || 
-                isNaN(carData.price) || isNaN(carData.year) || !carData.fuel || !carData.transmission) {
-                showAlert("يرجى ملء جميع الحقول الإلزامية بشكل صحيح", "error");
-                return;
-            }
-            
-            if (carData.price <= 0) {
-                showAlert("السعر يجب أن يكون أكبر من صفر", "error");
-                return;
-            }
-            
-            if (carData.year < 2010 || carData.year > 2024) {
-                showAlert("السنة يجب أن تكون بين 2010 و 2024", "error");
-                return;
-            }
-            
-            // إضافة أو تحديث السيارة
-            if (editMode) {
-                const index = cars.findIndex(car => car.id === currentEditId);
-                if (index !== -1) {
-                    cars[index] = carData;
-                    showAlert(`تم تحديث السيارة "${carData.title}" بنجاح ✓`, "success");
-                }
-            } else {
-                cars.push(carData);
-                showAlert(`تم إضافة السيارة "${carData.title}" بنجاح ✓`, "success");
-            }
-            
-            // حفظ في التخزين المحلي
-            const saveSuccess = saveCarsToStorage();
-            
-            if (saveSuccess) {
-                // تحديث العرض
-                displayCars();
-                loadAdminCarsList();
-                
-                // مسح النموذج بعد تأخير قصير
-                setTimeout(() => {
-                    clearCarForm();
-                }, 1000);
-            } else {
-                showAlert("حدث خطأ في حفظ البيانات", "error");
-            }
-        }
-        
-        // مسح نموذج السيارة
-        function clearCarForm() {
-            document.getElementById('carForm').reset();
-            const preview = document.getElementById('imagePreview');
-            if (preview) {
-                preview.innerHTML = `
-                    <div class="upload-icon">📷</div>
-                    <div class="upload-text">انقر لرفع صورة السيارة من جهازك</div>
-                    <input type="file" id="imageUpload" class="image-upload-input" accept="image/*">
-                `;
-                
-                // إعادة ربط حدث رفع الصور
-                const newInput = preview.querySelector('#imageUpload');
-                if (newInput) {
-                    newInput.addEventListener('change', handleImageUpload);
-                }
-            }
-            document.getElementById('carYear').value = 2023;
-            document.getElementById('carType').value = '';
-            document.getElementById('carEngineSelect').value = '';
-            document.getElementById('carEngineCustom').style.display = 'none';
-            uploadedImage = null;
-            
-            editMode = false;
-            currentEditId = null;
-            
-            // تغيير تبويب الإدارة إلى الإضافة
-            switchAdminTab('add');
-        }
-        
-        // تحميل قائمة السيارات للإدارة
-        function loadAdminCarsList() {
-            const container = document.getElementById('adminCarsList');
-            
-            if (cars.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 1.5rem; color: var(--gray); font-size: 0.9rem;">
-                        لا توجد سيارات للإدارة
+                    
+                    <div class="car-price">
+                        ${car.price.toFixed(1)}
+                        <span class="car-price-unit">مليون</span>
                     </div>
-                `;
-                return;
-            }
-            
-            let html = `
-                <div style="overflow-x: auto;">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>السيارة</th>
-                                <th>السعر</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            cars.forEach(car => {
-                html += `
-                    <tr>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <img src="${car.image}" 
-                                     alt="${car.title}" 
-                                     style="width: 50px; height: 35px; object-fit: cover; border-radius: 4px;">
-                                <div>
-                                    <strong style="font-size: 0.9rem;">${car.title}</strong><br>
-                                    <small style="color: var(--gray); font-size: 0.8rem;">${car.brand} - ${car.year} ${car.type === 'new' ? '🆕' : '🔄'}</small>
-                                </div>
-                            </div>
-                        </td>
-                        <td style="font-weight: bold; color: var(--accent); font-size: 0.9rem;">
-                            ${car.price.toFixed(1)} مليون
-                        </td>
-                        <td>
-                            <div class="table-actions">
-                                <button class="table-btn table-edit" onclick="editCarFromList('${car.id}')">
-                                    ✏️ تعديل
-                                </button>
-                                <button class="table-btn table-delete" onclick="deleteCarFromList('${car.id}')">
-                                    🗑️ حذف
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            html += `
-                        </tbody>
-                    </table>
-                    <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
-                        العدد الإجمالي: ${cars.length} سيارة
+                    
+                    ${car.mileage ? `
+                        <div class="car-specs">
+                            <span class="car-spec-item">
+                                <span>🛣️</span> ${car.mileage.toLocaleString('ar-DZ')} كم
+                            </span>
+                        </div>
+                    ` : ''}
+                    
+                    ${features.length > 0 ? `
+                        <div class="car-features">
+                            ${features.map(feature => `
+                                <span class="feature-tag">${feature.trim()}</span>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    <div class="car-actions">
+                        <button class="btn btn-details" onclick="showCarDetails('${car.id}')">
+                            <span>📋</span> التفاصيل
+                        </button>
+                        <a href="https://wa.me/213549883720?text=${encodeURIComponent(`أهلاً، أنا مهتم بالسيارة: ${car.title} (${car.price.toFixed(1)} مليون)`)}" 
+                           class="btn btn-whatsapp" target="_blank">
+                            <span>📞</span> واتساب
+                        </a>
                     </div>
                 </div>
-            `;
-            
-            container.innerHTML = html;
+            </div>
+        `;
+    });
+    
+    carsGrid.innerHTML = carsHTML;
+}
+
+// فلترة السيارات
+function filterCars() {
+    const typeFilter = document.getElementById('filterType') ? document.getElementById('filterType').value : '';
+    const brandFilter = document.getElementById('filterBrand') ? document.getElementById('filterBrand').value : '';
+    const engineFilter = document.getElementById('filterEngine') ? document.getElementById('filterEngine').value : '';
+    const priceSelect = document.getElementById('filterPrice') ? document.getElementById('filterPrice').value : '';
+    const customPriceInput = document.getElementById('customPriceInput');
+    
+    let priceFilter = null;
+    
+    // تحديد قيمة السعر بناءً على الاختيار
+    if (priceSelect === 'custom' && customPriceInput && customPriceInput.value) {
+        priceFilter = parseFloat(customPriceInput.value);
+    } else if (priceSelect && priceSelect !== '') {
+        priceFilter = parseFloat(priceSelect);
+    }
+    
+    const filteredCars = cars.filter(car => {
+        if (typeFilter && car.type !== typeFilter) return false;
+        if (brandFilter && car.brand !== brandFilter) return false;
+        if (engineFilter && engineFilter !== 'other' && !car.engine.includes(engineFilter)) return false;
+        if (priceFilter !== null && car.price > priceFilter) return false;
+        return true;
+    });
+    
+    displayCars(filteredCars);
+    
+    if (filteredCars.length === 0 && (typeFilter || brandFilter || engineFilter || priceFilter !== null)) {
+        showAlert("لا توجد سيارات تطابق معايير البحث", "info");
+    }
+}
+
+// معالجة رفع الصورة
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    // التحقق من نوع الملف
+    if (!file.type.startsWith('image/')) {
+        showAlert("يرجى اختيار ملف صورة فقط (JPEG, PNG, GIF)", "error");
+        return;
+    }
+    
+    // التحقق من حجم الملف (5MB كحد أقصى)
+    if (file.size > 5 * 1024 * 1024) {
+        showAlert("حجم الصورة كبير جداً (الحد الأقصى 5MB)", "error");
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview');
+        if (preview) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="معاينة الصورة">`;
         }
-        
-        // تعديل سيارة من القائمة
-        function editCarFromList(carId) {
-            const car = cars.find(c => c.id === carId);
-            if (!car) {
-                showAlert("السيارة غير موجودة", "error");
-                return;
-            }
-            
-            // تعبئة النموذج
-            document.getElementById('carTitle').value = car.title;
-            document.getElementById('carBrand').value = car.brand;
-            document.getElementById('carType').value = car.type;
-            
-            // التعامل مع نوع المحرك
-            const engineSelect = document.getElementById('carEngineSelect');
-            const engineCustom = document.getElementById('carEngineCustom');
-            
-            if (car.engine.includes('لتر') && ['1.0', '1.1', '1.2', '1.3', '1.4', '1.5', '1.6', '1.7', '1.8', '2.0', '2.2', '2.4', '2.5', '3.0', '3.5', '4.0'].some(size => car.engine.includes(size))) {
-                // إذا كان المحرك من القائمة المحددة
-                const engineSize = car.engine.split(' ')[0];
-                engineSelect.value = engineSize;
-                engineCustom.style.display = 'none';
-            } else {
-                // إذا كان المحرك مكتوب يدوياً
-                engineSelect.value = 'custom';
-                engineCustom.style.display = 'block';
-                engineCustom.value = car.engine;
-            }
-            
-            document.getElementById('carPrice').value = car.price;
-            document.getElementById('carYear').value = car.year;
-            document.getElementById('carFuel').value = car.fuel;
-            document.getElementById('carTransmission').value = car.transmission;
-            document.getElementById('carMileage').value = car.mileage || '';
-            document.getElementById('carFeatures').value = car.features || '';
-            document.getElementById('carDescription').value = car.description || '';
-            
-            // عرض الصورة
-            const preview = document.getElementById('imagePreview');
-            preview.innerHTML = `<img src="${car.image}" alt="معاينة الصورة">`;
-            uploadedImage = car.image;
-            
-            // تفعيل وضع التعديل
-            editMode = true;
-            currentEditId = carId;
-            
-            // تغيير التبويب
-            switchAdminTab('add');
-            
-            showAlert(`جاري تعديل السيارة: ${car.title}`, "info");
+        uploadedImage = e.target.result;
+        showAlert("تم تحميل الصورة بنجاح ✓", "success");
+    };
+    
+    reader.onerror = function() {
+        showAlert("حدث خطأ في تحميل الصورة", "error");
+    };
+    
+    reader.readAsDataURL(file);
+}
+
+// معالجة نموذج السيارة
+function handleCarFormSubmit(event) {
+    event.preventDefault();
+    
+    // التحقق من كلمة المرور أولاً
+    if (!isAdminAuthenticated) {
+        showAlert("يجب التحقق من الهوية أولاً", "error");
+        showPasswordModal();
+        return;
+    }
+    
+    // جمع البيانات
+    const engineSelect = document.getElementById('carEngineSelect');
+    const engineCustom = document.getElementById('carEngineCustom');
+    const engineValue = engineSelect && engineSelect.value === 'custom' ? 
+        (engineCustom ? engineCustom.value.trim() : 'غير محدد') : 
+        (engineSelect && engineSelect.options[engineSelect.selectedIndex] ? 
+            engineSelect.options[engineSelect.selectedIndex].text : 'غير محدد');
+    
+    const carData = {
+        id: editMode ? currentEditId : 'car_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+        title: document.getElementById('carTitle') ? document.getElementById('carTitle').value.trim() : '',
+        brand: document.getElementById('carBrand') ? document.getElementById('carBrand').value : '',
+        type: document.getElementById('carType') ? document.getElementById('carType').value : '',
+        engine: engineValue,
+        price: document.getElementById('carPrice') ? parseFloat(document.getElementById('carPrice').value) : 0,
+        year: document.getElementById('carYear') ? parseInt(document.getElementById('carYear').value) : 2023,
+        fuel: document.getElementById('carFuel') ? document.getElementById('carFuel').value : 'gasoline',
+        transmission: document.getElementById('carTransmission') ? document.getElementById('carTransmission').value : 'automatic',
+        mileage: document.getElementById('carMileage') && document.getElementById('carMileage').value ? 
+            parseInt(document.getElementById('carMileage').value) : null,
+        image: uploadedImage || "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        features: document.getElementById('carFeatures') ? document.getElementById('carFeatures').value.trim() : '',
+        description: document.getElementById('carDescription') ? document.getElementById('carDescription').value.trim() : '',
+        createdAt: new Date().toISOString()
+    };
+    
+    // التحقق من البيانات
+    if (!carData.title || !carData.brand || !carData.type || !carData.engine || 
+        isNaN(carData.price) || isNaN(carData.year) || !carData.fuel || !carData.transmission) {
+        showAlert("يرجى ملء جميع الحقول الإلزامية بشكل صحيح", "error");
+        return;
+    }
+    
+    if (carData.price <= 0) {
+        showAlert("السعر يجب أن يكون أكبر من صفر", "error");
+        return;
+    }
+    
+    if (carData.year < 2010 || carData.year > 2024) {
+        showAlert("السنة يجب أن تكون بين 2010 و 2024", "error");
+        return;
+    }
+    
+    // إضافة أو تحديث السيارة
+    if (editMode) {
+        const index = cars.findIndex(car => car.id === currentEditId);
+        if (index !== -1) {
+            cars[index] = carData;
+            showAlert(`تم تحديث السيارة "${carData.title}" بنجاح ✓`, "success");
         }
+    } else {
+        cars.push(carData);
+        showAlert(`تم إضافة السيارة "${carData.title}" بنجاح ✓`, "success");
+    }
+    
+    // حفظ في التخزين المحلي
+    const saveSuccess = saveCarsToStorage();
+    
+    if (saveSuccess) {
+        // تحديث العرض
+        displayCars();
+        loadAdminCarsList();
         
-        // حذف سيارة من القائمة
-        function deleteCarFromList(carId) {
-            if (!confirm('هل أنت متأكد من حذف هذه السيارة؟')) {
-                return;
-            }
-            
-            const carIndex = cars.findIndex(car => car.id === carId);
-            if (carIndex === -1) {
-                showAlert("السيارة غير موجودة", "error");
-                return;
-            }
-            
-            const carTitle = cars[carIndex].title;
-            cars.splice(carIndex, 1);
-            
-            saveCarsToStorage();
-            displayCars();
-            loadAdminCarsList();
-            
-            showAlert(`تم حذف السيارة: "${carTitle}" ✓`, "success");
-        }
-        
-        // تبديل لوحة الإدارة
-        function toggleAdminPanel() {
-            if (!isAdminAuthenticated) {
-                showPasswordModal();
-                return;
-            }
-            
-            const panel = document.getElementById('adminPanel');
-            const overlay = document.getElementById('adminOverlay');
-            
-            panel.classList.toggle('active');
-            overlay.classList.toggle('active');
-            
-            if (panel.classList.contains('active')) {
-                loadAdminCarsList();
-                loadBrandsList();
-            }
-        }
-        
-        // إغلاق لوحة الإدارة
-        function closeAdminPanel() {
-            document.getElementById('adminPanel').classList.remove('active');
-            document.getElementById('adminOverlay').classList.remove('active');
+        // مسح النموذج بعد تأخير قصير
+        setTimeout(() => {
             clearCarForm();
-        }
+        }, 1000);
+    } else {
+        showAlert("حدث خطأ في حفظ البيانات", "error");
+    }
+}
+
+// مسح نموذج السيارة
+function clearCarForm() {
+    const carForm = document.getElementById('carForm');
+    if (carForm) carForm.reset();
+    
+    const preview = document.getElementById('imagePreview');
+    if (preview) {
+        preview.innerHTML = `
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">انقر لرفع صورة السيارة من جهازك</div>
+            <input type="file" id="imageUpload" class="image-upload-input" accept="image/*">
+        `;
         
-        // تبديل تبويبات الإدارة
-        function switchAdminTab(tabId) {
-            // تحديث التبويبات النشطة
-            document.querySelectorAll('.admin-tab').forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.getAttribute('data-tab') === tabId) {
-                    tab.classList.add('active');
-                }
-            });
-            
-            // تحديث المحتوى
-            document.querySelectorAll('.admin-tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabId + 'Tab').classList.add('active');
-            
-            // تحميل البيانات الخاصة بالتبويب
-            if (tabId === 'brands') {
-                loadBrandsList();
-            }
+        // إعادة ربط حدث رفع الصور
+        const newInput = preview.querySelector('#imageUpload');
+        if (newInput) {
+            newInput.addEventListener('change', handleImageUpload);
         }
-        
-        // عرض تفاصيل السيارة
-        function showCarDetails(carId) {
-            const car = cars.find(c => c.id === carId);
-            if (!car) return;
-            
-            const details = `اسم السيارة: ${car.title}
+    }
+    
+    const carYear = document.getElementById('carYear');
+    if (carYear) carYear.value = 2023;
+    
+    const carType = document.getElementById('carType');
+    if (carType) carType.value = '';
+    
+    const engineSelect = document.getElementById('carEngineSelect');
+    if (engineSelect) engineSelect.value = '';
+    
+    const engineCustom = document.getElementById('carEngineCustom');
+    if (engineCustom) {
+        engineCustom.style.display = 'none';
+        engineCustom.value = '';
+    }
+    
+    uploadedImage = null;
+    editMode = false;
+    currentEditId = null;
+    
+    // تغيير تبويب الإدارة إلى الإضافة
+    switchAdminTab('add');
+}
+
+// تحميل قائمة السيارات للإدارة
+function loadAdminCarsList() {
+    const container = document.getElementById('adminCarsList');
+    if (!container) return;
+    
+    if (cars.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 1.5rem; color: var(--gray); font-size: 0.9rem;">
+                لا توجد سيارات للإدارة
+            </div>
+        `;
+        return;
+    }
+    
+    let html = `
+        <div style="overflow-x: auto;">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>السيارة</th>
+                        <th>السعر</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    cars.forEach(car => {
+        html += `
+            <tr>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <img src="${car.image}" 
+                             alt="${car.title}" 
+                             style="width: 50px; height: 35px; object-fit: cover; border-radius: 4px;"
+                             onerror="this.src='https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+                        <div>
+                            <strong style="font-size: 0.9rem;">${car.title}</strong><br>
+                            <small style="color: var(--gray); font-size: 0.8rem;">${car.brand} - ${car.year} ${car.type === 'new' ? '🆕' : '🔄'}</small>
+                        </div>
+                    </div>
+                </td>
+                <td style="font-weight: bold; color: var(--accent); font-size: 0.9rem;">
+                    ${car.price.toFixed(1)} مليون
+                </td>
+                <td>
+                    <div class="table-actions">
+                        <button class="table-btn table-edit" onclick="editCarFromList('${car.id}')">
+                            ✏️ تعديل
+                        </button>
+                        <button class="table-btn table-delete" onclick="deleteCarFromList('${car.id}')">
+                            🗑️ حذف
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    });
+    
+    html += `
+                </tbody>
+            </table>
+            <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
+                العدد الإجمالي: ${cars.length} سيارة
+            </div>
+        </div>
+    `;
+    
+    container.innerHTML = html;
+}
+
+// تعديل سيارة من القائمة
+function editCarFromList(carId) {
+    const car = cars.find(c => c.id === carId);
+    if (!car) {
+        showAlert("السيارة غير موجودة", "error");
+        return;
+    }
+    
+    // تعبئة النموذج
+    const carTitle = document.getElementById('carTitle');
+    const carBrand = document.getElementById('carBrand');
+    const carType = document.getElementById('carType');
+    const engineSelect = document.getElementById('carEngineSelect');
+    const engineCustom = document.getElementById('carEngineCustom');
+    const carPrice = document.getElementById('carPrice');
+    const carYear = document.getElementById('carYear');
+    const carFuel = document.getElementById('carFuel');
+    const carTransmission = document.getElementById('carTransmission');
+    const carMileage = document.getElementById('carMileage');
+    const carFeatures = document.getElementById('carFeatures');
+    const carDescription = document.getElementById('carDescription');
+    const preview = document.getElementById('imagePreview');
+    
+    if (carTitle) carTitle.value = car.title;
+    if (carBrand) carBrand.value = car.brand;
+    if (carType) carType.value = car.type;
+    
+    // التعامل مع نوع المحرك
+    if (engineSelect && engineCustom) {
+        if (car.engine.includes('لتر') && ['1.0', '1.1', '1.2', '1.3', '1.4', '1.5', '1.6', '1.7', '1.8', '2.0', '2.2', '2.4', '2.5', '3.0', '3.5', '4.0'].some(size => car.engine.includes(size))) {
+            // إذا كان المحرك من القائمة المحددة
+            const engineSize = car.engine.split(' ')[0];
+            engineSelect.value = engineSize;
+            engineCustom.style.display = 'none';
+        } else {
+            // إذا كان المحرك مكتوب يدوياً
+            engineSelect.value = 'custom';
+            engineCustom.style.display = 'block';
+            engineCustom.value = car.engine;
+        }
+    }
+    
+    if (carPrice) carPrice.value = car.price;
+    if (carYear) carYear.value = car.year;
+    if (carFuel) carFuel.value = car.fuel;
+    if (carTransmission) carTransmission.value = car.transmission;
+    if (carMileage) carMileage.value = car.mileage || '';
+    if (carFeatures) carFeatures.value = car.features || '';
+    if (carDescription) carDescription.value = car.description || '';
+    
+    // عرض الصورة
+    if (preview) {
+        preview.innerHTML = `<img src="${car.image}" alt="معاينة الصورة">`;
+    }
+    uploadedImage = car.image;
+    
+    // تفعيل وضع التعديل
+    editMode = true;
+    currentEditId = carId;
+    
+    // تغيير التبويب
+    switchAdminTab('add');
+    
+    showAlert(`جاري تعديل السيارة: ${car.title}`, "info");
+}
+
+// حذف سيارة من القائمة
+function deleteCarFromList(carId) {
+    if (!confirm('هل أنت متأكد من حذف هذه السيارة؟')) {
+        return;
+    }
+    
+    const carIndex = cars.findIndex(car => car.id === carId);
+    if (carIndex === -1) {
+        showAlert("السيارة غير موجودة", "error");
+        return;
+    }
+    
+    const carTitle = cars[carIndex].title;
+    cars.splice(carIndex, 1);
+    
+    saveCarsToStorage();
+    displayCars();
+    loadAdminCarsList();
+    
+    showAlert(`تم حذف السيارة: "${carTitle}" ✓`, "success");
+}
+
+// تبديل لوحة الإدارة
+function toggleAdminPanel() {
+    if (!isAdminAuthenticated) {
+        showPasswordModal();
+        return;
+    }
+    
+    const panel = document.getElementById('adminPanel');
+    const overlay = document.getElementById('adminOverlay');
+    
+    if (panel) panel.classList.toggle('active');
+    if (overlay) overlay.classList.toggle('active');
+    
+    if (panel && panel.classList.contains('active')) {
+        loadAdminCarsList();
+        loadBrandsList();
+    }
+}
+
+// إغلاق لوحة الإدارة
+function closeAdminPanel() {
+    const panel = document.getElementById('adminPanel');
+    const overlay = document.getElementById('adminOverlay');
+    
+    if (panel) panel.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    clearCarForm();
+}
+
+// تبديل تبويبات الإدارة
+function switchAdminTab(tabId) {
+    // تحديث التبويبات النشطة
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.getAttribute('data-tab') === tabId) {
+            tab.classList.add('active');
+        }
+    });
+    
+    // تحديث المحتوى
+    document.querySelectorAll('.admin-tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    const targetTab = document.getElementById(tabId + 'Tab');
+    if (targetTab) targetTab.classList.add('active');
+    
+    // تحميل البيانات الخاصة بالتبويب
+    if (tabId === 'brands') {
+        loadBrandsList();
+    }
+}
+
+// عرض تفاصيل السيارة
+function showCarDetails(carId) {
+    const car = cars.find(c => c.id === carId);
+    if (!car) return;
+    
+    const details = `اسم السيارة: ${car.title}
 الماركة: ${car.brand}
 الحالة: ${car.type === 'new' ? 'جديدة' : 'مستعملة'}
 نوع المحرك: ${car.engine}
@@ -2525,52 +2603,53 @@ ${car.mileage ? `المسافة المقطوعة: ${car.mileage.toLocaleString('
 
 الوصف: ${car.description || 'لا يوجد وصف'}`;
 
-            const whatsappText = `مرحباً، أنا مهتم بالسيارة: ${car.title}
+    const whatsappText = `مرحباً، أنا مهتم بالسيارة: ${car.title}
 
 ${details}
 
 أرجو التواصل معي للاستفسار عن هذه السيارة.`;
 
-            window.open(`https://wa.me/213559369237?text=${encodeURIComponent(whatsappText)}`, '_blank');
+    window.open(`https://wa.me/213549883720?text=${encodeURIComponent(whatsappText)}`, '_blank');
+}
+
+// إظهار التنبيهات
+function showAlert(message, type = 'info') {
+    const alertArea = document.getElementById('alertArea');
+    if (!alertArea) return;
+    
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.innerHTML = `
+        <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+        <span>${message}</span>
+    `;
+    
+    alertArea.appendChild(alert);
+    
+    setTimeout(() => {
+        if (alert.parentNode) {
+            alert.remove();
         }
-        
-        // إظهار التنبيهات
-        function showAlert(message, type = 'info') {
-            const alertArea = document.getElementById('alertArea');
-            
-            const alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.innerHTML = `
-                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
-                <span>${message}</span>
-            `;
-            
-            alertArea.appendChild(alert);
-            
-            setTimeout(() => {
-                if (alert.parentNode) {
-                    alert.remove();
-                }
-            }, 5000);
-        }
-        
-        // دوال مساعدة
-        function getFuelName(fuel) {
-            const fuels = {
-                'gasoline': 'بنزين',
-                'diesel': 'ديزل',
-                'electric': 'كهربائي',
-                'hybrid': 'هايبرد'
-            };
-            return fuels[fuel] || fuel;
-        }
-        
-        function getTransmissionName(transmission) {
-            return transmission === 'automatic' ? 'اوتوماتيك' : 'يدوي';
-        }
-        
-        // بدء التطبيق
-        document.addEventListener('DOMContentLoaded', initApp);
-    </script>
+    }, 5000);
+}
+
+// دوال مساعدة
+function getFuelName(fuel) {
+    const fuels = {
+        'gasoline': 'بنزين',
+        'diesel': 'ديزل',
+        'electric': 'كهربائي',
+        'hybrid': 'هايبرد'
+    };
+    return fuels[fuel] || fuel;
+}
+
+function getTransmissionName(transmission) {
+    return transmission === 'automatic' ? 'اوتوماتيك' : 'يدوي';
+}
+
+// بدء التطبيق
+document.addEventListener('DOMContentLoaded', initApp);
+</script>
 </body>
 </html>
