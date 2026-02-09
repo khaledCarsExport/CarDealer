@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khaled Cars Export | سيارات من أوروبا إلى الجزائر</title>
+    <title>Khaled Cars Export | سيارات جديدة ومستعملة من أوروبا إلى الجزائر</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
     <meta name="description" content="استيراد سيارات جديدة ومستعملة من أوروبا والصين إلى الجزائر - سكيكدة">
     
@@ -17,6 +17,9 @@
             --light: #f8fafc;
             --dark: #1e293b;
             --gray: #6b7280;
+            --algeria-green: #006633;
+            --algeria-red: #D21034;
+            --algeria-white: #FFFFFF;
         }
         
         * {
@@ -30,17 +33,42 @@
             background-color: #f5f7fa;
             color: var(--dark);
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
-        /* الهيدر */
+        /* العلم الجزائري في الخلفية */
+        .algeria-flag-background {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            background: linear-gradient(
+                90deg,
+                var(--algeria-green) 0%,
+                var(--algeria-green) 33.33%,
+                var(--algeria-white) 33.33%,
+                var(--algeria-white) 66.66%,
+                var(--algeria-red) 66.66%,
+                var(--algeria-red) 100%
+            );
+            pointer-events: none;
+        }
+        
+        /* الهيدر - أصغر حجم */
         .header {
-            background: linear-gradient(135deg, var(--primary) 0%, #d4d2ce 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%);
             color: white;
-            padding: 1.5rem 2rem;
+            padding: 0.8rem 1rem;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid var(--accent);
         }
         
         .header-content {
@@ -50,142 +78,170 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 0.8rem;
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
         
         .logo-icon {
-            font-size: 2.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 12px;
+            font-size: 1.8rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px;
+            border-radius: 8px;
+            min-width: 44px;
+            text-align: center;
         }
         
         .logo-text h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
+            font-size: 1.3rem;
+            margin-bottom: 3px;
+            line-height: 1.2;
         }
         
         .logo-text p {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.9;
+            line-height: 1.2;
         }
         
-        /* قسم الاتصالات في الهيدر */
-        .contact-header {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            border-right: 3px solid var(--accent);
-            min-width: 300px;
-        }
-        
-        .contact-item {
+        /* العلم الجزائري في الهيدر */
+        .algeria-flag {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
+            justify-content: center;
+            gap: 2px;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin-right: 5px;
         }
         
-        .contact-label {
+        .flag-stripe {
+            width: 16px;
+            height: 24px;
+        }
+        
+        .flag-green { background-color: var(--algeria-green); }
+        .flag-white { background-color: var(--algeria-white); }
+        .flag-red { background-color: var(--algeria-red); }
+        
+        /* هاتف الاتصال - أصغر */
+        .header-phone {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 3px;
+        }
+        
+        .phone-number {
+            font-size: 0.9rem;
             font-weight: bold;
-            color: rgba(255, 255, 255, 0.9);
-            min-width: 80px;
-        }
-        
-        .contact-number {
             direction: ltr;
-            text-align: left;
-            font-family: monospace;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             padding: 4px 8px;
             border-radius: 4px;
-            flex-grow: 1;
+            font-family: monospace;
         }
         
         .whatsapp-badge {
             background: #25D366;
             color: white;
-            padding: 2px 8px;
+            padding: 2px 6px;
             border-radius: 10px;
-            font-size: 0.8rem;
-            white-space: nowrap;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 3px;
         }
         
         /* المحتوى الرئيسي */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem 1rem;
+            flex: 1;
+            width: 100%;
         }
         
-        /* قسم البطل */
+        /* قسم البطل - أصغر */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
                         url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 4rem 2rem;
-            border-radius: 20px;
-            margin-bottom: 3rem;
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--algeria-green), var(--algeria-white), var(--algeria-red));
         }
         
         .hero h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: white;
         }
         
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             max-width: 800px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
+            margin: 0 auto 1.5rem;
+            opacity: 0.95;
+            line-height: 1.5;
         }
         
         /* نظام الفلترة */
         .filter-section {
             background: white;
-            border-radius: 15px;
-            padding: 2rem;
+            border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
         }
         
         .filter-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
         }
         
         .filter-group {
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             position: relative;
         }
         
         .filter-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--primary);
+            font-size: 0.9rem;
         }
         
         .filter-select, .filter-input {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
             transition: all 0.3s;
             background: white;
         }
@@ -196,6 +252,28 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         
+        /* حقل السعر اليدوي */
+        .price-input-group {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .price-custom-input {
+            flex: 1;
+        }
+        
+        .price-unit {
+            background: #f3f4f6;
+            color: var(--dark);
+            padding: 10px 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        
         /* خاصية إضافة ماركة جديدة */
         .brand-input-container {
             position: relative;
@@ -204,17 +282,17 @@
         
         .add-brand-btn {
             position: absolute;
-            left: 10px;
+            left: 8px;
             top: 50%;
             transform: translateY(-50%);
             background: var(--accent);
             color: white;
             border: none;
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -233,19 +311,20 @@
             right: 0;
             background: white;
             border: 1px solid #e5e7eb;
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 100;
-            max-height: 200px;
+            max-height: 180px;
             overflow-y: auto;
             display: none;
         }
         
         .brand-suggestion {
-            padding: 10px 15px;
+            padding: 8px 12px;
             cursor: pointer;
             transition: all 0.2s;
             border-bottom: 1px solid #f3f4f6;
+            font-size: 0.9rem;
         }
         
         .brand-suggestion:hover {
@@ -261,51 +340,54 @@
             background: var(--secondary);
             color: white;
             border: none;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.3s;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
         }
         
         .filter-btn:hover {
             background: #1d4ed8;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
         
         /* بطاقات السيارات */
         .cars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
         
         .car-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
             transition: all 0.3s ease;
             position: relative;
             border: 1px solid #e5e7eb;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .car-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
         
         .car-image-container {
             position: relative;
-            height: 220px;
+            height: 180px;
             overflow: hidden;
         }
         
@@ -322,13 +404,13 @@
         
         .car-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: var(--accent);
             color: white;
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
             font-weight: bold;
             z-index: 2;
         }
@@ -338,43 +420,47 @@
         }
         
         .car-info {
-            padding: 1.5rem;
+            padding: 1.2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .car-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             line-height: 1.3;
+            min-height: 3rem;
         }
         
         .car-specs {
             color: var(--gray);
-            font-size: 0.95rem;
-            margin-bottom: 1.2rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         
         .car-spec-item {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
         
         .car-price {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: var(--accent);
-            margin: 1.2rem 0;
+            margin: 1rem 0;
             display: flex;
             align-items: baseline;
-            gap: 5px;
+            gap: 4px;
         }
         
         .car-price-unit {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--gray);
             font-weight: normal;
         }
@@ -382,38 +468,40 @@
         .car-features {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin: 1.2rem 0;
+            gap: 6px;
+            margin: 1rem 0;
         }
         
         .feature-tag {
             background: #f3f4f6;
             color: var(--dark);
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
         }
         
         .car-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 1.5rem;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid #f3f4f6;
         }
         
         .btn {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.3s;
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .btn-details {
@@ -428,44 +516,53 @@
         
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         /* حالة عدم وجود سيارات */
         .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 3rem 1.5rem;
             grid-column: 1 / -1;
         }
         
         .empty-state-icon {
-            font-size: 4rem;
+            font-size: 3rem;
             color: #e5e7eb;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         
-        /* الفوتر */
+        /* الفوتر - أصغر */
         .footer {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
             color: white;
-            padding: 3rem 2rem 1.5rem;
-            margin-top: 4rem;
+            padding: 1.5rem 1rem;
+            margin-top: auto;
+            border-top: 3px solid var(--accent);
+        }
+        
+        .footer::before {
+            content: '';
+            display: block;
+            height: 3px;
+            background: linear-gradient(90deg, var(--algeria-green), var(--algeria-white), var(--algeria-red));
+            margin-bottom: 1rem;
         }
         
         .footer-content {
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
         }
         
         .footer-section h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
             color: white;
-            border-right: 3px solid var(--accent);
-            padding-right: 10px;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
         }
         
         .footer-links {
@@ -473,13 +570,17 @@
         }
         
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
         
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .footer-links a:hover {
@@ -488,29 +589,43 @@
         
         .copyright {
             text-align: center;
-            margin-top: 3rem;
-            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+        }
+        
+        /* العلم الجزائري في الفوتر */
+        .footer-flag {
+            display: flex;
+            justify-content: center;
+            margin: 1rem auto;
+            max-width: 200px;
+        }
+        
+        .footer-flag-stripe {
+            flex: 1;
+            height: 30px;
         }
         
         /* التنبيهات */
         .alert {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
+            bottom: 15px;
+            right: 15px;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
             color: white;
             font-weight: 600;
             z-index: 10000;
             animation: slideInRight 0.3s ease;
-            max-width: 350px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 320px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            font-size: 0.9rem;
         }
         
         @keyframes slideInRight {
@@ -533,21 +648,22 @@
         /* خاصية رفع الصور */
         .image-upload-container {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         
         .image-upload-label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: var(--primary);
+            font-size: 0.9rem;
         }
         
         .image-preview {
             width: 100%;
-            height: 200px;
+            height: 160px;
             border: 2px dashed #d1d5db;
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -571,14 +687,14 @@
         }
         
         .upload-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: #9ca3af;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .upload-text {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-align: center;
             padding: 0 10px;
         }
@@ -594,21 +710,21 @@
         /* زر الإدارة المخفي */
         .admin-toggle {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
+            bottom: 15px;
+            left: 15px;
             background: var(--primary);
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             z-index: 999;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             transition: all 0.3s;
             opacity: 0.3;
         }
@@ -622,15 +738,15 @@
         .admin-panel {
             position: fixed;
             top: 0;
-            right: -400px;
-            width: 380px;
+            right: -350px;
+            width: 320px;
             height: 100vh;
             background: white;
-            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
             z-index: 1001;
             transition: right 0.3s ease;
             overflow-y: auto;
-            padding: 2rem;
+            padding: 1.5rem;
         }
         
         .admin-panel.active {
@@ -656,12 +772,12 @@
         .admin-tabs {
             display: flex;
             border-bottom: 2px solid #e5e7eb;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         
         .admin-tab {
             flex: 1;
-            padding: 1rem;
+            padding: 0.8rem;
             background: none;
             border: none;
             cursor: pointer;
@@ -669,6 +785,7 @@
             color: var(--gray);
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
         
         .admin-tab:hover {
@@ -712,27 +829,27 @@
         
         .password-box {
             background: white;
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            max-width: 350px;
             width: 90%;
             text-align: center;
         }
         
         .password-box h3 {
             color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
         
         .password-input {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
             text-align: center;
             letter-spacing: 2px;
             font-family: monospace;
@@ -746,19 +863,20 @@
         .password-error {
             color: var(--danger);
             margin-top: 0.5rem;
-            font-size: 0.9rem;
-            min-height: 20px;
+            font-size: 0.85rem;
+            min-height: 18px;
         }
         
         /* تنسيق الجدول في لوحة الإدارة */
         .admin-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 0.85rem;
         }
         
         .admin-table th {
             background: #f8fafc;
-            padding: 12px;
+            padding: 10px;
             text-align: right;
             border-bottom: 2px solid #e5e7eb;
             color: var(--primary);
@@ -766,22 +884,22 @@
         }
         
         .admin-table td {
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid #e5e7eb;
             vertical-align: middle;
         }
         
         .table-actions {
             display: flex;
-            gap: 5px;
+            gap: 4px;
         }
         
         .table-btn {
-            padding: 6px 12px;
+            padding: 5px 10px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: all 0.3s;
         }
         
@@ -795,38 +913,98 @@
             color: white;
         }
         
-        /* التجاوب */
+        /* التجاوب - تحسينات للهاتف */
         @media (max-width: 768px) {
+            .header {
+                padding: 0.6rem 0.8rem;
+            }
+            
             .header-content {
-                flex-direction: column;
-                text-align: center;
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 0.5rem;
             }
             
-            .contact-header {
-                min-width: 100%;
-                text-align: center;
+            .logo-text h1 {
+                font-size: 1.1rem;
             }
             
-            .contact-item {
-                justify-content: center;
-                flex-wrap: wrap;
+            .logo-text p {
+                font-size: 0.75rem;
+            }
+            
+            .logo-icon {
+                font-size: 1.5rem;
+                min-width: 40px;
+                padding: 5px;
+            }
+            
+            .header-phone {
+                display: none; /* إخفاء الهاتف في الهيدر للهواتف */
+            }
+            
+            .hero {
+                padding: 1.5rem 1rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.5rem;
+                margin-bottom: 0.6rem;
+            }
+            
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            .container {
+                padding: 1rem 0.8rem;
+            }
+            
+            .filter-section {
+                padding: 1.2rem;
+            }
+            
+            .filter-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
             }
             
             .cars-grid {
                 grid-template-columns: 1fr;
+                gap: 1.2rem;
             }
             
-            .hero h2 {
-                font-size: 2rem;
+            .car-card {
+                max-width: 100%;
+            }
+            
+            .car-image-container {
+                height: 160px;
+            }
+            
+            .footer {
+                padding: 1.2rem 0.8rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+            
+            .footer-section h3 {
+                font-size: 1rem;
+            }
+            
+            .footer-links li {
+                font-size: 0.85rem;
             }
             
             .admin-panel {
                 width: 100%;
                 right: -100%;
-            }
-            
-            .admin-panel.active {
-                right: 0;
+                padding: 1.2rem;
             }
             
             .password-box {
@@ -836,56 +1014,143 @@
             
             .add-brand-btn {
                 left: 5px;
-                width: 25px;
-                height: 25px;
+                width: 22px;
+                height: 22px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* تحسينات للهواتف الصغيرة جداً */
+        @media (max-width: 480px) {
+            .logo {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            
+            .logo-text h1 {
                 font-size: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.3rem;
+            }
+            
+            .car-title {
+                font-size: 1.1rem;
+            }
+            
+            .car-price {
+                font-size: 1.4rem;
+            }
+            
+            .car-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
         
         /* تحسينات للشاشات الكبيرة */
         @media (min-width: 1200px) {
             .cars-grid {
-                grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             }
+        }
+        
+        /* تحسينات للشاشات المتوسطة */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .cars-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        /* إظهار الهاتف في الهيدر للشاشات الكبيرة */
+        @media (min-width: 769px) {
+            .mobile-contact-btn {
+                display: none;
+            }
+        }
+        
+        /* زر الاتصال للهواتف */
+        .mobile-contact-btn {
+            position: fixed;
+            bottom: 65px;
+            left: 15px;
+            background: #25D366;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 998;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .mobile-contact-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
         }
     </style>
 </head>
 <body>
+    <!-- العلم الجزائري في الخلفية -->
+    <div class="algeria-flag-background"></div>
+    
+    <!-- زر الاتصال للهواتف -->
+    <a href="https://wa.me/213559369237" class="mobile-contact-btn" target="_blank" aria-label="تواصل عبر واتساب">
+        📞
+    </a>
+    
     <!-- زر الإدارة المخفي -->
     <button class="admin-toggle" id="adminToggle" title="لوحة الإدارة (مخفي)">⚙️</button>
     
-    <!-- هيدر الموقع -->
+    <!-- هيدر الموقع - أصغر -->
     <header class="header">
         <div class="header-content">
             <div class="logo">
                 <div class="logo-icon">🚗</div>
                 <div class="logo-text">
                     <h1>Khaled Cars Export</h1>
-                    <p>سيارات من أوروبا والصين إلى الجزائر</p>
+                    <p>سيارات جديدة ومستعملة من أوروبا إلى الجزائر</p>
                 </div>
             </div>
             
-            <h2>🚗 استيراد كل أنواع السيارات بثقة وسهولة</h2>
-            <p>جديدة وأقل من 3 سنوات • وثائق رسمية • سرعة التوصيل • شحن إلى جميع ولايات الجزائر</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="#filter" class="filter-btn" style="text-decoration: none;">
-                    🔍 ابحث عن سيارتك
-                </a>
-                <a href="https://wa.me/213559369237" class="filter-btn" target="_blank" style="background: #25D366; text-decoration: none;">
-                    📞 تواصل عبر واتساب
-                </a>
+            <!-- العلم الجزائري في الهيدر -->
+            <div class="algeria-flag">
+                <div class="flag-stripe flag-green"></div>
+                <div class="flag-stripe flag-white"></div>
+                <div class="flag-stripe flag-red"></div>
             </div>
-
+            
+            <!-- معلومات الاتصال - للشاشات الكبيرة -->
+            <div class="header-phone">
+                <div class="phone-number">+213 559 369 237</div>
+                <div class="whatsapp-badge">
+                    <span>واتساب</span>
+                </div>
+            </div>
         </div>
     </header>
     
     <!-- المحتوى الرئيسي -->
     <main class="container">
-        <!-- قسم البطل -->
-                
+        <!-- قسم البطل - أصغر -->
+        
+        
         <!-- نظام الفلترة -->
         <section class="filter-section" id="filter">
-            <h2 style="margin-bottom: 1.5rem; color: var(--primary);">🔍 البحث في السيارات</h2>
+            <h2 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.3rem;">🔍 البحث في السيارات</h2>
             
             <div class="filter-grid">
                 <div class="filter-group">
@@ -915,12 +1180,18 @@
                     <select class="filter-select" id="filterEngine">
                         <option value="">الكل</option>
                         <option value="1.0">1.0 لتر</option>
+                        <option value="1.1">1.1 لتر</option>
                         <option value="1.2">1.2 لتر</option>
+                        <option value="1.3">1.3 لتر</option>
                         <option value="1.4">1.4 لتر</option>
+                        <option value="1.5">1.5 لتر</option>
                         <option value="1.6">1.6 لتر</option>
+                        <option value="1.7">1.7 لتر</option>
                         <option value="1.8">1.8 لتر</option>
                         <option value="2.0">2.0 لتر</option>
+                        <option value="2.2">2.2 لتر</option>
                         <option value="2.4">2.4 لتر</option>
+                        <option value="2.5">2.5 لتر</option>
                         <option value="3.0">3.0 لتر</option>
                         <option value="3.5">3.5 لتر</option>
                         <option value="4.0">4.0 لتر+</option>
@@ -931,16 +1202,30 @@
                 <div class="filter-group">
                     <label class="filter-label">السعر الأقصى (مليون)</label>
                     <select class="filter-select" id="filterPrice">
-                        <option value="">لا يهم</option>
-                        <option value="5">حتى 5</option>
-                        <option value="10">حتى 10</option>
-                        <option value="15">حتى 15</option>
-                        <option value="20">حتى 20</option>
-                        <option value="25">حتى 25</option>
-                        <option value="30">حتى 30</option>
-                        <option value="40">حتى 40</option>
+                        <option value="">اختر من القائمة</option>
                         <option value="50">حتى 50</option>
+                        <option value="100">حتى 100</option>
+                        <option value="150">حتى 150</option>
+                        <option value="200">حتى 200</option>
+                        <option value="250">حتى 250</option>
+                        <option value="300">حتى 300</option>
+                        <option value="350">حتى 350</option>
+                        <option value="400">حتى 400</option>
+                        <option value="450">حتى 450</option>
+                        <option value="500">حتى 500</option>
+                        <option value="550">حتى 550</option>
+                        <option value="600">حتى 600</option>
+                        <option value="custom">أدخل سعر يدوياً</option>
                     </select>
+                </div>
+                
+                <!-- حقل السعر اليدوي (مخفي افتراضياً) -->
+                <div class="filter-group" id="customPriceGroup" style="display: none;">
+                    <label class="filter-label">أدخل السعر الأقصى (مليون)</label>
+                    <div class="price-input-group">
+                        <input type="number" class="filter-input price-custom-input" id="customPriceInput" placeholder="مثال: 275" min="0" step="0.1">
+                        <div class="price-unit">مليون</div>
+                    </div>
                 </div>
             </div>
             
@@ -951,9 +1236,9 @@
         
         <!-- عرض السيارات -->
         <section>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2 style="color: var(--primary);">🚗 السيارات المتاحة</h2>
-                <div id="carsCount" style="color: var(--gray); font-weight: 600;">جاري التحميل...</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="color: var(--primary); font-size: 1.3rem;">🚗 السيارات المتاحة</h2>
+                <div id="carsCount" style="color: var(--gray); font-weight: 600; font-size: 0.9rem;">جاري التحميل...</div>
             </div>
             
             <div id="carsGrid" class="cars-grid">
@@ -962,22 +1247,29 @@
             
             <div id="noCarsMessage" class="empty-state" style="display: none;">
                 <div class="empty-state-icon">🚗</div>
-                <h3 style="color: var(--gray); margin-bottom: 0.5rem;">لا توجد سيارات متاحة</h3>
-                <p style="color: var(--gray);">حاول تغيير معايير البحث للعثور على المزيد من السيارات</p>
+                <h3 style="color: var(--gray); margin-bottom: 0.5rem; font-size: 1.1rem;">لا توجد سيارات متاحة</h3>
+                <p style="color: var(--gray); font-size: 0.9rem;">حاول تغيير معايير البحث للعثور على المزيد من السيارات</p>
             </div>
         </section>
     </main>
     
-    <!-- الفوتر -->
+    <!-- الفوتر - أصغر -->
     <footer class="footer">
+        <!-- العلم الجزائري في الفوتر -->
+        <div class="footer-flag">
+            <div class="footer-flag-stripe flag-green"></div>
+            <div class="footer-flag-stripe flag-white"></div>
+            <div class="footer-flag-stripe flag-red"></div>
+        </div>
+        
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Khaled Cars Export</h3>
-                <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1rem;">
+                <p style="color: rgba(255, 255, 255, 0.85); margin-bottom: 0.8rem; font-size: 0.9rem;">
                     متخصصون في استيراد السيارات الجديدة والمستعملة من أوروبا والصين إلى الجزائر
                 </p>
-                <div style="display: flex; gap: 10px; margin-top: 1rem;">
-                    <a href="https://wa.me/213559369237" class="filter-btn" style="padding: 8px 15px; font-size: 0.9rem; background: #25D366; text-decoration: none;" target="_blank">
+                <div style="display: flex; gap: 8px; margin-top: 0.8rem;">
+                    <a href="https://wa.me/213559369237" class="filter-btn" style="padding: 6px 12px; font-size: 0.85rem; background: #25D366; text-decoration: none;" target="_blank">
                         📞 تواصل عبر واتساب
                     </a>
                 </div>
@@ -988,21 +1280,19 @@
                 <ul class="footer-links">
                     <li>
                         <strong>📍 العنوان:</strong>
-                        <div style="color: rgba(255, 255, 255, 0.8);">سكيكدة، الجزائر</div>
+                        <div style="color: rgba(255, 255, 255, 0.85); font-size: 0.9rem;">سكيكدة، الجزائر</div>
                     </li>
                     <li>
                         <strong>📞 الهاتف:</strong>
-                        <div style="color: rgba(255, 255, 255, 0.8); direction: ltr; text-align: right;">سكيكدة  0549883720</div>
-                        <div style="color: rgba(255, 255, 255, 0.8); direction: ltr; text-align: right;">0780325968 سكيكدة</div>
-                        <div style="color: rgba(255, 255, 255, 0.8); direction: ltr; text-align: right;">0659605045 تلمسان</div>
-
+                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">0549883720 سكيكدة</div>
+                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">0780325968 سكيكدة</div>
+                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">0659605045 تلمسان</div>
                     </li>
                     <li>
                         <strong>📱 واتساب:</strong>
-                        <div style="color: rgba(255, 255, 255, 0.8); direction: ltr; text-align: right;">+213549883720 سكيكدة</div>
-                        <div style="color: rgba(255, 255, 255, 0.8); direction: ltr; text-align: right;">+213559369237 خالد</div>
-                        <div style="color: rgba(255, 255, 255, 0.8); direction: ltr; text-align: right;">+33684208705 فرنسا</div>
-
+                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">+213549883720 سكيكدة</div>
+                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">+213559369237 خالد</div>
+                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">+33684208705 فرنسا</div>
                     </li>
                 </ul>
             </div>
@@ -1011,7 +1301,8 @@
                 <h3>خدماتنا</h3>
                 <ul class="footer-links">
                     <li>✓ سيارات جديدة من أوروبا</li>
-                    <li>✓ سيارات مستعملة (أقل من 3 سنوات)</li>
+                    <li>✓ سيارات مستعملة</li>
+                    <li>✓ كل أنواع المحركات</li>
                     <li>✓ فحص كامل قبل الشحن</li>
                     <li>✓ وثائق رسمية موثقة</li>
                     <li>✓ توصيل لجميع الولايات</li>
@@ -1022,7 +1313,7 @@
         
         <div class="copyright">
             © 2024 Khaled Cars Export. جميع الحقوق محفوظة.
-            <div style="margin-top: 10px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6);">
+            <div style="margin-top: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6);">
                 تم التطوير بواسطة فريق Khaled Cars Export
             </div>
         </div>
@@ -1032,22 +1323,22 @@
     <div class="password-modal" id="passwordModal">
         <div class="password-box">
             <h3>🔒 التحقق من الهوية</h3>
-            <p style="color: var(--gray); margin-bottom: 1.5rem;">أدخل كلمة المرور للوصول إلى لوحة الإدارة</p>
+            <p style="color: var(--gray); margin-bottom: 1rem; font-size: 0.9rem;">أدخل كلمة المرور للوصول إلى لوحة الإدارة</p>
             <input type="password" class="password-input" id="passwordInput" placeholder="أدخل كلمة المرور">
             <div class="password-error" id="passwordError"></div>
-            <button class="filter-btn" id="submitPassword" style="width: 100%;">
+            <button class="filter-btn" id="submitPassword" style="width: 100%; padding: 10px;">
                 🔓 دخول
             </button>
-                    </div>
+        </div>
     </div>
     
     <!-- لوحة الإدارة المخفية -->
     <div class="admin-overlay" id="adminOverlay"></div>
     
     <div class="admin-panel" id="adminPanel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-            <h2 style="color: var(--primary);">⚙️ إدارة السيارات</h2>
-            <button id="closeAdmin" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="color: var(--primary); font-size: 1.3rem;">⚙️ إدارة السيارات</h2>
+            <button id="closeAdmin" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--gray);">
                 ✕
             </button>
         </div>
@@ -1055,13 +1346,13 @@
         <!-- تبويبات الإدارة -->
         <div class="admin-tabs">
             <button class="admin-tab active" data-tab="add">➕ إضافة سيارة</button>
-            <button class="admin-tab" data-tab="manage">📋 إدارة السيارات</button>
-            <button class="admin-tab" data-tab="brands">🏷️ إدارة الماركات</button>
+            <button class="admin-tab" data-tab="manage">📋 إدارة</button>
+            <button class="admin-tab" data-tab="brands">🏷️ ماركات</button>
         </div>
         
         <!-- تبويب إضافة سيارة -->
         <div id="addTab" class="admin-tab-content active">
-            <form id="carForm" style="margin-bottom: 2rem;">
+            <form id="carForm" style="margin-bottom: 1.5rem;">
                 <div class="image-upload-container">
                     <label class="image-upload-label">صورة السيارة</label>
                     <div class="image-preview" id="imagePreview">
@@ -1069,15 +1360,15 @@
                         <div class="upload-text">انقر لرفع صورة السيارة من جهازك</div>
                         <input type="file" id="imageUpload" class="image-upload-input" accept="image/*">
                     </div>
-                    <div style="font-size: 0.8rem; color: var(--gray); margin-top: 5px;">
+                    <div style="font-size: 0.75rem; color: var(--gray); margin-top: 5px;">
                         يمكنك رفع صور JPEG, PNG, GIF (الحد الأقصى 5MB)
                     </div>
                 </div>
                 
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
                     <div>
                         <label class="filter-label">* اسم السيارة</label>
-                        <input type="text" class="filter-input" id="carTitle" placeholder="مثال: Mercedes C-Class 2022" required>
+                        <input type="text" class="filter-input" id="carTitle" placeholder="مثال: Mercedes C-Class 2024" required>
                     </div>
                     
                     <div>
@@ -1094,7 +1385,7 @@
                     </div>
                 </div>
                 
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
                     <div>
                         <label class="filter-label">* النوع</label>
                         <select class="filter-select" id="carType" required>
@@ -1110,12 +1401,18 @@
                             <select class="filter-select" id="carEngineSelect" required style="flex: 1;">
                                 <option value="">اختر أو اكتب</option>
                                 <option value="1.0">1.0 لتر</option>
+                                <option value="1.1">1.1 لتر</option>
                                 <option value="1.2">1.2 لتر</option>
+                                <option value="1.3">1.3 لتر</option>
                                 <option value="1.4">1.4 لتر</option>
+                                <option value="1.5">1.5 لتر</option>
                                 <option value="1.6">1.6 لتر</option>
+                                <option value="1.7">1.7 لتر</option>
                                 <option value="1.8">1.8 لتر</option>
                                 <option value="2.0">2.0 لتر</option>
+                                <option value="2.2">2.2 لتر</option>
                                 <option value="2.4">2.4 لتر</option>
+                                <option value="2.5">2.5 لتر</option>
                                 <option value="3.0">3.0 لتر</option>
                                 <option value="3.5">3.5 لتر</option>
                                 <option value="4.0">4.0 لتر+</option>
@@ -1126,7 +1423,7 @@
                     </div>
                 </div>
                 
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
                     <div>
                         <label class="filter-label">* السعر (مليون)</label>
                         <input type="number" class="filter-input" id="carPrice" step="0.1" placeholder="مثال: 18.5" required>
@@ -1138,7 +1435,7 @@
                     </div>
                 </div>
                 
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
                     <div>
                         <label class="filter-label">* الوقود</label>
                         <select class="filter-select" id="carFuel" required>
@@ -1158,26 +1455,26 @@
                     </div>
                 </div>
                 
-                <div style="margin-bottom: 1rem;">
+                <div style="margin-bottom: 0.8rem;">
                     <label class="filter-label">المسافة المقطوعة (كم)</label>
                     <input type="number" class="filter-input" id="carMileage" placeholder="مثال: 15000">
                 </div>
                 
-                <div style="margin-bottom: 1rem;">
+                <div style="margin-bottom: 0.8rem;">
                     <label class="filter-label">المواصفات (افصل بينها بفواصل)</label>
-                    <textarea class="filter-input" id="carFeatures" rows="3" placeholder="مثال: مكيف, كاميرا خلفية, جلد طبيعي, شاشة لمس"></textarea>
+                    <textarea class="filter-input" id="carFeatures" rows="2" placeholder="مثال: مكيف, كاميرا خلفية, جلد طبيعي, شاشة لمس"></textarea>
                 </div>
                 
-                <div style="margin-bottom: 2rem;">
+                <div style="margin-bottom: 1.5rem;">
                     <label class="filter-label">وصف السيارة</label>
-                    <textarea class="filter-input" id="carDescription" rows="4" placeholder="وصف تفصيلي للسيارة..."></textarea>
+                    <textarea class="filter-input" id="carDescription" rows="3" placeholder="وصف تفصيلي للسيارة..."></textarea>
                 </div>
                 
-                <div style="display: flex; gap: 1rem;">
-                    <button type="submit" class="filter-btn" style="flex: 1;">
+                <div style="display: flex; gap: 0.8rem;">
+                    <button type="submit" class="filter-btn" style="flex: 1; padding: 10px;">
                         💾 حفظ السيارة
                     </button>
-                    <button type="button" class="filter-btn" onclick="clearCarForm()" style="background: var(--gray); flex: 1;">
+                    <button type="button" class="filter-btn" onclick="clearCarForm()" style="background: var(--gray); flex: 1; padding: 10px;">
                         🗑️ مسح النموذج
                     </button>
                 </div>
@@ -1187,7 +1484,7 @@
         <!-- تبويب إدارة السيارات -->
         <div id="manageTab" class="admin-tab-content">
             <div id="adminCarsList">
-                <p style="text-align: center; color: var(--gray); padding: 2rem;">
+                <p style="text-align: center; color: var(--gray); padding: 1.5rem; font-size: 0.9rem;">
                     جاري تحميل قائمة السيارات...
                 </p>
             </div>
@@ -1195,20 +1492,20 @@
         
         <!-- تبويب إدارة الماركات -->
         <div id="brandsTab" class="admin-tab-content">
-            <div style="margin-bottom: 2rem;">
-                <h3 style="color: var(--primary); margin-bottom: 1rem;">🏷️ إدارة الماركات</h3>
-                <p style="color: var(--gray); margin-bottom: 1.5rem;">يمكنك إضافة، تعديل، أو حذف الماركات المحفوظة</p>
+            <div style="margin-bottom: 1.5rem;">
+                <h3 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;">🏷️ إدارة الماركات</h3>
+                <p style="color: var(--gray); margin-bottom: 1rem; font-size: 0.9rem;">يمكنك إضافة، تعديل، أو حذف الماركات المحفوظة</p>
                 
-                <div style="display: flex; gap: 10px; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 8px; margin-bottom: 1rem;">
                     <input type="text" class="filter-input" id="newBrandName" placeholder="أدخل اسم ماركة جديدة">
-                    <button class="filter-btn" onclick="addNewBrand()" style="white-space: nowrap;">
+                    <button class="filter-btn" onclick="addNewBrand()" style="white-space: nowrap; padding: 10px;">
                         ➕ إضافة ماركة
                     </button>
                 </div>
             </div>
             
             <div id="brandsList">
-                <p style="text-align: center; color: var(--gray); padding: 2rem;">
+                <p style="text-align: center; color: var(--gray); padding: 1.5rem; font-size: 0.9rem;">
                     جاري تحميل قائمة الماركات...
                 </p>
             </div>
@@ -1239,37 +1536,37 @@
             "شيفروليه"
         ];
         
-        // بيانات السيارات الافتراضية
+        // بيانات السيارات (جديدة ومستعملة)
         const defaultCars = [
             {
                 id: "1",
-                title: "Mercedes C-Class 2022",
+                title: "Mercedes C-Class 2024",
                 brand: "مرسيدس",
                 type: "new",
                 engine: "2.0 لتر",
-                price: 18.5,
-                year: 2022,
+                price: 20.5,
+                year: 2024,
                 fuel: "gasoline",
                 transmission: "automatic",
-                mileage: 15000,
+                mileage: 0,
                 image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 features: "مكيف, كاميرا خلفية, جلد طبيعي, شاشة لمس, مقاعد كهربائية",
-                description: "سيارة مرسيدس C-Class 2022 بحالة الوكالة، فحص كامل، وثائق رسمية، خالية من الحوادث."
+                description: "سيارة مرسيدس C-Class 2024 جديدة تماماً، فل كامل، وكالة الجزائر."
             },
             {
                 id: "2",
-                title: "BMW X5 2021",
+                title: "BMW 5 Series 2021",
                 brand: "بي إم دبليو",
                 type: "used",
                 engine: "3.0 لتر",
-                price: 22.5,
+                price: 35.5,
                 year: 2021,
                 fuel: "diesel",
                 transmission: "automatic",
                 mileage: 45000,
                 image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 features: "دفع رباعي, شاشة لمس كبيرة, مقاعد جلدية, نظام صوتي متميز",
-                description: "بي إم دبليو X5 2021 ديزل، بحالة جيدة جداً، صيانة دورية في الوكالة."
+                description: "بي إم دبليو 5 Series 2021 مستعملة، ديزل، بحالة جيدة جداً."
             },
             {
                 id: "3",
@@ -1277,14 +1574,59 @@
                 brand: "أودي",
                 type: "new",
                 engine: "2.0 لتر",
-                price: 28.75,
+                price: 32.75,
                 year: 2023,
                 fuel: "diesel",
                 transmission: "automatic",
                 mileage: 5000,
                 image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 features: "مكيف, ملاحة GPS, تحكم صوتي, كاميرا 360 درجة, مقاعد مساج",
-                description: "أودي A6 2023 ديزل، فل كامل، مسافة قليلة، وكالة الجزائر."
+                description: "أودي A6 2023 جديدة، ديزل، فل كامل، وكالة الجزائر."
+            },
+            {
+                id: "4",
+                title: "Toyota Camry 2020",
+                brand: "تويوتا",
+                type: "used",
+                engine: "2.5 لتر",
+                price: 18.9,
+                year: 2020,
+                fuel: "gasoline",
+                transmission: "automatic",
+                mileage: 80000,
+                image: "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                features: "مكيف, شاشة لمس, كاميرا خلفية, نظام أمان متكامل",
+                description: "تويوتا كامري 2020 مستعملة، بنزين، بحالة ممتازة."
+            },
+            {
+                id: "5",
+                title: "Hyundai Tucson 2024",
+                brand: "هيونداي",
+                type: "new",
+                engine: "2.0 لتر",
+                price: 16.8,
+                year: 2024,
+                fuel: "gasoline",
+                transmission: "automatic",
+                mileage: 0,
+                image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                features: "دفع رباعي, شاشة لمس كبيرة, مقاعد جلدية, نظام ملاحة",
+                description: "هيونداي توسان 2024 جديدة، فل كامل، وكالة الجزائر."
+            },
+            {
+                id: "6",
+                title: "Renault Koleos 2019",
+                brand: "رينو",
+                type: "used",
+                engine: "2.0 لتر",
+                price: 12.5,
+                year: 2019,
+                fuel: "diesel",
+                transmission: "automatic",
+                mileage: 120000,
+                image: "https://images.unsplash.com/photo-1622418682629-d6d48739e3d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                features: "دفع رباعي, شاشة لمس, كاميرا 360 درجة, مقاعد جلدية",
+                description: "رينو كوليون 2019 مستعملة، ديزل، فحص كامل."
             }
         ];
         
@@ -1483,6 +1825,23 @@
             document.getElementById('carBrand').addEventListener('input', function() {
                 showBrandSuggestions(this.value, 'admin');
             });
+            
+            // السعر اليدوي - إظهار/إخفاء حقل الإدخال
+            const priceSelect = document.getElementById('filterPrice');
+            if (priceSelect) {
+                priceSelect.addEventListener('change', function() {
+                    const customPriceGroup = document.getElementById('customPriceGroup');
+                    const customPriceInput = document.getElementById('customPriceInput');
+                    
+                    if (this.value === 'custom') {
+                        customPriceGroup.style.display = 'block';
+                        customPriceInput.focus();
+                    } else {
+                        customPriceGroup.style.display = 'none';
+                        customPriceInput.value = '';
+                    }
+                });
+            }
         }
         
         // عرض نافذة كلمة المرور
@@ -1640,7 +1999,7 @@
             
             if (brands.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: var(--gray);">
+                    <div style="text-align: center; padding: 1.5rem; color: var(--gray); font-size: 0.9rem;">
                         لا توجد ماركات مسجلة
                     </div>
                 `;
@@ -1675,7 +2034,7 @@
                                     color: ${carsCount > 0 ? '#065f46' : '#6b7280'}; 
                                     padding: 4px 10px; 
                                     border-radius: 15px;
-                                    font-size: 0.85rem;">
+                                    font-size: 0.8rem;">
                                 ${carsCount} سيارة
                             </span>
                         </td>
@@ -1696,7 +2055,7 @@
             html += `
                         </tbody>
                     </table>
-                    <div style="margin-top: 1rem; text-align: left; color: var(--gray); font-size: 0.9rem;">
+                    <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
                         العدد الإجمالي: ${brands.length} ماركة
                     </div>
                 </div>
@@ -1859,19 +2218,29 @@
             const typeFilter = document.getElementById('filterType').value;
             const brandFilter = document.getElementById('filterBrand').value;
             const engineFilter = document.getElementById('filterEngine').value;
-            const priceFilter = document.getElementById('filterPrice').value;
+            const priceSelect = document.getElementById('filterPrice').value;
+            const customPriceInput = document.getElementById('customPriceInput');
+            
+            let priceFilter = null;
+            
+            // تحديد قيمة السعر بناءً على الاختيار
+            if (priceSelect === 'custom' && customPriceInput.value) {
+                priceFilter = parseFloat(customPriceInput.value);
+            } else if (priceSelect && priceSelect !== '') {
+                priceFilter = parseFloat(priceSelect);
+            }
             
             const filteredCars = cars.filter(car => {
                 if (typeFilter && car.type !== typeFilter) return false;
                 if (brandFilter && car.brand !== brandFilter) return false;
                 if (engineFilter && engineFilter !== 'other' && !car.engine.includes(engineFilter)) return false;
-                if (priceFilter && car.price > parseFloat(priceFilter)) return false;
+                if (priceFilter !== null && car.price > priceFilter) return false;
                 return true;
             });
             
             displayCars(filteredCars);
             
-            if (filteredCars.length === 0 && (typeFilter || brandFilter || engineFilter || priceFilter)) {
+            if (filteredCars.length === 0 && (typeFilter || brandFilter || engineFilter || priceFilter !== null)) {
                 showAlert("لا توجد سيارات تطابق معايير البحث", "info");
             }
         }
@@ -1937,7 +2306,7 @@
                 fuel: document.getElementById('carFuel').value,
                 transmission: document.getElementById('carTransmission').value,
                 mileage: document.getElementById('carMileage').value ? parseInt(document.getElementById('carMileage').value) : null,
-                image: uploadedImage || "https://images.unsplash.com/photo-1592198084033-aade902d1aae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                image: uploadedImage || "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                 features: document.getElementById('carFeatures').value.trim(),
                 description: document.getElementById('carDescription').value.trim(),
                 createdAt: new Date().toISOString()
@@ -2007,6 +2376,7 @@
                 }
             }
             document.getElementById('carYear').value = 2023;
+            document.getElementById('carType').value = '';
             document.getElementById('carEngineSelect').value = '';
             document.getElementById('carEngineCustom').style.display = 'none';
             uploadedImage = null;
@@ -2024,7 +2394,7 @@
             
             if (cars.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: var(--gray);">
+                    <div style="text-align: center; padding: 1.5rem; color: var(--gray); font-size: 0.9rem;">
                         لا توجد سيارات للإدارة
                     </div>
                 `;
@@ -2048,17 +2418,17 @@
                 html += `
                     <tr>
                         <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
                                 <img src="${car.image}" 
                                      alt="${car.title}" 
-                                     style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">
+                                     style="width: 50px; height: 35px; object-fit: cover; border-radius: 4px;">
                                 <div>
-                                    <strong>${car.title}</strong><br>
-                                    <small style="color: var(--gray);">${car.brand} - ${car.year}</small>
+                                    <strong style="font-size: 0.9rem;">${car.title}</strong><br>
+                                    <small style="color: var(--gray); font-size: 0.8rem;">${car.brand} - ${car.year} ${car.type === 'new' ? '🆕' : '🔄'}</small>
                                 </div>
                             </div>
                         </td>
-                        <td style="font-weight: bold; color: var(--accent);">
+                        <td style="font-weight: bold; color: var(--accent); font-size: 0.9rem;">
                             ${car.price.toFixed(1)} مليون
                         </td>
                         <td>
@@ -2078,7 +2448,7 @@
             html += `
                         </tbody>
                     </table>
-                    <div style="margin-top: 1rem; text-align: left; color: var(--gray); font-size: 0.9rem;">
+                    <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
                         العدد الإجمالي: ${cars.length} سيارة
                     </div>
                 </div>
@@ -2104,7 +2474,7 @@
             const engineSelect = document.getElementById('carEngineSelect');
             const engineCustom = document.getElementById('carEngineCustom');
             
-            if (car.engine.includes('لتر') && ['1.0', '1.2', '1.4', '1.6', '1.8', '2.0', '2.4', '3.0', '3.5', '4.0'].some(size => car.engine.includes(size))) {
+            if (car.engine.includes('لتر') && ['1.0', '1.1', '1.2', '1.3', '1.4', '1.5', '1.6', '1.7', '1.8', '2.0', '2.2', '2.4', '2.5', '3.0', '3.5', '4.0'].some(size => car.engine.includes(size))) {
                 // إذا كان المحرك من القائمة المحددة
                 const engineSize = car.engine.split(' ')[0];
                 engineSelect.value = engineSize;
@@ -2216,13 +2586,13 @@
             
             const details = `اسم السيارة: ${car.title}
 الماركة: ${car.brand}
-النوع: ${car.type === 'new' ? 'جديدة' : 'مستعملة'}
+الحالة: ${car.type === 'new' ? 'جديدة' : 'مستعملة'}
 نوع المحرك: ${car.engine}
 السعر: ${car.price.toFixed(1)} مليون
 سنة الصنع: ${car.year}
 الوقود: ${getFuelName(car.fuel)}
 ناقل الحركة: ${getTransmissionName(car.transmission)}
-${car.mileage ? `المسافة المقطوعة: ${car.mileage.toLocaleString('ar-DZ')} كم` : ''}
+${car.mileage ? `المسافة المقطوعة: ${car.mileage.toLocaleString('ar-DZ')} كم` : 'المسافة المقطوعة: 0 كم (سيارة جديدة)'}
 
 المواصفات: ${car.features || 'لا يوجد'}
 
