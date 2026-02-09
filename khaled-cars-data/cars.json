@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "title": "Renault Clio 5 Equilibre",
+    "brand": "رينو",
+    "type": "used",
+    "engine": "1.0 لتر",
+    "price": 313,
+    "year": 2023,
+    "fuel": "gasoline",
+    "transmission": "يدوي",
+    "mileage": 24245,
+    "image": "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "features": "السعر لا يشمل مصاريف الجمركة",
+    "description": "",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]
