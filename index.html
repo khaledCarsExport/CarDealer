@@ -1,2673 +1,947 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khaled Cars Export | سيارات جديدة ومستعملة من أوروبا و الصين إلى الجزائر</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚗</text></svg>">
-    <meta name="description" content="استيراد سيارات جديدة ومستعملة من أوروبا والصين إلى الجزائر - سكيكدة">
-      
-    <!-- هذه السطور الجديدة لمنع التخزين المؤقت -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
+    <title>جرد السيارات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #1a365d;
-            --secondary: #2563eb;
-            --accent: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --light: #f8fafc;
-            --dark: #1e293b;
-            --gray: #6b7280;
-            --algeria-green: #006633;
-            --algeria-red: #D21034;
-            --algeria-white: #FFFFFF;
-        }
-        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
         
         body {
             background-color: #f5f7fa;
-            color: var(--dark);
+            color: #333;
             line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            padding: 20px;
+            direction: rtl;
         }
         
-        /* العلم الجزائري في الخلفية */
-        .algeria-flag-background {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.05;
-            background: linear-gradient(
-                90deg,
-                var(--algeria-green) 0%,
-                var(--algeria-green) 33.33%,
-                var(--algeria-white) 33.33%,
-                var(--algeria-white) 66.66%,
-                var(--algeria-red) 66.66%,
-                var(--algeria-red) 100%
-            );
-            pointer-events: none;
-        }
-        
-        /* الهيدر - أصغر حجم */
-        .header {
-            background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%);
-            color: white;
-            padding: 0.8rem 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-bottom: 3px solid var(--accent);
-        }
-        
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .logo-icon {
-            font-size: 1.8rem;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 6px;
-            border-radius: 8px;
-            min-width: 44px;
-            text-align: center;
-        }
-        
-        .logo-text h1 {
-            font-size: 1.3rem;
-            margin-bottom: 3px;
-            line-height: 1.2;
-        }
-        
-        .logo-text p {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            line-height: 1.2;
-        }
-        
-        /* العلم الجزائري في الهيدر */
-        .algeria-flag {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            padding: 4px 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 6px;
-            margin-right: 5px;
-        }
-        
-        .flag-stripe {
-            width: 16px;
-            height: 24px;
-        }
-        
-        .flag-green { background-color: var(--algeria-green); }
-        .flag-white { background-color: var(--algeria-white); }
-        .flag-red { background-color: var(--algeria-red); }
-        .flag-white { background-color: var(--algeria-white); }
-        
-        /* هاتف الاتصال - أصغر */
-        .header-phone {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 3px;
-        }
-        
-        .phone-number {
-            font-size: 0.9rem;
-            font-weight: bold;
-            direction: ltr;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-        
-        .whatsapp-badge {
-            background: #25D366;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-        }
-        
-        /* المحتوى الرئيسي */
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 1.5rem 1rem;
-            flex: 1;
-            width: 100%;
         }
         
-        /* قسم البطل - أصغر */
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                        url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 2rem 1.5rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
+        header {
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--algeria-green), var(--algeria-white), var(--algeria-red));
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         
-        .hero h2 {
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .form-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .inventory-section {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        h2 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
             font-size: 1.8rem;
-            margin-bottom: 0.8rem;
-            color: white;
         }
         
-        .hero p {
-            font-size: 1rem;
-            max-width: 800px;
-            margin: 0 auto 1.5rem;
-            opacity: 0.95;
-            line-height: 1.5;
+        .form-group {
+            margin-bottom: 20px;
         }
         
-        /* نظام الفلترة */
-        .filter-section {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e5e7eb;
-        }
-        
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.8rem;
-            margin-top: 0.8rem;
-        }
-        
-        .filter-group {
-            margin-bottom: 0.8rem;
-            position: relative;
-        }
-        
-        .filter-label {
+        label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-        
-        .filter-select, .filter-input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            background: white;
-        }
-        
-        .filter-select:focus, .filter-input:focus {
-            outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        
-        /* حقل السعر اليدوي */
-        .price-input-group {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .price-custom-input {
-            flex: 1;
-        }
-        
-        .price-unit {
-            background: #f3f4f6;
-            color: var(--dark);
-            padding: 10px 15px;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            white-space: nowrap;
-        }
-        
-        /* خاصية إضافة ماركة جديدة */
-        .brand-input-container {
-            position: relative;
-            width: 100%;
-        }
-        
-        .add-brand-btn {
-            position: absolute;
-            left: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--accent);
-            color: white;
-            border: none;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .add-brand-btn:hover {
-            background: #0da371;
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .brand-suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 100;
-            max-height: 180px;
-            overflow-y: auto;
-            display: none;
-        }
-        
-        .brand-suggestion {
-            padding: 8px 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border-bottom: 1px solid #f3f4f6;
-            font-size: 0.9rem;
-        }
-        
-        .brand-suggestion:hover {
-            background: #f0f7ff;
-            color: var(--secondary);
-        }
-        
-        .brand-suggestion:last-child {
-            border-bottom: none;
-        }
-        
-        .filter-btn {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.3s;
-            margin-top: 0.8rem;
-        }
-        
-        .filter-btn:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-        }
-        
-        /* بطاقات السيارات */
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        
-        .car-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
-            position: relative;
-            border: 1px solid #e5e7eb;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .car-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-        }
-        
-        .car-image-container {
-            position: relative;
-            height: 180px;
-            overflow: hidden;
-        }
-        
-        .car-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .car-card:hover .car-image {
-            transform: scale(1.05);
-        }
-        
-        .car-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 2;
-        }
-        
-        .car-badge.used {
-            background: var(--warning);
-        }
-        
-        .car-info {
-            padding: 1.2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .car-title {
-            font-size: 1.2rem;
-            color: var(--primary);
             margin-bottom: 8px;
-            line-height: 1.3;
-            min-height: 3rem;
+            font-weight: 600;
+            color: #444;
         }
         
-        .car-specs {
-            color: var(--gray);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 0 2px rgba(42, 82, 152, 0.1);
+        }
+        
+        .image-upload {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .image-upload:hover {
+            border-color: #2a5298;
+            background-color: #f9faff;
+        }
+        
+        .image-upload i {
+            font-size: 2rem;
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .image-preview {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
+            margin-top: 15px;
         }
         
-        .car-spec-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .car-price {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: var(--accent);
-            margin: 1rem 0;
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-        
-        .car-price-unit {
-            font-size: 0.9rem;
-            color: var(--gray);
-            font-weight: normal;
-        }
-        
-        .car-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin: 1rem 0;
-        }
-        
-        .feature-tag {
-            background: #f3f4f6;
-            color: var(--dark);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-        }
-        
-        .car-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid #f3f4f6;
+        .preview-item {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #ddd;
         }
         
         .btn {
-            flex: 1;
-            padding: 10px;
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #2a5298;
+            color: white;
             border: none;
             border-radius: 6px;
-            font-weight: bold;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
             transition: all 0.3s;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        
-        .btn-details {
-            background: var(--secondary);
-            color: white;
-        }
-        
-        .btn-whatsapp {
-            background: #25D366;
-            color: white;
+            text-align: center;
         }
         
         .btn:hover {
+            background-color: #1e3c72;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
-        /* حالة عدم وجود سيارات */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1.5rem;
-            grid-column: 1 / -1;
-        }
-        
-        .empty-state-icon {
-            font-size: 3rem;
-            color: #e5e7eb;
-            margin-bottom: 1rem;
-        }
-        
-        /* الفوتر - أصغر */
-        .footer {
-            background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
-            color: white;
-            padding: 1.5rem 1rem;
-            margin-top: auto;
-            border-top: 3px solid var(--accent);
-        }
-        
-        .footer::before {
-            content: '';
-            display: block;
-            height: 3px;
-            background: linear-gradient(90deg, var(--algeria-green), var(--algeria-white), var(--algeria-red));
-            margin-bottom: 1rem;
-        }
-        
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: white;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        .copyright {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
-        }
-        
-        /* العلم الجزائري في الفوتر */
-        .footer-flag {
-            display: flex;
-            justify-content: center;
-            margin: 1rem auto;
-            max-width: 200px;
-        }
-        
-        .footer-flag-stripe {
-            flex: 1;
-            height: 30px;
-        }
-        
-        /* التنبيهات */
-        .alert {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            z-index: 10000;
-            animation: slideInRight 0.3s ease;
-            max-width: 320px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-        
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        .alert-success {
-            background: linear-gradient(135deg, var(--accent) 0%, #0da371 100%);
-        }
-        
-        .alert-error {
-            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
-        }
-        
-        .alert-info {
-            background: linear-gradient(135deg, var(--secondary) 0%, #1d4ed8 100%);
-        }
-        
-        /* خاصية رفع الصور */
-        .image-upload-container {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-        
-        .image-upload-label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-        
-        .image-preview {
+        .btn-generate {
+            background-color: #28a745;
+            margin-top: 20px;
             width: 100%;
-            height: 160px;
-            border: 2px dashed #d1d5db;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
+        }
+        
+        .btn-generate:hover {
+            background-color: #218838;
+        }
+        
+        .btn-refresh {
+            background-color: #17a2b8;
+            margin-bottom: 20px;
+        }
+        
+        .btn-refresh:hover {
+            background-color: #138496;
+        }
+        
+        .car-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .car-card {
+            background-color: white;
+            border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .car-images {
+            height: 180px;
             position: relative;
-            background: #f9fafb;
-            transition: all 0.3s;
+            overflow: hidden;
         }
         
-        .image-preview:hover {
-            border-color: var(--secondary);
-            background: #f0f7ff;
-        }
-        
-        .image-preview img {
-            max-width: 100%;
-            max-height: 100%;
+        .car-main-image {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
         
-        .upload-icon {
-            font-size: 2.5rem;
-            color: #9ca3af;
-            margin-bottom: 8px;
-        }
-        
-        .upload-text {
-            color: var(--gray);
-            font-size: 0.85rem;
-            text-align: center;
-            padding: 0 10px;
-        }
-        
-        .image-upload-input {
+        .car-thumbnails {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
         }
         
-        /* زر الإدارة المخفي */
-        .admin-toggle {
-            position: fixed;
-            bottom: 15px;
-            left: 15px;
-            background: var(--primary);
-            color: white;
-            border: none;
+        .thumbnail {
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            object-fit: cover;
+            border-radius: 3px;
+            border: 2px solid white;
             cursor: pointer;
-            z-index: 999;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            opacity: 0.3;
+            opacity: 0.7;
+            transition: opacity 0.3s;
         }
         
-        .admin-toggle:hover {
+        .thumbnail.active {
             opacity: 1;
-            transform: scale(1.1);
+            border-color: #2a5298;
         }
         
-        /* لوحة الإدارة المخفية */
-        .admin-panel {
-            position: fixed;
-            top: 0;
-            right: -350px;
-            width: 320px;
-            height: 100vh;
-            background: white;
-            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
-            z-index: 1001;
-            transition: right 0.3s ease;
-            overflow-y: auto;
-            padding: 1.5rem;
+        .car-details {
+            padding: 20px;
         }
         
-        .admin-panel.active {
-            right: 0;
+        .car-title {
+            font-size: 1.4rem;
+            color: #2a5298;
+            margin-bottom: 15px;
         }
         
-        .admin-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            display: none;
+        .car-specs {
+            list-style: none;
+            margin-bottom: 15px;
         }
         
-        .admin-overlay.active {
-            display: block;
-        }
-        
-        /* تبويبات الإدارة */
-        .admin-tabs {
+        .car-specs li {
+            margin-bottom: 8px;
             display: flex;
-            border-bottom: 2px solid #e5e7eb;
-            margin-bottom: 1.5rem;
+            justify-content: space-between;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 5px;
         }
         
-        .admin-tab {
-            flex: 1;
-            padding: 0.8rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--gray);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-            font-size: 0.9rem;
+        .car-specs strong {
+            color: #555;
         }
         
-        .admin-tab:hover {
-            color: var(--secondary);
-        }
-        
-        .admin-tab.active {
-            color: var(--secondary);
-            border-bottom-color: var(--secondary);
-        }
-        
-        .admin-tab-content {
-            display: none;
-        }
-        
-        .admin-tab-content.active {
-            display: block;
-        }
-        
-        /* نافذة كلمة المرور */
-        .password-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1002;
+        .car-tags {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
         }
         
-        .password-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .password-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            max-width: 350px;
-            width: 90%;
-            text-align: center;
-        }
-        
-        .password-box h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        .password-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 6px;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            text-align: center;
-            letter-spacing: 2px;
-            font-family: monospace;
-        }
-        
-        .password-input:focus {
-            outline: none;
-            border-color: var(--secondary);
-        }
-        
-        .password-error {
-            color: var(--danger);
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            min-height: 18px;
-        }
-        
-        /* تنسيق الجدول في لوحة الإدارة */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-        
-        .admin-table th {
-            background: #f8fafc;
-            padding: 10px;
-            text-align: right;
-            border-bottom: 2px solid #e5e7eb;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .admin-table td {
-            padding: 10px;
-            border-bottom: 1px solid #e5e7eb;
-            vertical-align: middle;
-        }
-        
-        .table-actions {
-            display: flex;
-            gap: 4px;
-        }
-        
-        .table-btn {
+        .tag {
+            background-color: #f0f4ff;
+            color: #2a5298;
             padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
         
-        .table-edit {
-            background: var(--secondary);
-            color: white;
-        }
-        
-        .table-delete {
-            background: var(--danger);
-            color: white;
-        }
-        
-        /* التجاوب - تحسينات للهاتف */
-        @media (max-width: 768px) {
-            .header {
-                padding: 0.6rem 0.8rem;
-            }
-            
-            .header-content {
-                flex-direction: row;
-                justify-content: space-between;
-                gap: 0.5rem;
-            }
-            
-            .logo-text h1 {
-                font-size: 1.1rem;
-            }
-            
-            .logo-text p {
-                font-size: 0.75rem;
-            }
-            
-            .logo-icon {
-                font-size: 1.5rem;
-                min-width: 40px;
-                padding: 5px;
-            }
-            
-            .header-phone {
-                display: none; /* إخفاء الهاتف في الهيدر للهواتف */
-            }
-            
-            .hero {
-                padding: 1.5rem 1rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .hero h2 {
-                font-size: 1.5rem;
-                margin-bottom: 0.6rem;
-            }
-            
-            .hero p {
-                font-size: 0.9rem;
-                margin-bottom: 1.2rem;
-            }
-            
-            .container {
-                padding: 1rem 0.8rem;
-            }
-            
-            .filter-section {
-                padding: 1.2rem;
-            }
-            
-            .filter-grid {
-                grid-template-columns: 1fr;
-                gap: 0.6rem;
-            }
-            
-            .cars-grid {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
-            }
-            
-            .car-card {
-                max-width: 100%;
-            }
-            
-            .car-image-container {
-                height: 160px;
-            }
-            
-            .footer {
-                padding: 1.2rem 0.8rem;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
-            }
-            
-            .footer-section h3 {
-                font-size: 1rem;
-            }
-            
-            .footer-links li {
-                font-size: 0.85rem;
-            }
-            
-            .admin-panel {
-                width: 100%;
-                right: -100%;
-                padding: 1.2rem;
-            }
-            
-            .password-box {
-                padding: 1.5rem;
-                width: 95%;
-            }
-            
-            .add-brand-btn {
-                left: 5px;
-                width: 22px;
-                height: 22px;
-                font-size: 0.9rem;
-            }
-        }
-        
-        /* تحسينات للهواتف الصغيرة جداً */
-        @media (max-width: 480px) {
-            .logo {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-            }
-            
-            .logo-text h1 {
-                font-size: 1rem;
-            }
-            
-            .hero h2 {
-                font-size: 1.3rem;
-            }
-            
-            .car-title {
-                font-size: 1.1rem;
-            }
-            
-            .car-price {
-                font-size: 1.4rem;
-            }
-            
-            .car-actions {
-                flex-direction: column;
-                gap: 6px;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-        
-        /* تحسينات للشاشات الكبيرة */
-        @media (min-width: 1200px) {
-            .cars-grid {
-                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            }
-        }
-        
-        /* تحسينات للشاشات المتوسطة */
-        @media (min-width: 992px) and (max-width: 1199px) {
-            .cars-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-        }
-        
-        /* إظهار الهاتف في الهيدر للشاشات الكبيرة */
-        @media (min-width: 769px) {
-            .mobile-contact-btn {
-                display: none;
-            }
-        }
-        
-        /* زر الاتصال للهواتف */
-        .mobile-contact-btn {
-            position: fixed;
-            bottom: 65px;
-            left: 15px;
-            background: #25D366;
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 998;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        .car-actions {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s;
-            text-decoration: none;
+            gap: 10px;
+            margin-top: 15px;
         }
         
-        .mobile-contact-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        .btn-edit {
+            background-color: #ffc107;
+            color: #333;
+            flex: 1;
+        }
+        
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-delete {
+            background-color: #dc3545;
+            flex: 1;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+        
+        .code-output {
+            margin-top: 30px;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .code-output h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .code-output.active {
+            display: block;
+        }
+        
+        .copy-btn {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+        
+        .copy-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .car-list {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- العلم الجزائري في الخلفية -->
-    <div class="algeria-flag-background"></div>
-    
-    <!-- زر الاتصال للهواتف -->
-    <a href="https://wa.me/213549883720" class="mobile-contact-btn" target="_blank" aria-label="تواصل عبر واتساب">
-        📞
-    </a>
-    
-    <!-- زر الإدارة المخفي -->
-    <button class="admin-toggle" id="adminToggle" title="لوحة الإدارة (مخفي)">⚙️</button>
-    
-    <!-- هيدر الموقع - أصغر -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">🚗</div>
-                <div class="logo-text">
-                    <h1>Khaled Cars Export</h1>
-                    <p>سيارات جديدة ومستعملة من أوروبا و الصين إلى الجزائر</p>
-                </div>
-            </div>
-            
-            <!-- العلم الجزائري في الهيدر -->
-            <div class="algeria-flag">
-                <div class="flag-stripe flag-white"></div>
-                <div class="flag-stripe flag-green"></div>
-                <div class="flag-stripe flag-white"></div>
-                <div class="flag-stripe flag-red"></div>
-                <div class="flag-stripe flag-white"></div>
-                <div class="flag-stripe flag-green"></div>
-                <div class="flag-stripe flag-white"></div>
-                <div class="flag-stripe flag-red"></div>
-            </div>
-            
-            <!-- معلومات الاتصال - للشاشات الكبيرة -->
-            <div class="header-phone">
-                <div class="phone-number">+213549883720</div>
-                <div class="whatsapp-badge">
-                    <span>واتساب</span>
-                </div>
-            </div>
-        </div>
-    </header>
-    
-    <!-- المحتوى الرئيسي -->
-    <main class="container">
-        <!-- نظام الفلترة -->
-        <section class="filter-section" id="filter">
-            <h2 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.3rem;">🔍 البحث في السيارات</h2>
-            
-            <div class="filter-grid">
-                <div class="filter-group">
-                    <label class="filter-label">حالة السيارة</label>
-                    <select class="filter-select" id="filterType">
-                        <option value="">الكل</option>
-                        <option value="new">جديدة</option>
-                        <option value="used">مستعملة</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <label class="filter-label">الماركة</label>
-                    <div class="brand-input-container">
-                        <select class="filter-select" id="filterBrand">
-                            <!-- سيتم ملؤها ديناميكياً -->
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-car"></i> جرد السيارات</h1>
+            <p>أداة لإدارة جرد السيارات مع مستعرض صور وتوليد كود HTML</p>
+        </header>
+        
+        <div class="app-container">
+            <section class="form-section">
+                <h2><i class="fas fa-plus-circle"></i> إضافة سيارة جديدة</h2>
+                <form id="carForm">
+                    <div class="form-group">
+                        <label for="carModel">الموديل (مثال: Renault Clio 5)</label>
+                        <input type="text" id="carModel" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carTrim">الطراز / النسخة (مثال: Équilibre)</label>
+                        <input type="text" id="carTrim">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carYear">سنة الصنع</label>
+                        <input type="number" id="carYear" min="2000" max="2030" value="2024" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carEngine">المحرك (مثال: 1.0 TCE)</label>
+                        <input type="text" id="carEngine" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carPower">القوة (حصان)</label>
+                        <input type="text" id="carPower" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carTransmission">ناقل الحركة</label>
+                        <select id="carTransmission">
+                            <option value="Manual">يدوي</option>
+                            <option value="Automatic">أوتوماتيك</option>
+                            <option value="Semi-Automatic">شبه أوتوماتيك</option>
                         </select>
-                        <button type="button" class="add-brand-btn" id="addBrandBtn">+</button>
                     </div>
-                    <div class="brand-suggestions" id="brandSuggestions">
-                        <!-- سيتم ملؤها ديناميكياً -->
+                    
+                    <div class="form-group">
+                        <label for="carFuel">نوع الوقود</label>
+                        <select id="carFuel">
+                            <option value="Petrol">بنزين</option>
+                            <option value="Diesel">ديزل</option>
+                            <option value="Electric">كهربائي</option>
+                            <option value="Hybrid">هجين</option>
+                        </select>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="carMileage">المسافة المقطوعة (كم)</label>
+                        <input type="text" id="carMileage" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="carFeatures">مميزات إضافية (مثال: Camera: 360)</label>
+                        <textarea id="carFeatures" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>رفع صور السيارة</label>
+                        <div class="image-upload" id="imageUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>انقر لرفع الصور أو اسحبها هنا</p>
+                            <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn"><i class="fas fa-car-side"></i> إضافة السيارة</button>
+                </form>
+                
+                <button class="btn btn-generate" id="generateCodeBtn"><i class="fas fa-code"></i> توليد كود HTML</button>
+            </section>
+            
+            <section class="inventory-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2><i class="fas fa-clipboard-list"></i> المخزون الحالي</h2>
+                    <button class="btn btn-refresh" id="refreshBtn"><i class="fas fa-redo"></i> تحديث</button>
                 </div>
                 
-                <div class="filter-group">
-                    <label class="filter-label">نوع المحرك</label>
-                    <select class="filter-select" id="filterEngine">
-                        <option value="">الكل</option>
-                        <option value="1.0">1.0 لتر</option>
-                        <option value="1.1">1.1 لتر</option>
-                        <option value="1.2">1.2 لتر</option>
-                        <option value="1.3">1.3 لتر</option>
-                        <option value="1.4">1.4 لتر</option>
-                        <option value="1.5">1.5 لتر</option>
-                        <option value="1.6">1.6 لتر</option>
-                        <option value="1.7">1.7 لتر</option>
-                        <option value="1.8">1.8 لتر</option>
-                        <option value="2.0">2.0 لتر</option>
-                        <option value="2.2">2.2 لتر</option>
-                        <option value="2.4">2.4 لتر</option>
-                        <option value="2.5">2.5 لتر</option>
-                        <option value="3.0">3.0 لتر</option>
-                        <option value="3.5">3.5 لتر</option>
-                        <option value="4.0">4.0 لتر+</option>
-                        <option value="other">اكتب نوع المحرك</option>
-                    </select>
+                <div class="car-list" id="carList">
+                    <!-- Cars will be loaded here -->
                 </div>
                 
-                <div class="filter-group">
-                    <label class="filter-label">السعر الأقصى (مليون)</label>
-                    <select class="filter-select" id="filterPrice">
-                        <option value="">اختر من القائمة</option>
-                        <option value="50">حتى 50</option>
-                        <option value="100">حتى 100</option>
-                        <option value="150">حتى 150</option>
-                        <option value="200">حتى 200</option>
-                        <option value="250">حتى 250</option>
-                        <option value="300">حتى 300</option>
-                        <option value="350">حتى 350</option>
-                        <option value="400">حتى 400</option>
-                        <option value="450">حتى 450</option>
-                        <option value="500">حتى 500</option>
-                        <option value="550">حتى 550</option>
-                        <option value="600">حتى 600</option>
-                        <option value="custom">أدخل سعر يدوياً</option>
-                    </select>
+                <div class="code-output" id="codeOutput">
+                    <h3>كود HTML للمخزون</h3>
+                    <pre id="generatedCode"></pre>
+                    <button class="btn copy-btn" id="copyCodeBtn"><i class="far fa-copy"></i> نسخ الكود</button>
                 </div>
-                
-                <!-- حقل السعر اليدوي (مخفي افتراضياً) -->
-                <div class="filter-group" id="customPriceGroup" style="display: none;">
-                    <label class="filter-label">أدخل السعر الأقصى (مليون)</label>
-                    <div class="price-input-group">
-                        <input type="number" class="filter-input price-custom-input" id="customPriceInput" placeholder="مثال: 275" min="0" step="0.1">
-                        <div class="price-unit">مليون</div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="filter-btn" id="applyFilter">
-                🔍 تطبيق البحث
-            </button>
-        </section>
-        
-        <!-- عرض السيارات -->
-        <section>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 style="color: var(--primary); font-size: 1.3rem;">🚗 السيارات المتاحة</h2>
-                <div id="carsCount" style="color: var(--gray); font-weight: 600; font-size: 0.9rem;">جاري التحميل...</div>
-            </div>
-            
-            <div id="carsGrid" class="cars-grid">
-                <!-- سيتم ملؤها ديناميكياً -->
-            </div>
-            
-            <div id="noCarsMessage" class="empty-state" style="display: none;">
-                <div class="empty-state-icon">🚗</div>
-                <h3 style="color: var(--gray); margin-bottom: 0.5rem; font-size: 1.1rem;">لا توجد سيارات متاحة</h3>
-                <p style="color: var(--gray); font-size: 0.9rem;">حاول تغيير معايير البحث للعثور على المزيد من السيارات</p>
-            </div>
-        </section>
-    </main>
-    
-    <!-- الفوتر - أصغر -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Khaled Cars Export</h3>
-                <p style="color: rgba(255, 255, 255, 0.85); margin-bottom: 0.8rem; font-size: 0.9rem;">
-                    متخصصون في استيراد السيارات الجديدة والمستعملة من أوروبا والصين إلى الجزائر
-                </p>
-                <div style="display: flex; gap: 8px; margin-top: 0.8rem;">
-                    <a href="https://wa.me/213549883720" class="filter-btn" style="padding: 6px 12px; font-size: 0.85rem; background: #25D366; text-decoration: none;" target="_blank">
-                        📞 تواصل عبر واتساب
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>معلومات الاتصال</h3>
-                <ul class="footer-links">
-                    <li>
-                        <strong>📍 العنوان:</strong>
-                        <div style="color: rgba(255, 255, 255, 0.85); font-size: 0.9rem;">سكيكدة، الجزائر</div>
-                    </li>
-                    <li>
-                        <strong>📞 الهاتف:</strong>
-                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">0549883720 سكيكدة</div>
-                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">0780325968 سكيكدة</div>
-                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">0659605045 تلمسان</div>
-                    </li>
-                    <li>
-                        <strong>📱 واتساب:</strong>
-                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">+213549883720 سكيكدة</div>
-                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">+213559369237 خالد</div>
-                        <div style="color: rgba(255, 255, 255, 0.85); direction: ltr; text-align: right; font-family: monospace; font-size: 0.9rem;">+33684208705 فرنسا</div>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>خدماتنا</h3>
-                <ul class="footer-links">
-                    <li>✓ سيارات جديدة من أوروبا و الصين</li>
-                    <li>✓ سيارات مستعملة</li>
-                    <li>✓ كل أنواع المحركات</li>
-                    <li>✓ فحص كامل قبل الشحن</li>
-                    <li>✓ وثائق رسمية موثقة</li>
-                    <li>✓ توصيل لجميع الولايات</li>
-                    <li>✓ دعم واستشارة مجانية</li>
-                </ul>
-            </div>
+            </section>
         </div>
         
-        <div class="copyright">
-            © 2025 Khaled Cars Export. جميع الحقوق محفوظة.
-            <div style="margin-top: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6);">
-                تم التطوير بواسطة فريق Khaled Cars Export
-            </div>
-        </div>
-    </footer>
-    
-    <!-- نافذة كلمة المرور -->
-    <div class="password-modal" id="passwordModal">
-        <div class="password-box">
-            <h3>🔒 التحقق من الهوية</h3>
-            <p style="color: var(--gray); margin-bottom: 1rem; font-size: 0.9rem;">أدخل كلمة المرور للوصول إلى لوحة الإدارة</p>
-            <input type="password" class="password-input" id="passwordInput" placeholder="أدخل كلمة المرور">
-            <div class="password-error" id="passwordError"></div>
-            <button class="filter-btn" id="submitPassword" style="width: 100%; padding: 10px;">
-                🔓 دخول
-            </button>
-        </div>
+        <footer>
+            <p>تم إنشاء هذا الموقع لعرض جرد السيارات وتوليد كود HTML للنشر على GitHub</p>
+            <p>جميع الحقوق محفوظة &copy; <span id="currentYear"></span></p>
+        </footer>
     </div>
-    
-    <!-- لوحة الإدارة المخفية -->
-    <div class="admin-overlay" id="adminOverlay"></div>
-    
-    <div class="admin-panel" id="adminPanel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <h2 style="color: var(--primary); font-size: 1.3rem;">⚙️ إدارة السيارات</h2>
-            <button id="closeAdmin" style="background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--gray);">
-                ✕
-            </button>
-        </div>
-        
-        <!-- تبويبات الإدارة -->
-        <div class="admin-tabs">
-            <button class="admin-tab active" data-tab="add">➕ إضافة سيارة</button>
-            <button class="admin-tab" data-tab="manage">📋 إدارة</button>
-            <button class="admin-tab" data-tab="brands">🏷️ ماركات</button>
-        </div>
-        
-        <!-- تبويب إضافة سيارة -->
-        <div id="addTab" class="admin-tab-content active">
-            <form id="carForm" style="margin-bottom: 1.5rem;">
-                <div class="image-upload-container">
-                    <label class="image-upload-label">صورة السيارة</label>
-                    <div class="image-preview" id="imagePreview">
-                        <div class="upload-icon">📷</div>
-                        <div class="upload-text">انقر لرفع صورة السيارة من جهازك</div>
-                        <input type="file" id="imageUpload" class="image-upload-input" accept="image/*">
-                    </div>
-                    <div style="font-size: 0.75rem; color: var(--gray); margin-top: 5px;">
-                        يمكنك رفع صور JPEG, PNG, GIF (الحد الأقصى 5MB)
-                    </div>
-                </div>
-                
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
-                    <div>
-                        <label class="filter-label">* اسم السيارة</label>
-                        <input type="text" class="filter-input" id="carTitle" placeholder="مثال: Mercedes C-Class 2024" required>
-                    </div>
-                    
-                    <div>
-                        <label class="filter-label">* الماركة</label>
-                        <div class="brand-input-container">
-                            <select class="filter-select" id="carBrand" required>
-                                <!-- سيتم ملؤها ديناميكياً -->
-                            </select>
-                            <button type="button" class="add-brand-btn" id="addBrandBtnAdmin">+</button>
-                        </div>
-                        <div class="brand-suggestions" id="brandSuggestionsAdmin">
-                            <!-- سيتم ملؤها ديناميكياً -->
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
-                    <div>
-                        <label class="filter-label">* النوع</label>
-                        <select class="filter-select" id="carType" required>
-                            <option value="">اختر النوع</option>
-                            <option value="new">جديدة</option>
-                            <option value="used">مستعملة</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="filter-label">* نوع المحرك</label>
-                        <div style="display: flex; gap: 5px;">
-                            <select class="filter-select" id="carEngineSelect" required style="flex: 1;">
-                                <option value="">اختر أو اكتب</option>
-                                <option value="1.0">1.0 لتر</option>
-                                <option value="1.1">1.1 لتر</option>
-                                <option value="1.2">1.2 لتر</option>
-                                <option value="1.3">1.3 لتر</option>
-                                <option value="1.4">1.4 لتر</option>
-                                <option value="1.5">1.5 لتر</option>
-                                <option value="1.6">1.6 لتر</option>
-                                <option value="1.7">1.7 لتر</option>
-                                <option value="1.8">1.8 لتر</option>
-                                <option value="2.0">2.0 لتر</option>
-                                <option value="2.2">2.2 لتر</option>
-                                <option value="2.4">2.4 لتر</option>
-                                <option value="2.5">2.5 لتر</option>
-                                <option value="3.0">3.0 لتر</option>
-                                <option value="3.5">3.5 لتر</option>
-                                <option value="4.0">4.0 لتر+</option>
-                                <option value="custom">اكتب نوع المحرك</option>
-                            </select>
-                            <input type="text" class="filter-input" id="carEngineCustom" placeholder="اكتب نوع المحرك" style="flex: 1; display: none;">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
-                    <div>
-                        <label class="filter-label">* السعر (مليون)</label>
-                        <input type="number" class="filter-input" id="carPrice" step="0.1" placeholder="مثال: 18.5" required>
-                    </div>
-                    
-                    <div>
-                        <label class="filter-label">* سنة الصنع</label>
-                        <input type="number" class="filter-input" id="carYear" min="2010" max="2024" value="2023" required>
-                    </div>
-                </div>
-                
-                <div class="filter-grid" style="grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 0.8rem;">
-                    <div>
-                        <label class="filter-label">* الوقود</label>
-                        <select class="filter-select" id="carFuel" required>
-                            <option value="gasoline">بنزين</option>
-                            <option value="diesel">ديزل</option>
-                            <option value="electric">كهربائي</option>
-                            <option value="hybrid">هايبرد</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="filter-label">* ناقل الحركة</label>
-                        <select class="filter-select" id="carTransmission" required>
-                            <option value="automatic">اوتوماتيك</option>
-                            <option value="manual">يدوي</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 0.8rem;">
-                    <label class="filter-label">المسافة المقطوعة (كم)</label>
-                    <input type="number" class="filter-input" id="carMileage" placeholder="مثال: 15000">
-                </div>
-                
-                <div style="margin-bottom: 0.8rem;">
-                    <label class="filter-label">المواصفات (افصل بينها بفواصل)</label>
-                    <textarea class="filter-input" id="carFeatures" rows="2" placeholder="مثال: مكيف, كاميرا خلفية, جلد طبيعي, شاشة لمس"></textarea>
-                </div>
-                
-                <div style="margin-bottom: 1.5rem;">
-                    <label class="filter-label">وصف السيارة</label>
-                    <textarea class="filter-input" id="carDescription" rows="3" placeholder="وصف تفصيلي للسيارة..."></textarea>
-                </div>
-                
-                <div style="display: flex; gap: 0.8rem;">
-                    <button type="submit" class="filter-btn" style="flex: 1; padding: 10px;">
-                        💾 حفظ السيارة
-                    </button>
-                    <button type="button" class="filter-btn" onclick="clearCarForm()" style="background: var(--gray); flex: 1; padding: 10px;">
-                        🗑️ مسح النموذج
-                    </button>
-                </div>
-            </form>
-        </div>
-        
-        <!-- تبويب إدارة السيارات -->
-        <div id="manageTab" class="admin-tab-content">
-            <div id="adminCarsList">
-                <p style="text-align: center; color: var(--gray); padding: 1.5rem; font-size: 0.9rem;">
-                    جاري تحميل قائمة السيارات...
-                </p>
-            </div>
-        </div>
-        
-        <!-- تبويب إدارة الماركات -->
-        <div id="brandsTab" class="admin-tab-content">
-            <div style="margin-bottom: 1.5rem;">
-                <h3 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;">🏷️ إدارة الماركات</h3>
-                <p style="color: var(--gray); margin-bottom: 1rem; font-size: 0.9rem;">يمكنك إضافة، تعديل، أو حذف الماركات المحفوظة</p>
-                
-                <div style="display: flex; gap: 8px; margin-bottom: 1rem;">
-                    <input type="text" class="filter-input" id="newBrandName" placeholder="أدخل اسم ماركة جديدة">
-                    <button class="filter-btn" onclick="addNewBrand()" style="white-space: nowrap; padding: 10px;">
-                        ➕ إضافة ماركة
-                    </button>
-                </div>
-            </div>
-            
-            <div id="brandsList">
-                <p style="text-align: center; color: var(--gray); padding: 1.5rem; font-size: 0.9rem;">
-                    جاري تحميل قائمة الماركات...
-                </p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- منطقة التنبيهات -->
-    <div id="alertArea"></div>
 
-    <!-- التطبيق الرئيسي -->
     <script>
-        // ==================== تهيئة التطبيق ====================
-        
-        // كلمة المرور
-        const ADMIN_PASSWORD = "SS2305khaledcars@76exportss";
-        
-        // الماركات الأساسية
-        const defaultBrands = [
-            "مرسيدس",
-            "بي إم دبليو",
-            "أودي",
-            "فولكس فاجن",
-            "رينو",
-            "بيجو",
-            "تويوتا",
-            "هيونداي",
-            "فورد",
-            "شيفروليه"
-        ];
-        
-        // بيانات السيارات (جديدة ومستعملة)
-        const defaultCars = [
+        // Sample initial cars data
+        const initialCars = [
             {
-                id: "1",
-                title: "Renault Clio 5 Equilibre",
-                brand: "رينو",
-                type: "used",
-                engine: "1.0 لتر",
-                price: 313,
+                id: 1,
+                model: "Renault Clio 5",
+                trim: "Équilibre",
                 year: 2023,
-                fuel: "gasoline",
-                transmission: "يدوي",
-                mileage: 24245,
-                image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                features: "السعر لا يشمل مصاريف الجمركة",
-                description: ""
+                engine: "1.0 TCE",
+                power: "90 ch",
+                transmission: "Manual",
+                fuel: "Petrol",
+                mileage: "50.0 km",
+                features: "",
+                images: ["https://images.unsplash.com/photo-1593941707882-a5bba5338fe2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"]
             },
-
-{
-                id: "2",
-                title: "Citroen C3 You",
-                brand: "سيتروان",
-                type: "used",
-                engine: "1.2 لتر",
-                price: 309,
+            {
+                id: 2,
+                model: "Citroen C3",
+                trim: "",
+                year: 2023,
+                engine: "1.2 puretech",
+                power: "100 ch",
+                transmission: "Manual",
+                fuel: "Petrol",
+                mileage: "8.5 km",
+                features: "",
+                images: ["https://images.unsplash.com/photo-1599393166885-8dcc2ad46d92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"]
+            },
+            {
+                id: 3,
+                model: "Opel Corsa",
+                trim: "Phase 2",
                 year: 2024,
-                fuel: "gasoline",
-                transmission: "يدوي",
-                mileage: 13000,
-                image: "https://i.ibb.co/HfCpg1Zm/photo-4.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                features: "السعر لا يشمل مصاريف الجمركة",
-                description: ""
+                engine: "1.2",
+                power: "100 ch",
+                transmission: "Manual",
+                fuel: "Petrol",
+                mileage: "19.5 km",
+                features: "Camera: 360",
+                images: [
+                    "https://images.unsplash.com/photo-1609521263045-881f6e480ca2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://images.unsplash.com/photo-1609521263045-881f6e480ca2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                ]
+            },
+            {
+                id: 4,
+                model: "Peugeot 208",
+                trim: "Équilibre",
+                year: 2024,
+                engine: "1.2 PureTech",
+                power: "75 ch",
+                transmission: "Manual",
+                fuel: "Petrol",
+                mileage: "17.5 km",
+                features: "",
+                images: ["https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"]
             }
-
-
         ];
-        
-        let cars = [];
-        let brands = [];
-        let editMode = false;
-        let currentEditId = null;
-        let uploadedImage = null;
-        let isAdminAuthenticated = false;
-        
-        // ==================== دوال التطبيق ====================
-        
-        // تهيئة التطبيق
-        function initApp() {
-            console.log("🚗 جاري تهيئة تطبيق Khaled Cars Export...");
-            
-            // تحميل البيانات من التخزين المحلي
-            loadCarsFromStorage();
-            loadBrandsFromStorage();
-            
-            // إعداد الأحداث
-            setupEventListeners();
-            
-            // تحديث قوائم الماركات
-            updateBrandsLists();
-            
-            // عرض السيارات
+
+        let cars = JSON.parse(localStorage.getItem('carInventory')) || initialCars;
+        let imageFiles = [];
+        let nextCarId = cars.length > 0 ? Math.max(...cars.map(car => car.id)) + 1 : 5;
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
             displayCars();
+            setupEventListeners();
+        });
+
+        // Display all cars in the inventory
+        function displayCars() {
+            const carList = document.getElementById('carList');
+            carList.innerHTML = '';
             
-            console.log("✅ التطبيق جاهز!");
-            console.log(`📊 عدد السيارات: ${cars.length}`);
-            console.log(`🏷️ عدد الماركات: ${brands.length}`);
-            showAlert("مرحباً بك في Khaled Cars Export", "info");
-        }
-        
-        // تحميل السيارات من التخزين المحلي
-        function loadCarsFromStorage() {
-            try {
-                const savedCars = localStorage.getItem('khaledCarsExport');
-                if (savedCars) {
-                    const parsedCars = JSON.parse(savedCars);
-                    if (Array.isArray(parsedCars) && parsedCars.length > 0) {
-                        cars = parsedCars;
-                        console.log(`📁 تم تحميل ${cars.length} سيارة من التخزين المحلي`);
-                        return;
-                    }
-                }
-                
-                // إذا لم تكن هناك بيانات أو كانت فارغة، نستخدم البيانات الافتراضية
-                console.log("📁 لا توجد بيانات مخزنة، جاري استخدام البيانات الافتراضية...");
-                cars = [...defaultCars];
-                saveCarsToStorage();
-                console.log("📁 تم إنشاء بيانات السيارات الافتراضية");
-                
-            } catch (error) {
-                console.error("❌ خطأ في تحميل السيارات:", error);
-                cars = [...defaultCars];
-                saveCarsToStorage();
-            }
-        }
-        
-        // تحميل الماركات من التخزين المحلي
-        function loadBrandsFromStorage() {
-            try {
-                const savedBrands = localStorage.getItem('khaledBrandsExport');
-                if (savedBrands) {
-                    const parsedBrands = JSON.parse(savedBrands);
-                    if (Array.isArray(parsedBrands) && parsedBrands.length > 0) {
-                        brands = parsedBrands;
-                        console.log(`🏷️ تم تحميل ${brands.length} ماركة من التخزين المحلي`);
-                        return;
-                    }
-                }
-                
-                // إذا لم تكن هناك بيانات أو كانت فارغة، نستخدم البيانات الافتراضية
-                console.log("🏷️ لا توجد ماركات مخزنة، جاري استخدام الماركات الافتراضية...");
-                brands = [...defaultBrands];
-                saveBrandsToStorage();
-                console.log("🏷️ تم إنشاء الماركات الافتراضية");
-                
-            } catch (error) {
-                console.error("❌ خطأ في تحميل الماركات:", error);
-                brands = [...defaultBrands];
-                saveBrandsToStorage();
-            }
-        }
-        
-        // حفظ السيارات في التخزين المحلي
-        function saveCarsToStorage() {
-            try {
-                localStorage.setItem('khaledCarsExport', JSON.stringify(cars));
-                console.log(`💾 تم حفظ ${cars.length} سيارة`);
-                return true;
-            } catch (error) {
-                console.error("❌ خطأ في حفظ السيارات:", error);
-                showAlert("خطأ في حفظ بيانات السيارات", "error");
-                return false;
-            }
-        }
-        
-        // حفظ الماركات في التخزين المحلي
-        function saveBrandsToStorage() {
-            try {
-                localStorage.setItem('khaledBrandsExport', JSON.stringify(brands));
-                console.log(`💾 تم حفظ ${brands.length} ماركة`);
-                return true;
-            } catch (error) {
-                console.error("❌ خطأ في حفظ الماركات:", error);
-                showAlert("خطأ في حفظ بيانات الماركات", "error");
-                return false;
-            }
-        }
-        
-        // تحديث قوائم الماركات في كل مكان
-        function updateBrandsLists() {
-            // تحديث قائمة الفلتر الرئيسية
-            const filterBrandSelect = document.getElementById('filterBrand');
-            if (filterBrandSelect) {
-                filterBrandSelect.innerHTML = '<option value="">الكل</option>' + 
-                    brands.map(brand => `<option value="${brand}">${brand}</option>`).join('');
+            if (cars.length === 0) {
+                carList.innerHTML = '<p style="text-align: center; padding: 30px; color: #666;">لا توجد سيارات في المخزون. أضف سيارة جديدة!</p>';
+                return;
             }
             
-            // تحديث قائمة الإدارة
-            const adminBrandSelect = document.getElementById('carBrand');
-            if (adminBrandSelect) {
-                adminBrandSelect.innerHTML = '<option value="">اختر الماركة</option>' + 
-                    brands.map(brand => `<option value="${brand}">${brand}</option>`).join('');
-            }
-        }
-        
-        // إعداد الأحداث
-        function setupEventListeners() {
-            // فلترة السيارات
-            const applyFilterBtn = document.getElementById('applyFilter');
-            if (applyFilterBtn) applyFilterBtn.addEventListener('click', filterCars);
-            
-            // إدارة النموذج
-            const carForm = document.getElementById('carForm');
-            if (carForm) carForm.addEventListener('submit', handleCarFormSubmit);
-            
-            // رفع الصور
-            const imageUpload = document.getElementById('imageUpload');
-            if (imageUpload) {
-                imageUpload.addEventListener('change', handleImageUpload);
-            }
-            
-            // زر الإدارة المخفي - يطلب كلمة المرور
-            const adminToggle = document.getElementById('adminToggle');
-            if (adminToggle) adminToggle.addEventListener('click', showPasswordModal);
-            
-            // إغلاق لوحة الإدارة
-            const closeAdmin = document.getElementById('closeAdmin');
-            if (closeAdmin) closeAdmin.addEventListener('click', closeAdminPanel);
-            
-            const adminOverlay = document.getElementById('adminOverlay');
-            if (adminOverlay) adminOverlay.addEventListener('click', closeAdminPanel);
-            
-            // تبويبات الإدارة
-            document.querySelectorAll('.admin-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    switchAdminTab(tabId);
-                });
+            cars.forEach(car => {
+                const carCard = createCarCard(car);
+                carList.appendChild(carCard);
             });
-            
-            // كلمة المرور
-            const submitPassword = document.getElementById('submitPassword');
-            if (submitPassword) submitPassword.addEventListener('click', checkPassword);
-            
-            const passwordInput = document.getElementById('passwordInput');
-            if (passwordInput) {
-                passwordInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        checkPassword();
-                    }
-                });
-            }
-            
-            // نوع المحرك المخصص
-            const engineSelect = document.getElementById('carEngineSelect');
-            if (engineSelect) {
-                engineSelect.addEventListener('change', function() {
-                    const customInput = document.getElementById('carEngineCustom');
-                    if (this.value === 'custom') {
-                        customInput.style.display = 'block';
-                        customInput.required = true;
-                    } else {
-                        customInput.style.display = 'none';
-                        customInput.required = false;
-                        customInput.value = '';
-                    }
-                });
-            }
-            
-            // إضافة ماركة جديدة - الفلتر الرئيسي
-            const addBrandBtn = document.getElementById('addBrandBtn');
-            if (addBrandBtn) {
-                addBrandBtn.addEventListener('click', function() {
-                    showAddBrandModal('main');
-                });
-            }
-            
-            // إضافة ماركة جديدة - لوحة الإدارة
-            const addBrandBtnAdmin = document.getElementById('addBrandBtnAdmin');
-            if (addBrandBtnAdmin) {
-                addBrandBtnAdmin.addEventListener('click', function() {
-                    showAddBrandModal('admin');
-                });
-            }
-            
-            // البحث في الماركات - الفلتر الرئيسي
-            const filterBrand = document.getElementById('filterBrand');
-            if (filterBrand) {
-                filterBrand.addEventListener('input', function() {
-                    showBrandSuggestions(this.value, 'main');
-                });
-            }
-            
-            // البحث في الماركات - لوحة الإدارة
-            const carBrand = document.getElementById('carBrand');
-            if (carBrand) {
-                carBrand.addEventListener('input', function() {
-                    showBrandSuggestions(this.value, 'admin');
-                });
-            }
-            
-            // السعر اليدوي - إظهار/إخفاء حقل الإدخال
-            const priceSelect = document.getElementById('filterPrice');
-            if (priceSelect) {
-                priceSelect.addEventListener('change', function() {
-                    const customPriceGroup = document.getElementById('customPriceGroup');
-                    const customPriceInput = document.getElementById('customPriceInput');
-                    
-                    if (this.value === 'custom') {
-                        customPriceGroup.style.display = 'block';
-                        if (customPriceInput) customPriceInput.focus();
-                    } else {
-                        customPriceGroup.style.display = 'none';
-                        if (customPriceInput) customPriceInput.value = '';
-                    }
-                });
-            }
         }
-        
-        // عرض نافذة كلمة المرور
-        function showPasswordModal() {
-            const modal = document.getElementById('passwordModal');
-            const passwordInput = document.getElementById('passwordInput');
-            const passwordError = document.getElementById('passwordError');
+
+        // Create HTML for a car card
+        function createCarCard(car) {
+            const carCard = document.createElement('div');
+            carCard.className = 'car-card';
+            carCard.dataset.id = car.id;
             
-            if (modal) modal.classList.add('active');
-            if (passwordInput) {
-                passwordInput.focus();
-                passwordInput.value = '';
-            }
-            if (passwordError) passwordError.textContent = '';
-        }
-        
-        // التحقق من كلمة المرور
-        function checkPassword() {
-            const passwordInput = document.getElementById('passwordInput');
-            const passwordError = document.getElementById('passwordError');
-            const enteredPassword = passwordInput ? passwordInput.value.trim() : '';
-            
-            if (enteredPassword === ADMIN_PASSWORD) {
-                isAdminAuthenticated = true;
-                const modal = document.getElementById('passwordModal');
-                if (modal) modal.classList.remove('active');
-                if (passwordInput) passwordInput.value = '';
-                toggleAdminPanel();
-                showAlert("تم التحقق من الهوية بنجاح ✓", "success");
-            } else {
-                if (passwordError) passwordError.textContent = "كلمة المرور غير صحيحة";
-                if (passwordInput) {
-                    passwordInput.focus();
-                    passwordInput.select();
-                }
-            }
-        }
-        
-        // عرض اقتراحات الماركات
-        function showBrandSuggestions(searchTerm, type) {
-            const suggestionsId = type === 'main' ? 'brandSuggestions' : 'brandSuggestionsAdmin';
-            const suggestionsContainer = document.getElementById(suggestionsId);
-            
-            if (!suggestionsContainer || !searchTerm.trim()) {
-                if (suggestionsContainer) suggestionsContainer.style.display = 'none';
-                return;
-            }
-            
-            const filteredBrands = brands.filter(brand => 
-                brand.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            
-            if (filteredBrands.length === 0) {
-                suggestionsContainer.innerHTML = `
-                    <div class="brand-suggestion" onclick="addBrandFromSuggestion('${searchTerm}', '${type}')">
-                        ➕ إضافة "${searchTerm}" كماركة جديدة
+            // Create thumbnails if multiple images exist
+            let thumbnailsHTML = '';
+            if (car.images && car.images.length > 1) {
+                thumbnailsHTML = `
+                    <div class="car-thumbnails">
+                        ${car.images.map((img, index) => `
+                            <img src="${img}" class="thumbnail ${index === 0 ? 'active' : ''}" 
+                                 data-index="${index}" alt="صورة ${index + 1}">
+                        `).join('')}
                     </div>
                 `;
-            } else {
-                suggestionsContainer.innerHTML = filteredBrands.map(brand => `
-                    <div class="brand-suggestion" onclick="selectBrand('${brand}', '${type}')">
-                        ${brand}
+            }
+            
+            carCard.innerHTML = `
+                <div class="car-images">
+                    <img src="${car.images[0]}" class="car-main-image" alt="${car.model}">
+                    ${thumbnailsHTML}
+                </div>
+                <div class="car-details">
+                    <h3 class="car-title">${car.model} ${car.trim ? `<span style="font-size: 0.9rem; color: #777;">(${car.trim})</span>` : ''}</h3>
+                    <ul class="car-specs">
+                        ${car.trim ? `<li><strong>الطراز</strong> <span>${car.trim}</span></li>` : ''}
+                        <li><strong>السنة</strong> <span>${car.year}</span></li>
+                        <li><strong>المحرك</strong> <span>${car.engine}</span></li>
+                        <li><strong>القوة</strong> <span>${car.power}</span></li>
+                    </ul>
+                    <div class="car-tags">
+                        <span class="tag">${car.transmission}</span>
+                        <span class="tag">${car.fuel}</span>
+                        <span class="tag">${car.mileage}</span>
                     </div>
-                `).join('');
-            }
-            
-            suggestionsContainer.style.display = 'block';
-        }
-        
-        // إضافة ماركة من الاقتراحات
-        function addBrandFromSuggestion(brandName, type) {
-            const trimmedBrand = brandName.trim();
-            if (!trimmedBrand) return;
-            
-            if (!brands.includes(trimmedBrand)) {
-                brands.push(trimmedBrand);
-                saveBrandsToStorage();
-                updateBrandsLists();
-                showAlert(`تم إضافة الماركة "${trimmedBrand}" بنجاح ✓`, "success");
-            }
-            
-            selectBrand(trimmedBrand, type);
-        }
-        
-        // اختيار ماركة من القائمة
-        function selectBrand(brandName, type) {
-            const selectId = type === 'main' ? 'filterBrand' : 'carBrand';
-            const selectElement = document.getElementById(selectId);
-            
-            if (selectElement) {
-                // التحقق إذا كانت الماركة موجودة في القائمة
-                let found = false;
-                for (let i = 0; i < selectElement.options.length; i++) {
-                    if (selectElement.options[i].value === brandName) {
-                        selectElement.value = brandName;
-                        found = true;
-                        break;
-                    }
-                }
-                
-                // إذا لم توجد الماركة، إضافتها
-                if (!found) {
-                    const option = document.createElement('option');
-                    option.value = brandName;
-                    option.textContent = brandName;
-                    selectElement.appendChild(option);
-                    selectElement.value = brandName;
-                }
-            }
-            
-            // إخفاء الاقتراحات
-            const suggestionsId = type === 'main' ? 'brandSuggestions' : 'brandSuggestionsAdmin';
-            const suggestionsContainer = document.getElementById(suggestionsId);
-            if (suggestionsContainer) suggestionsContainer.style.display = 'none';
-        }
-        
-        // إضافة ماركة جديدة
-        function addNewBrand() {
-            const newBrandInput = document.getElementById('newBrandName');
-            const brandName = newBrandInput ? newBrandInput.value.trim() : '';
-            
-            if (!brandName) {
-                showAlert("يرجى إدخال اسم الماركة", "error");
-                return;
-            }
-            
-            if (brands.includes(brandName)) {
-                showAlert("هذه الماركة موجودة بالفعل", "info");
-                return;
-            }
-            
-            brands.push(brandName);
-            saveBrandsToStorage();
-            updateBrandsLists();
-            loadBrandsList();
-            
-            if (newBrandInput) newBrandInput.value = '';
-            showAlert(`تم إضافة الماركة "${brandName}" بنجاح ✓`, "success");
-        }
-        
-        // عرض نافذة إضافة ماركة
-        function showAddBrandModal(type) {
-            const brandName = prompt("أدخل اسم الماركة الجديدة:");
-            if (!brandName || !brandName.trim()) return;
-            
-            const trimmedBrand = brandName.trim();
-            
-            if (brands.includes(trimmedBrand)) {
-                showAlert("هذه الماركة موجودة بالفعل", "info");
-                return;
-            }
-            
-            brands.push(trimmedBrand);
-            saveBrandsToStorage();
-            updateBrandsLists();
-            
-            // تحديد الماركة المضافة
-            selectBrand(trimmedBrand, type);
-            
-            showAlert(`تم إضافة الماركة "${trimmedBrand}" بنجاح ✓`, "success");
-        }
-        
-        // تحميل قائمة الماركات للإدارة
-        function loadBrandsList() {
-            const container = document.getElementById('brandsList');
-            if (!container) return;
-            
-            if (brands.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 1.5rem; color: var(--gray); font-size: 0.9rem;">
-                        لا توجد ماركات مسجلة
+                    ${car.features ? `<p><strong>مميزات إضافية:</strong> ${car.features}</p>` : ''}
+                    <div class="car-actions">
+                        <button class="btn btn-edit edit-car" data-id="${car.id}"><i class="fas fa-edit"></i> تعديل</button>
+                        <button class="btn btn-delete delete-car" data-id="${car.id}"><i class="fas fa-trash"></i> حذف</button>
                     </div>
-                `;
-                return;
-            }
-            
-            let html = `
-                <div style="overflow-x: auto;">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>اسم الماركة</th>
-                                <th>عدد السيارات</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                </div>
             `;
             
-            brands.forEach((brand, index) => {
-                const carsCount = cars.filter(car => car.brand === brand).length;
-                
-                html += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>
-                            <strong>${brand}</strong>
-                        </td>
-                        <td>
-                            <span style="background: ${carsCount > 0 ? '#d1fae5' : '#f3f4f6'}; 
-                                    color: ${carsCount > 0 ? '#065f46' : '#6b7280'}; 
-                                    padding: 4px 10px; 
-                                    border-radius: 15px;
-                                    font-size: 0.8rem;">
-                                ${carsCount} سيارة
-                            </span>
-                        </td>
-                        <td>
-                            <div class="table-actions">
-                                <button class="table-btn table-edit" onclick="editBrand(${index})">
-                                    ✏️ تعديل
-                                </button>
-                                <button class="table-btn table-delete" onclick="deleteBrand(${index})" ${carsCount > 0 ? 'disabled style="opacity: 0.5;"' : ''}>
-                                    🗑️ حذف
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+            // Add event listeners for thumbnails
+            const thumbnails = carCard.querySelectorAll('.thumbnail');
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    const index = this.dataset.index;
+                    const mainImage = carCard.querySelector('.car-main-image');
+                    mainImage.src = car.images[index];
+                    
+                    // Update active thumbnail
+                    carCard.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
             });
             
-            html += `
-                </tbody>
-            </table>
-            <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
-                العدد الإجمالي: ${brands.length} ماركة
-            </div>
-        </div>
-    `;
-    
-    container.innerHTML = html;
-}
-
-// تعديل ماركة
-function editBrand(index) {
-    const oldBrandName = brands[index];
-    const newBrandName = prompt("أدخل الاسم الجديد للماركة:", oldBrandName);
-    
-    if (!newBrandName || !newBrandName.trim() || newBrandName === oldBrandName) return;
-    
-    const trimmedBrand = newBrandName.trim();
-    
-    if (brands.includes(trimmedBrand) && brands.indexOf(trimmedBrand) !== index) {
-        showAlert("هذه الماركة موجودة بالفعل", "error");
-        return;
-    }
-    
-    // تحديث جميع السيارات التي تستخدم هذه الماركة
-    cars.forEach(car => {
-        if (car.brand === oldBrandName) {
-            car.brand = trimmedBrand;
+            return carCard;
         }
-    });
-    
-    // تحديث الماركة في القائمة
-    brands[index] = trimmedBrand;
-    
-    // حفظ التغييرات
-    saveCarsToStorage();
-    saveBrandsToStorage();
-    updateBrandsLists();
-    loadBrandsList();
-    
-    showAlert(`تم تحديث الماركة من "${oldBrandName}" إلى "${trimmedBrand}" بنجاح ✓`, "success");
-}
 
-// حذف ماركة
-function deleteBrand(index) {
-    const brandName = brands[index];
-    const carsCount = cars.filter(car => car.brand === brandName).length;
-    
-    if (carsCount > 0) {
-        showAlert(`لا يمكن حذف الماركة "${brandName}" لأنها مستخدمة في ${carsCount} سيارة`, "error");
-        return;
-    }
-    
-    if (!confirm(`هل أنت متأكد من حذف الماركة "${brandName}"؟`)) {
-        return;
-    }
-    
-    brands.splice(index, 1);
-    saveBrandsToStorage();
-    updateBrandsLists();
-    loadBrandsList();
-    
-    showAlert(`تم حذف الماركة "${brandName}" بنجاح ✓`, "success");
-}
-
-// عرض السيارات
-function displayCars(filteredCars = null) {
-    const carsToShow = filteredCars || cars;
-    const carsGrid = document.getElementById('carsGrid');
-    const noCarsMessage = document.getElementById('noCarsMessage');
-    const carsCount = document.getElementById('carsCount');
-    
-    if (!carsGrid || !carsCount) return;
-    
-    // تحديث العداد
-    carsCount.textContent = `${carsToShow.length} سيارة`;
-    
-    if (carsToShow.length === 0) {
-        carsGrid.innerHTML = '';
-        if (noCarsMessage) noCarsMessage.style.display = 'block';
-        return;
-    }
-    
-    if (noCarsMessage) noCarsMessage.style.display = 'none';
-    
-    // إنشاء بطاقات السيارات
-    let carsHTML = '';
-    
-    carsToShow.forEach(car => {
-        const fuelName = getFuelName(car.fuel);
-        const transmissionName = getTransmissionName(car.transmission);
-        const features = car.features ? car.features.split(',').slice(0, 3) : [];
-        
-        carsHTML += `
-            <div class="car-card">
-                <div class="car-image-container">
-                    <img src="${car.image}" alt="${car.title}" class="car-image" onerror="this.src='https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-                    <div class="car-badge ${car.type === 'new' ? '' : 'used'}">
-                        ${car.type === 'new' ? 'جديد' : 'مستعمل'}
-                    </div>
-                </div>
+        // Setup event listeners
+        function setupEventListeners() {
+            // Form submission
+            document.getElementById('carForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addCar();
+            });
+            
+            // Image upload
+            document.getElementById('imageUpload').addEventListener('click', function() {
+                document.getElementById('fileInput').click();
+            });
+            
+            document.getElementById('fileInput').addEventListener('change', function(e) {
+                handleImageUpload(e.target.files);
+            });
+            
+            // Drag and drop for images
+            const uploadArea = document.getElementById('imageUpload');
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#2a5298';
+                uploadArea.style.backgroundColor = '#f0f4ff';
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.style.borderColor = '#ccc';
+                uploadArea.style.backgroundColor = '';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ccc';
+                uploadArea.style.backgroundColor = '';
                 
-                <div class="car-info">
-                    <h3 class="car-title">${car.title}</h3>
-                    
-                    <div class="car-specs">
-                        <span class="car-spec-item">
-                            <span>🏷️</span> ${car.brand}
-                        </span>
-                        <span class="car-spec-item">
-                            <span>📅</span> ${car.year}
-                        </span>
-                        <span class="car-spec-item">
-                            <span>⚙️</span> ${car.engine}
-                        </span>
-                        <span class="car-spec-item">
-                            <span>⛽</span> ${fuelName}
-                        </span>
-                        <span class="car-spec-item">
-                            <span>🔧</span> ${transmissionName}
-                        </span>
-                    </div>
-                    
-                    <div class="car-price">
-                        ${car.price.toFixed(1)}
-                        <span class="car-price-unit">مليون</span>
-                    </div>
-                    
-                    ${car.mileage ? `
-                        <div class="car-specs">
-                            <span class="car-spec-item">
-                                <span>🛣️</span> ${car.mileage.toLocaleString('ar-DZ')} كم
-                            </span>
-                        </div>
-                    ` : ''}
-                    
-                    ${features.length > 0 ? `
-                        <div class="car-features">
-                            ${features.map(feature => `
-                                <span class="feature-tag">${feature.trim()}</span>
-                            `).join('')}
-                        </div>
-                    ` : ''}
-                    
-                    <div class="car-actions">
-                        <button class="btn btn-details" onclick="showCarDetails('${car.id}')">
-                            <span>📋</span> التفاصيل
-                        </button>
-                        <a href="https://wa.me/213549883720?text=${encodeURIComponent(`أهلاً، أنا مهتم بالسيارة: ${car.title} (${car.price.toFixed(1)} مليون)`)}" 
-                           class="btn btn-whatsapp" target="_blank">
-                            <span>📞</span> واتساب
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-    
-    carsGrid.innerHTML = carsHTML;
-}
-
-// فلترة السيارات
-function filterCars() {
-    const typeFilter = document.getElementById('filterType') ? document.getElementById('filterType').value : '';
-    const brandFilter = document.getElementById('filterBrand') ? document.getElementById('filterBrand').value : '';
-    const engineFilter = document.getElementById('filterEngine') ? document.getElementById('filterEngine').value : '';
-    const priceSelect = document.getElementById('filterPrice') ? document.getElementById('filterPrice').value : '';
-    const customPriceInput = document.getElementById('customPriceInput');
-    
-    let priceFilter = null;
-    
-    // تحديد قيمة السعر بناءً على الاختيار
-    if (priceSelect === 'custom' && customPriceInput && customPriceInput.value) {
-        priceFilter = parseFloat(customPriceInput.value);
-    } else if (priceSelect && priceSelect !== '') {
-        priceFilter = parseFloat(priceSelect);
-    }
-    
-    const filteredCars = cars.filter(car => {
-        if (typeFilter && car.type !== typeFilter) return false;
-        if (brandFilter && car.brand !== brandFilter) return false;
-        if (engineFilter && engineFilter !== 'other' && !car.engine.includes(engineFilter)) return false;
-        if (priceFilter !== null && car.price > priceFilter) return false;
-        return true;
-    });
-    
-    displayCars(filteredCars);
-    
-    if (filteredCars.length === 0 && (typeFilter || brandFilter || engineFilter || priceFilter !== null)) {
-        showAlert("لا توجد سيارات تطابق معايير البحث", "info");
-    }
-}
-
-// معالجة رفع الصورة
-function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    
-    // التحقق من نوع الملف
-    if (!file.type.startsWith('image/')) {
-        showAlert("يرجى اختيار ملف صورة فقط (JPEG, PNG, GIF)", "error");
-        return;
-    }
-    
-    // التحقق من حجم الملف (5MB كحد أقصى)
-    if (file.size > 5 * 1024 * 1024) {
-        showAlert("حجم الصورة كبير جداً (الحد الأقصى 5MB)", "error");
-        return;
-    }
-    
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const preview = document.getElementById('imagePreview');
-        if (preview) {
-            preview.innerHTML = `<img src="${e.target.result}" alt="معاينة الصورة">`;
+                if (e.dataTransfer.files.length) {
+                    handleImageUpload(e.dataTransfer.files);
+                }
+            });
+            
+            // Generate HTML code
+            document.getElementById('generateCodeBtn').addEventListener('click', generateHTMLCode);
+            
+            // Copy code to clipboard
+            document.getElementById('copyCodeBtn').addEventListener('click', copyCodeToClipboard);
+            
+            // Refresh button
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                displayCars();
+                document.getElementById('codeOutput').classList.remove('active');
+            });
+            
+            // Event delegation for edit and delete buttons
+            document.getElementById('carList').addEventListener('click', function(e) {
+                if (e.target.closest('.edit-car')) {
+                    const carId = parseInt(e.target.closest('.edit-car').dataset.id);
+                    editCar(carId);
+                }
+                
+                if (e.target.closest('.delete-car')) {
+                    const carId = parseInt(e.target.closest('.delete-car').dataset.id);
+                    deleteCar(carId);
+                }
+            });
         }
-        uploadedImage = e.target.result;
-        showAlert("تم تحميل الصورة بنجاح ✓", "success");
-    };
-    
-    reader.onerror = function() {
-        showAlert("حدث خطأ في تحميل الصورة", "error");
-    };
-    
-    reader.readAsDataURL(file);
-}
 
-// معالجة نموذج السيارة
-function handleCarFormSubmit(event) {
-    event.preventDefault();
-    
-    // التحقق من كلمة المرور أولاً
-    if (!isAdminAuthenticated) {
-        showAlert("يجب التحقق من الهوية أولاً", "error");
-        showPasswordModal();
-        return;
-    }
-    
-    // جمع البيانات
-    const engineSelect = document.getElementById('carEngineSelect');
-    const engineCustom = document.getElementById('carEngineCustom');
-    const engineValue = engineSelect && engineSelect.value === 'custom' ? 
-        (engineCustom ? engineCustom.value.trim() : 'غير محدد') : 
-        (engineSelect && engineSelect.options[engineSelect.selectedIndex] ? 
-            engineSelect.options[engineSelect.selectedIndex].text : 'غير محدد');
-    
-    const carData = {
-        id: editMode ? currentEditId : 'car_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
-        title: document.getElementById('carTitle') ? document.getElementById('carTitle').value.trim() : '',
-        brand: document.getElementById('carBrand') ? document.getElementById('carBrand').value : '',
-        type: document.getElementById('carType') ? document.getElementById('carType').value : '',
-        engine: engineValue,
-        price: document.getElementById('carPrice') ? parseFloat(document.getElementById('carPrice').value) : 0,
-        year: document.getElementById('carYear') ? parseInt(document.getElementById('carYear').value) : 2023,
-        fuel: document.getElementById('carFuel') ? document.getElementById('carFuel').value : 'gasoline',
-        transmission: document.getElementById('carTransmission') ? document.getElementById('carTransmission').value : 'automatic',
-        mileage: document.getElementById('carMileage') && document.getElementById('carMileage').value ? 
-            parseInt(document.getElementById('carMileage').value) : null,
-        image: uploadedImage || "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        features: document.getElementById('carFeatures') ? document.getElementById('carFeatures').value.trim() : '',
-        description: document.getElementById('carDescription') ? document.getElementById('carDescription').value.trim() : '',
-        createdAt: new Date().toISOString()
-    };
-    
-    // التحقق من البيانات
-    if (!carData.title || !carData.brand || !carData.type || !carData.engine || 
-        isNaN(carData.price) || isNaN(carData.year) || !carData.fuel || !carData.transmission) {
-        showAlert("يرجى ملء جميع الحقول الإلزامية بشكل صحيح", "error");
-        return;
-    }
-    
-    if (carData.price <= 0) {
-        showAlert("السعر يجب أن يكون أكبر من صفر", "error");
-        return;
-    }
-    
-    if (carData.year < 2010 || carData.year > 2024) {
-        showAlert("السنة يجب أن تكون بين 2010 و 2024", "error");
-        return;
-    }
-    
-    // إضافة أو تحديث السيارة
-    if (editMode) {
-        const index = cars.findIndex(car => car.id === currentEditId);
-        if (index !== -1) {
-            cars[index] = carData;
-            showAlert(`تم تحديث السيارة "${carData.title}" بنجاح ✓`, "success");
+        // Handle image upload
+        function handleImageUpload(files) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+            imageFiles = [];
+            
+            for (let i = 0; i < Math.min(files.length, 5); i++) {
+                const file = files[i];
+                if (!file.type.match('image.*')) continue;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.className = 'preview-item';
+                    img.src = e.target.result;
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+                imageFiles.push(file);
+            }
         }
-    } else {
-        cars.push(carData);
-        showAlert(`تم إضافة السيارة "${carData.title}" بنجاح ✓`, "success");
-    }
-    
-    // حفظ في التخزين المحلي
-    const saveSuccess = saveCarsToStorage();
-    
-    if (saveSuccess) {
-        // تحديث العرض
-        displayCars();
-        loadAdminCarsList();
-        
-        // مسح النموذج بعد تأخير قصير
-        setTimeout(() => {
-            clearCarForm();
-        }, 1000);
-    } else {
-        showAlert("حدث خطأ في حفظ البيانات", "error");
-    }
-}
 
-// مسح نموذج السيارة
-function clearCarForm() {
-    const carForm = document.getElementById('carForm');
-    if (carForm) carForm.reset();
-    
-    const preview = document.getElementById('imagePreview');
-    if (preview) {
-        preview.innerHTML = `
-            <div class="upload-icon">📷</div>
-            <div class="upload-text">انقر لرفع صورة السيارة من جهازك</div>
-            <input type="file" id="imageUpload" class="image-upload-input" accept="image/*">
-        `;
-        
-        // إعادة ربط حدث رفع الصور
-        const newInput = preview.querySelector('#imageUpload');
-        if (newInput) {
-            newInput.addEventListener('change', handleImageUpload);
+        // Add a new car
+        function addCar() {
+            const model = document.getElementById('carModel').value;
+            const trim = document.getElementById('carTrim').value;
+            const year = parseInt(document.getElementById('carYear').value);
+            const engine = document.getElementById('carEngine').value;
+            const power = document.getElementById('carPower').value;
+            const transmission = document.getElementById('carTransmission').value;
+            const fuel = document.getElementById('carFuel').value;
+            const mileage = document.getElementById('carMileage').value;
+            const features = document.getElementById('carFeatures').value;
+            
+            // Use placeholder images if no images uploaded
+            let carImages = [];
+            if (imageFiles.length > 0) {
+                carImages = Array.from(imageFiles).map(file => URL.createObjectURL(file));
+            } else {
+                // Default car image if none uploaded
+                carImages = ['https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'];
+            }
+            
+            const newCar = {
+                id: nextCarId++,
+                model,
+                trim,
+                year,
+                engine,
+                power,
+                transmission,
+                fuel,
+                mileage,
+                features,
+                images: carImages
+            };
+            
+            cars.push(newCar);
+            saveToLocalStorage();
+            displayCars();
+            resetForm();
+            
+            // Show success message
+            alert(`تمت إضافة ${model} إلى المخزون بنجاح!`);
         }
-    }
-    
-    const carYear = document.getElementById('carYear');
-    if (carYear) carYear.value = 2023;
-    
-    const carType = document.getElementById('carType');
-    if (carType) carType.value = '';
-    
-    const engineSelect = document.getElementById('carEngineSelect');
-    if (engineSelect) engineSelect.value = '';
-    
-    const engineCustom = document.getElementById('carEngineCustom');
-    if (engineCustom) {
-        engineCustom.style.display = 'none';
-        engineCustom.value = '';
-    }
-    
-    uploadedImage = null;
-    editMode = false;
-    currentEditId = null;
-    
-    // تغيير تبويب الإدارة إلى الإضافة
-    switchAdminTab('add');
-}
 
-// تحميل قائمة السيارات للإدارة
-function loadAdminCarsList() {
-    const container = document.getElementById('adminCarsList');
-    if (!container) return;
+        // Edit a car
+        function editCar(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (!car) return;
+            
+            // For simplicity, we'll just delete and re-add with editing
+            // In a more advanced version, you'd populate the form with car data
+            const confirmEdit = confirm(`هل تريد تعديل ${car.model}؟ في هذه النسخة البسيطة، يمكنك حذفها وإضافتها من جديد.`);
+            if (confirmEdit) {
+                deleteCar(carId);
+                
+                // Populate form with car data
+                document.getElementById('carModel').value = car.model;
+                document.getElementById('carTrim').value = car.trim;
+                document.getElementById('carYear').value = car.year;
+                document.getElementById('carEngine').value = car.engine;
+                document.getElementById('carPower').value = car.power;
+                document.getElementById('carTransmission').value = car.transmission;
+                document.getElementById('carFuel').value = car.fuel;
+                document.getElementById('carMileage').value = car.mileage;
+                document.getElementById('carFeatures').value = car.features;
+                
+                // Scroll to form
+                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Delete a car
+        function deleteCar(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (!car) return;
+            
+            const confirmDelete = confirm(`هل أنت متأكد من حذف ${car.model}؟`);
+            if (!confirmDelete) return;
+            
+            cars = cars.filter(c => c.id !== carId);
+            saveToLocalStorage();
+            displayCars();
+            
+            // Show message
+            alert(`تم حذف ${car.model} من المخزون.`);
+        }
+
+        // Reset the form
+        function resetForm() {
+            document.getElementById('carForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('fileInput').value = '';
+            imageFiles = [];
+            document.getElementById('carYear').value = 2024;
+        }
+
+        // Generate HTML code for the inventory
+        function generateHTMLCode() {
+            let htmlCode = `<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventaire des Voitures</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .car {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .car h2 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .car ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .car li {
+            margin-bottom: 8px;
+        }
+        .tags {
+            margin: 15px 0;
+            font-weight: bold;
+            color: #7f8c8d;
+        }
+        .actions {
+            margin-top: 15px;
+        }
+        .actions button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .edit-btn {
+            background-color: #f39c12;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        hr {
+            border: none;
+            border-top: 1px dashed #ddd;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inventaire des Voitures</h1>
     
-    if (cars.length === 0) {
-        container.innerHTML = `
-            <div style="text-align: center; padding: 1.5rem; color: var(--gray); font-size: 0.9rem;">
-                لا توجد سيارات للإدارة
-            </div>
-        `;
-        return;
-    }
-    
-    let html = `
-        <div style="overflow-x: auto;">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>السيارة</th>
-                        <th>السعر</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody>
-    `;
-    
-    cars.forEach(car => {
-        html += `
-            <tr>
-                <td>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <img src="${car.image}" 
-                             alt="${car.title}" 
-                             style="width: 50px; height: 35px; object-fit: cover; border-radius: 4px;"
-                             onerror="this.src='https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
-                        <div>
-                            <strong style="font-size: 0.9rem;">${car.title}</strong><br>
-                            <small style="color: var(--gray); font-size: 0.8rem;">${car.brand} - ${car.year} ${car.type === 'new' ? '🆕' : '🔄'}</small>
-                        </div>
-                    </div>
-                </td>
-                <td style="font-weight: bold; color: var(--accent); font-size: 0.9rem;">
-                    ${car.price.toFixed(1)} مليون
-                </td>
-                <td>
-                    <div class="table-actions">
-                        <button class="table-btn table-edit" onclick="editCarFromList('${car.id}')">
-                            ✏️ تعديل
-                        </button>
-                        <button class="table-btn table-delete" onclick="deleteCarFromList('${car.id}')">
-                            🗑️ حذف
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        `;
-    });
-    
-    html += `
-                </tbody>
-            </table>
-            <div style="margin-top: 0.8rem; text-align: left; color: var(--gray); font-size: 0.8rem;">
-                العدد الإجمالي: ${cars.length} سيارة
-            </div>
+`;
+            
+            cars.forEach((car, index) => {
+                htmlCode += `
+    <div class="car">
+        <h2>${car.model} ${car.trim ? `- ${car.trim}` : ''}</h2>
+        <ul>
+            ${car.trim ? `<li><strong>${car.trim}</strong> ${car.year}</li>` : `<li><strong>Année:</strong> ${car.year}</li>`}
+            <li><strong>Moteur:</strong> ${car.engine}</li>
+            <li><strong>Puissance:</strong> ${car.power}</li>
+        </ul>
+        <div class="tags">${car.transmission} | ${car.fuel} | ${car.mileage}</div>
+        ${car.features ? `<p><strong>Fonctionnalités:</strong> ${car.features}</p>` : ''}
+        <div class="actions">
+            <button class="edit-btn">Modifier</button>
+            <button class="delete-btn">Supprimer</button>
         </div>
-    `;
-    
-    container.innerHTML = html;
-}
-
-// تعديل سيارة من القائمة
-function editCarFromList(carId) {
-    const car = cars.find(c => c.id === carId);
-    if (!car) {
-        showAlert("السيارة غير موجودة", "error");
-        return;
-    }
-    
-    // تعبئة النموذج
-    const carTitle = document.getElementById('carTitle');
-    const carBrand = document.getElementById('carBrand');
-    const carType = document.getElementById('carType');
-    const engineSelect = document.getElementById('carEngineSelect');
-    const engineCustom = document.getElementById('carEngineCustom');
-    const carPrice = document.getElementById('carPrice');
-    const carYear = document.getElementById('carYear');
-    const carFuel = document.getElementById('carFuel');
-    const carTransmission = document.getElementById('carTransmission');
-    const carMileage = document.getElementById('carMileage');
-    const carFeatures = document.getElementById('carFeatures');
-    const carDescription = document.getElementById('carDescription');
-    const preview = document.getElementById('imagePreview');
-    
-    if (carTitle) carTitle.value = car.title;
-    if (carBrand) carBrand.value = car.brand;
-    if (carType) carType.value = car.type;
-    
-    // التعامل مع نوع المحرك
-    if (engineSelect && engineCustom) {
-        if (car.engine.includes('لتر') && ['1.0', '1.1', '1.2', '1.3', '1.4', '1.5', '1.6', '1.7', '1.8', '2.0', '2.2', '2.4', '2.5', '3.0', '3.5', '4.0'].some(size => car.engine.includes(size))) {
-            // إذا كان المحرك من القائمة المحددة
-            const engineSize = car.engine.split(' ')[0];
-            engineSelect.value = engineSize;
-            engineCustom.style.display = 'none';
-        } else {
-            // إذا كان المحرك مكتوب يدوياً
-            engineSelect.value = 'custom';
-            engineCustom.style.display = 'block';
-            engineCustom.value = car.engine;
+    </div>
+`;
+                
+                if (index < cars.length - 1) {
+                    htmlCode += '    <hr>\n\n';
+                }
+            });
+            
+            htmlCode += `
+    <div style="text-align: center; margin-top: 30px;">
+        <button style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Actualiser
+        </button>
+    </div>
+</body>
+</html>`;
+            
+            document.getElementById('generatedCode').textContent = htmlCode;
+            document.getElementById('codeOutput').classList.add('active');
+            
+            // Scroll to code output
+            document.getElementById('codeOutput').scrollIntoView({ behavior: 'smooth' });
         }
-    }
-    
-    if (carPrice) carPrice.value = car.price;
-    if (carYear) carYear.value = car.year;
-    if (carFuel) carFuel.value = car.fuel;
-    if (carTransmission) carTransmission.value = car.transmission;
-    if (carMileage) carMileage.value = car.mileage || '';
-    if (carFeatures) carFeatures.value = car.features || '';
-    if (carDescription) carDescription.value = car.description || '';
-    
-    // عرض الصورة
-    if (preview) {
-        preview.innerHTML = `<img src="${car.image}" alt="معاينة الصورة">`;
-    }
-    uploadedImage = car.image;
-    
-    // تفعيل وضع التعديل
-    editMode = true;
-    currentEditId = carId;
-    
-    // تغيير التبويب
-    switchAdminTab('add');
-    
-    showAlert(`جاري تعديل السيارة: ${car.title}`, "info");
-}
 
-// حذف سيارة من القائمة
-function deleteCarFromList(carId) {
-    if (!confirm('هل أنت متأكد من حذف هذه السيارة؟')) {
-        return;
-    }
-    
-    const carIndex = cars.findIndex(car => car.id === carId);
-    if (carIndex === -1) {
-        showAlert("السيارة غير موجودة", "error");
-        return;
-    }
-    
-    const carTitle = cars[carIndex].title;
-    cars.splice(carIndex, 1);
-    
-    saveCarsToStorage();
-    displayCars();
-    loadAdminCarsList();
-    
-    showAlert(`تم حذف السيارة: "${carTitle}" ✓`, "success");
-}
-
-// تبديل لوحة الإدارة
-function toggleAdminPanel() {
-    if (!isAdminAuthenticated) {
-        showPasswordModal();
-        return;
-    }
-    
-    const panel = document.getElementById('adminPanel');
-    const overlay = document.getElementById('adminOverlay');
-    
-    if (panel) panel.classList.toggle('active');
-    if (overlay) overlay.classList.toggle('active');
-    
-    if (panel && panel.classList.contains('active')) {
-        loadAdminCarsList();
-        loadBrandsList();
-    }
-}
-
-// إغلاق لوحة الإدارة
-function closeAdminPanel() {
-    const panel = document.getElementById('adminPanel');
-    const overlay = document.getElementById('adminOverlay');
-    
-    if (panel) panel.classList.remove('active');
-    if (overlay) overlay.classList.remove('active');
-    clearCarForm();
-}
-
-// تبديل تبويبات الإدارة
-function switchAdminTab(tabId) {
-    // تحديث التبويبات النشطة
-    document.querySelectorAll('.admin-tab').forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.getAttribute('data-tab') === tabId) {
-            tab.classList.add('active');
+        // Copy code to clipboard
+        function copyCodeToClipboard() {
+            const code = document.getElementById('generatedCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const copyBtn = document.getElementById('copyCodeBtn');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+                copyBtn.style.backgroundColor = '#28a745';
+                
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                    copyBtn.style.backgroundColor = '';
+                }, 2000);
+            });
         }
-    });
-    
-    // تحديث المحتوى
-    document.querySelectorAll('.admin-tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-    
-    const targetTab = document.getElementById(tabId + 'Tab');
-    if (targetTab) targetTab.classList.add('active');
-    
-    // تحميل البيانات الخاصة بالتبويب
-    if (tabId === 'brands') {
-        loadBrandsList();
-    }
-}
 
-// عرض تفاصيل السيارة
-function showCarDetails(carId) {
-    const car = cars.find(c => c.id === carId);
-    if (!car) return;
-    
-    const details = `اسم السيارة: ${car.title}
-الماركة: ${car.brand}
-الحالة: ${car.type === 'new' ? 'جديدة' : 'مستعملة'}
-نوع المحرك: ${car.engine}
-السعر: ${car.price.toFixed(1)} مليون
-سنة الصنع: ${car.year}
-الوقود: ${getFuelName(car.fuel)}
-ناقل الحركة: ${getTransmissionName(car.transmission)}
-${car.mileage ? `المسافة المقطوعة: ${car.mileage.toLocaleString('ar-DZ')} كم` : 'المسافة المقطوعة: 0 كم (سيارة جديدة)'}
-
-المواصفات: ${car.features || 'لا يوجد'}
-
-الوصف: ${car.description || 'لا يوجد وصف'}`;
-
-    const whatsappText = `مرحباً، أنا مهتم بالسيارة: ${car.title}
-
-${details}
-
-أرجو التواصل معي للاستفسار عن هذه السيارة.`;
-
-    window.open(`https://wa.me/213549883720?text=${encodeURIComponent(whatsappText)}`, '_blank');
-}
-
-// إظهار التنبيهات
-function showAlert(message, type = 'info') {
-    const alertArea = document.getElementById('alertArea');
-    if (!alertArea) return;
-    
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type}`;
-    alert.innerHTML = `
-        <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
-        <span>${message}</span>
-    `;
-    
-    alertArea.appendChild(alert);
-    
-    setTimeout(() => {
-        if (alert.parentNode) {
-            alert.remove();
+        // Save cars to localStorage
+        function saveToLocalStorage() {
+            // Convert image URLs to strings for storage
+            const carsToSave = cars.map(car => {
+                const carCopy = {...car};
+                // If images are blob URLs, we can't save them to localStorage
+                // In a real app, you would upload images to a server
+                // For this demo, we'll keep only the first image if it's a URL
+                if (carCopy.images && carCopy.images.length > 0) {
+                    // Keep only external URLs for localStorage
+                    carCopy.images = carCopy.images.filter(img => img.startsWith('http'));
+                    if (carCopy.images.length === 0) {
+                        // Add a placeholder if no external URLs
+                        carCopy.images = ['https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'];
+                    }
+                }
+                return carCopy;
+            });
+            
+            localStorage.setItem('carInventory', JSON.stringify(carsToSave));
         }
-    }, 5000);
-}
-
-// دوال مساعدة
-function getFuelName(fuel) {
-    const fuels = {
-        'gasoline': 'بنزين',
-        'diesel': 'ديزل',
-        'electric': 'كهربائي',
-        'hybrid': 'هايبرد'
-    };
-    return fuels[fuel] || fuel;
-}
-
-function getTransmissionName(transmission) {
-    return transmission === 'automatic' ? 'اوتوماتيك' : 'يدوي';
-}
-
-// بدء التطبيق
-document.addEventListener('DOMContentLoaded', initApp);
-</script>
+    </script>
 </body>
 </html>
