@@ -510,6 +510,37 @@
             margin-top: 30px;
         }
 
+        /* قائمة اللغات */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50px;
+            padding: 8px 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .language-selector select {
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 5px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            outline: none;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .language-selector select option {
+            background: #1F3A5F;
+            color: white;
+        }
+
         /* Modal لعرض الصور */
         .modal {
             display: none;
@@ -627,11 +658,27 @@
             .prev, .next {
                 font-size: 30px;
             }
+
+            .language-selector {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 15px;
+                width: fit-content;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="language-selector">
+            <select id="languageSelect" onchange="changeLanguage(this.value)">
+                <option value="ar" selected>🇸🇦 العربية</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="fr">🇫🇷 Français</option>
+            </select>
+        </div>
+
         <header>
             <div class="header-content">
                 <div class="logo-flags-wrapper">
@@ -647,19 +694,19 @@
                     <div class="flags-container">
                         <div class="flag-item">
                             <img src="https://flagcdn.com/w40/dz.png" alt="Algeria" class="flag-icon">
-                            <span class="flag-name">الجزائر</span>
+                            <span class="flag-name" data-translate="algeria">الجزائر</span>
                         </div>
                         <div class="flag-item">
                             <img src="https://flagcdn.com/w40/cn.png" alt="China" class="flag-icon">
-                            <span class="flag-name">الصين</span>
+                            <span class="flag-name" data-translate="china">الصين</span>
                         </div>
                         <div class="flag-item">
                             <img src="https://flagcdn.com/w40/eu.png" alt="European Union" class="flag-icon">
-                            <span class="flag-name">أوروبا</span>
+                            <span class="flag-name" data-translate="europe">أوروبا</span>
                         </div>
                         <div class="flag-item">
                             <img src="https://flagcdn.com/w40/kr.png" alt="South Korea" class="flag-icon">
-                            <span class="flag-name">كوريا</span>
+                            <span class="flag-name" data-translate="korea">كوريا</span>
                         </div>
                     </div>
                 </div>
@@ -670,114 +717,114 @@
                             <i class="fab fa-whatsapp"></i>
                             <span class="phone-number">+213549883720</span>
                             <span class="whatsapp-badge">
-                                <i class="fab fa-whatsapp"></i> واتساب
+                                <i class="fab fa-whatsapp"></i> <span data-translate="whatsapp">واتساب</span>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="tagline">
+            <div class="tagline" id="tagline">
                 <i class="fas fa-globe-europe"></i>
-                سيارات جديدة و مستعملة من أوروبا - الصين - كوريا إلى الجزائر
+                <span data-translate="tagline">سيارات جديدة و مستعملة من أوروبا - الصين - كوريا إلى الجزائر</span>
                 <i class="fas fa-globe-asia"></i>
             </div>
             
             <div class="service-info">
-                <h3><i class="fas fa-star"></i> خدماتنا المميزة</h3>
+                <h3><i class="fas fa-star"></i> <span data-translate="ourServices">خدماتنا المميزة</span></h3>
                 <ul>
-                    <li><i class="fas fa-check-circle"></i> سيارات من أوروبا - الصين - كوريا</li>
-                    <li><i class="fas fa-check-circle"></i> جديدة و أقل من 3 سنوات</li>
-                    <li><i class="fas fa-check-circle"></i> سرعة التوصيل</li>
-                    <li><i class="fas fa-check-circle"></i> وثائق و فواتير رسمية</li>
-                    <li><i class="fas fa-check-circle"></i> طريقة دفع آمنة</li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service1">سيارات من أوروبا - الصين - كوريا</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service2">جديدة و أقل من 3 سنوات</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service3">سرعة التوصيل</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service4">وثائق و فواتير رسمية</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service5">طريقة دفع آمنة</span></li>
                 </ul>
             </div>
         </header>
         
         <section class="cars-section">
-            <h2 class="section-title">السيارات المتوفرة </h2>
+            <h2 class="section-title" data-translate="availableCars">السيارات المتوفرة </h2>
             <div class="cars-grid" id="cars-container"></div>
         </section>
         
         <section class="contact-section">
-            <h2 class="section-title" style="color: white;">للتواصل والاستفسار</h2>
+            <h2 class="section-title" style="color: white;" data-translate="contactUs">للتواصل والاستفسار</h2>
             
             <div class="contact-wrapper">
                 <div class="contact-card">
-                    <h3><i class="fas fa-flag"></i> الجزائر - Algeria</h3>
+                    <h3><i class="fas fa-flag"></i> <span data-translate="algeria">الجزائر</span> - Algeria</h3>
                     <div class="contact-details">
                         <div class="contact-row" onclick="window.open('https://wa.me/213549883720?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات', '_blank')" style="cursor: pointer;">
                             <i class="fab fa-whatsapp"></i>
                             <span>+213549883720</span>
-                            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;" data-translate="skikda">سكيكدة</span>
                         </div>
                         
                         <div class="contact-row" onclick="window.location.href='tel:0549883720'" style="cursor: pointer;">
                             <i class="fas fa-phone"></i>
                             <span>0549883720</span>
-                            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;" data-translate="skikda">سكيكدة</span>
                         </div>
                         
                         <div class="contact-row" onclick="window.location.href='tel:0780325968'" style="cursor: pointer;">
                             <i class="fas fa-phone"></i>
                             <span>0780325968</span>
-                            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;" data-translate="skikda">سكيكدة</span>
                         </div>
                         
                         <div class="contact-row" onclick="window.location.href='tel:0659605045'" style="cursor: pointer;">
                             <i class="fas fa-phone"></i>
                             <span>0659605045</span>
-                            <span style="font-size:0.9rem; color:#ffcc00;">تلمسان</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;" data-translate="tlemcen">تلمسان</span>
                         </div>
                     </div>
                     
                     <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
                         <div class="location-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال</span>
+                            <span data-translate="skikdaAddress">مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="contact-card">
-                    <h3><i class="fas fa-flag"></i> فرنسا - France</h3>
+                    <h3><i class="fas fa-flag"></i> <span data-translate="france">فرنسا</span> - France</h3>
                     <div class="contact-details">
                         <div class="contact-row" onclick="window.open('https://wa.me/213559369237?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات%20من%20فرنسا', '_blank')" style="cursor: pointer;">
                             <i class="fab fa-whatsapp"></i>
                             <span>+213559369237</span>
-                            <span style="font-size:0.9rem; color:#ffcc00;">خالد</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;" data-translate="khaled">خالد</span>
                         </div>
                         
                         <div class="contact-row" onclick="window.open('https://wa.me/33684208705?text=Bonjour%2C%20je%20voudrais%20me%20renseigner%20sur%20les%20voitures%20importées', '_blank')" style="cursor: pointer;">
                             <i class="fab fa-whatsapp"></i>
                             <span>+33684208705</span>
-                            <span style="font-size:0.9rem; color:#ffcc00;">France</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;" data-translate="france">France</span>
                         </div>
                     </div>
                     
                     <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
                         <div class="location-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>شحن أسبوعي من فرنسا إلى الجزائر</span>
+                            <span data-translate="weeklyShipping">شحن أسبوعي من فرنسا إلى الجزائر</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="contact-card">
-                    <h3><i class="fas fa-info-circle"></i> خدماتنا</h3>
+                    <h3><i class="fas fa-info-circle"></i> <span data-translate="ourServices2">خدماتنا</span></h3>
                     <div style="display: flex; flex-direction: column; gap: 15px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-car" style="color: #ffcc00; font-size: 1.3rem;"></i>
-                            <span>إستيراد كل أنواع السيارات</span>
+                            <span data-translate="serviceImport">إستيراد كل أنواع السيارات</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-ship" style="color: #ffcc00; font-size: 1.3rem;"></i>
-                            <span>شحن أسبوعي إلى الجزائر</span>
+                            <span data-translate="serviceShipping">شحن أسبوعي إلى الجزائر</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-hand-holding-usd" style="color: #ffcc00; font-size: 1.3rem;"></i>
-                            <span>دفع آمن</span>
+                            <span data-translate="servicePayment">دفع آمن</span>
                         </div>
                     </div>
                 </div>
@@ -785,8 +832,8 @@
         </section>
         
         <footer>
-            <p>© 2026 خالد كارز إكسبور - Khaled Cars Export. جميع الحقوق محفوظة.</p>
-            <p>سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر</p>
+            <p id="copyright">© 2026 خالد كارز إكسبور - Khaled Cars Export. <span data-translate="allRights">جميع الحقوق محفوظة.</span></p>
+            <p id="footerTagline" data-translate="footerTagline">سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر</p>
             <p style="margin-top: 10px; font-size: 0.9rem;">
                 <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213549883720 | 
                 <i class="fas fa-phone" style="color: #4CAF50;"></i> 0549883720 | 
@@ -809,144 +856,315 @@
         let currentImageIndex = 0;
         let currentCarImages = [];
 
-        // بيانات السيارات مع إضافة المزيد من الصور لكل سيارة
+        // بيانات السيارات
         const carsData = [
             {
                 id: 1,
                 name: "Renault Clio 5 Equilibre",
+                name_en: "Renault Clio 5 Equilibre",
+                name_fr: "Renault Clio 5 Equilibre",
                 price: "313 مليون",
+                price_en: "313 million",
+                price_fr: "313 millions",
                 images: [
-                    "https://i.ibb.co/hxz5y65x/1.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/Swd4rmKZ/2.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/qY5b9XGZ/3.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/zhj0Rknt/4.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/wr4hnXXJ/5.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/Kj76pvRz/6.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-
+                    "https://i.ibb.co/hxz5y65x/1.png",
+                    "https://i.ibb.co/Swd4rmKZ/2.jpg",
+                    "https://i.ibb.co/qY5b9XGZ/3.png",
+                    "https://i.ibb.co/zhj0Rknt/4.png",
+                    "https://i.ibb.co/wr4hnXXJ/5.png",
+                    "https://i.ibb.co/Kj76pvRz/6.png"
                 ],
                 details: [
-                                {icon: "fas fa-calendar-alt", text: "2023  "},
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "يدوي"},
-                    {icon: "fas fa-tachometer-alt", text: "24245 كلم"},
-                    {icon: "fas fa-horse-head", text: "90 حصان"}
+                    {icon: "fas fa-calendar-alt", text: "2023", text_en: "2023", text_fr: "2023"},
+                    {icon: "fas fa-gas-pump", text: "بنزين", text_en: "Petrol", text_fr: "Essence"},
+                    {icon: "fas fa-cogs", text: "يدوي", text_en: "Manual", text_fr: "Manuelle"},
+                    {icon: "fas fa-tachometer-alt", text: "24245 كلم", text_en: "24245 km", text_fr: "24245 km"},
+                    {icon: "fas fa-horse-head", text: "90 حصان", text_en: "90 HP", text_fr: "90 CV"}
                 ],
-                description: "السعر دون إحتساب مصاريف الجمركة"
+                description: "السعر دون إحتساب مصاريف الجمركة",
+                description_en: "Price excluding customs fees",
+                description_fr: "Prix hors frais de douane"
             },
             {
                 id: 2,
                 name: "Peugeot 208 Active",
+                name_en: "Peugeot 208 Active",
+                name_fr: "Peugeot 208 Active",
                 price: "339 مليون",
+                price_en: "339 million",
+                price_fr: "339 millions",
                 images: [
-                    "https://i.ibb.co/zy0dN1N/1.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/Hpt3P8Cb/2.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/pvmy0G8L/627076457-122119931481086655-4479522672578579393-n.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/r2yVNBfp/11.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-
+                    "https://i.ibb.co/zy0dN1N/1.jpg",
+                    "https://i.ibb.co/Hpt3P8Cb/2.jpg",
+                    "https://i.ibb.co/pvmy0G8L/627076457-122119931481086655-4479522672578579393-n.jpg",
+                    "https://i.ibb.co/r2yVNBfp/11.jpg"
                 ],
                 details: [
-                                {icon: "fas fa-calendar-alt", text: "2024  "},
-
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "يدوي"},
-                    {icon: "fas fa-tachometer-alt", text: "15600 كلم"},
-                    {icon: "fas fa-horse-head", text: "75 حصان"}
+                    {icon: "fas fa-calendar-alt", text: "2024", text_en: "2024", text_fr: "2024"},
+                    {icon: "fas fa-gas-pump", text: "بنزين", text_en: "Petrol", text_fr: "Essence"},
+                    {icon: "fas fa-cogs", text: "يدوي", text_en: "Manual", text_fr: "Manuelle"},
+                    {icon: "fas fa-tachometer-alt", text: "15600 كلم", text_en: "15600 km", text_fr: "15600 km"},
+                    {icon: "fas fa-horse-head", text: "75 حصان", text_en: "75 HP", text_fr: "75 CV"}
                 ],
-                description: "السعر دون إحتساب مصاريف الجمركة"
+                description: "السعر دون إحتساب مصاريف الجمركة",
+                description_en: "Price excluding customs fees",
+                description_fr: "Prix hors frais de douane"
             },
             {
                 id: 3,
                 name: "Peugeot 208 Active",
+                name_en: "Peugeot 208 Active",
+                name_fr: "Peugeot 208 Active",
                 price: "329 مليون",
+                price_en: "329 million",
+                price_fr: "329 millions",
                 images: [
-                    "https://i.ibb.co/N2h4cmdV/photo-10.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/spWZYp4R/photo-13.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/GQ9j9wPp/photo-15.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/wNjtRZLX/photo-20.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/Mw6wVt8/photo-27.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/vtwjm6J/photo-28.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-
+                    "https://i.ibb.co/N2h4cmdV/photo-10.jpg",
+                    "https://i.ibb.co/spWZYp4R/photo-13.jpg",
+                    "https://i.ibb.co/GQ9j9wPp/photo-15.jpg",
+                    "https://i.ibb.co/wNjtRZLX/photo-20.jpg",
+                    "https://i.ibb.co/Mw6wVt8/photo-27.jpg",
+                    "https://i.ibb.co/vtwjm6J/photo-28.jpg"
                 ],
                 details: [
-                                {icon: "fas fa-calendar-alt", text: "2024  "},
-
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "يدوي"},
-                    {icon: "fas fa-tachometer-alt", text: "17500 كلم"},
-                    {icon: "fas fa-horse-head", text: "75 حصان"}
+                    {icon: "fas fa-calendar-alt", text: "2024", text_en: "2024", text_fr: "2024"},
+                    {icon: "fas fa-gas-pump", text: "بنزين", text_en: "Petrol", text_fr: "Essence"},
+                    {icon: "fas fa-cogs", text: "يدوي", text_en: "Manual", text_fr: "Manuelle"},
+                    {icon: "fas fa-tachometer-alt", text: "17500 كلم", text_en: "17500 km", text_fr: "17500 km"},
+                    {icon: "fas fa-horse-head", text: "75 حصان", text_en: "75 HP", text_fr: "75 CV"}
                 ],
-                description: "السعر دون إحتساب مصاريف الجمركة"
+                description: "السعر دون إحتساب مصاريف الجمركة",
+                description_en: "Price excluding customs fees",
+                description_fr: "Prix hors frais de douane"
             },
             {
                 id: 4,
                 name: "Citroen C3 You",
+                name_en: "Citroen C3 You",
+                name_fr: "Citroen C3 You",
                 price: "309 مليون",
+                price_en: "309 million",
+                price_fr: "309 millions",
                 images: [
-                    "https://i.ibb.co/nMNF8bMx/photo-2.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/QjPzPxsL/photo-4.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/vxyf5Gbj/photo-8.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/BKzy966B/photo-13.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/qFBKHMYn/photo-19.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/JwdQn4qs/photo-21.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                    "https://i.ibb.co/nMNF8bMx/photo-2.jpg",
+                    "https://i.ibb.co/QjPzPxsL/photo-4.jpg",
+                    "https://i.ibb.co/vxyf5Gbj/photo-8.jpg",
+                    "https://i.ibb.co/BKzy966B/photo-13.jpg",
+                    "https://i.ibb.co/qFBKHMYn/photo-19.jpg",
+                    "https://i.ibb.co/JwdQn4qs/photo-21.jpg"
                 ],
                 details: [
-                                {icon: "fas fa-calendar-alt", text: "2024  "},
-
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "يدوي"},
-                    {icon: "fas fa-tachometer-alt", text: "13000 كلم"},
-                    {icon: "fas fa-horse-head", text: "83 حصان"}
+                    {icon: "fas fa-calendar-alt", text: "2024", text_en: "2024", text_fr: "2024"},
+                    {icon: "fas fa-gas-pump", text: "بنزين", text_en: "Petrol", text_fr: "Essence"},
+                    {icon: "fas fa-cogs", text: "يدوي", text_en: "Manual", text_fr: "Manuelle"},
+                    {icon: "fas fa-tachometer-alt", text: "13000 كلم", text_en: "13000 km", text_fr: "13000 km"},
+                    {icon: "fas fa-horse-head", text: "83 حصان", text_en: "83 HP", text_fr: "83 CV"}
                 ],
-                description: "السعر دون إحتساب مصاريف الجمركة"
+                description: "السعر دون إحتساب مصاريف الجمركة",
+                description_en: "Price excluding customs fees",
+                description_fr: "Prix hors frais de douane"
             },
             {
                 id: 5,
                 name: "Renault Austral Evolution",
-                         price: "515 مليون",
+                name_en: "Renault Austral Evolution",
+                name_fr: "Renault Austral Evolution",
+                price: "515 مليون",
+                price_en: "515 million",
+                price_fr: "515 millions",
                 images: [
-                    "https://i.ibb.co/ym0jqw6n/1.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/WN4vZjDL/2.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/GfLgK3rF/5.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/FkjYN5b8/7.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/B54nH7Q6/10.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/vxP32D5p/11.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                      ],
-                details: [
-                                {icon: "fas fa-calendar-alt", text: "2023  "},
-
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "يدوي"},
-                    {icon: "fas fa-tachometer-alt", text: "17349 كلم"},
-                    {icon: "fas fa-horse-head", text: "130 حصان"}
+                    "https://i.ibb.co/ym0jqw6n/1.jpg",
+                    "https://i.ibb.co/WN4vZjDL/2.jpg",
+                    "https://i.ibb.co/GfLgK3rF/5.jpg",
+                    "https://i.ibb.co/FkjYN5b8/7.jpg",
+                    "https://i.ibb.co/B54nH7Q6/10.jpg",
+                    "https://i.ibb.co/vxP32D5p/11.jpg"
                 ],
-                description: "السعر دون إحتساب مصاريف الجمركة"
+                details: [
+                    {icon: "fas fa-calendar-alt", text: "2023", text_en: "2023", text_fr: "2023"},
+                    {icon: "fas fa-gas-pump", text: "بنزين", text_en: "Petrol", text_fr: "Essence"},
+                    {icon: "fas fa-cogs", text: "يدوي", text_en: "Manual", text_fr: "Manuelle"},
+                    {icon: "fas fa-tachometer-alt", text: "17349 كلم", text_en: "17349 km", text_fr: "17349 km"},
+                    {icon: "fas fa-horse-head", text: "130 حصان", text_en: "130 HP", text_fr: "130 CV"}
+                ],
+                description: "السعر دون إحتساب مصاريف الجمركة",
+                description_en: "Price excluding customs fees",
+                description_fr: "Prix hors frais de douane"
             },
             {
                 id: 6,
                 name: "Geely Coolray",
+                name_en: "Geely Coolray",
+                name_fr: "Geely Coolray",
                 price: "532 مليون",
+                price_en: "532 million",
+                price_fr: "532 millions",
                 images: [
-                    "https://i.ibb.co/gFzN42tk/4.png?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/hFC3g5tf/1.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/4Rm9YLzf/8.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/tpmv6xyr/3.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/tMfvqL7L/5.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/SDYfLVQT/6.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/FkrbWXD0/2.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                    "https://i.ibb.co/DgggGrxv/7.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-
-],
-                details: [
-                                {icon: "fas fa-calendar-alt", text: "2025  "},
-
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "أوتوماتيكي"},
-                    {icon: "fas fa-tachometer-alt", text: "300 كلم"},
-                    {icon: "fas fa-horse-head", text: "181 حصان"}
+                    "https://i.ibb.co/gFzN42tk/4.png",
+                    "https://i.ibb.co/hFC3g5tf/1.jpg",
+                    "https://i.ibb.co/4Rm9YLzf/8.png",
+                    "https://i.ibb.co/tpmv6xyr/3.jpg",
+                    "https://i.ibb.co/tMfvqL7L/5.jpg",
+                    "https://i.ibb.co/SDYfLVQT/6.jpg",
+                    "https://i.ibb.co/FkrbWXD0/2.jpg",
+                    "https://i.ibb.co/DgggGrxv/7.jpg"
                 ],
-                description: "Full Options"
+                details: [
+                    {icon: "fas fa-calendar-alt", text: "2025", text_en: "2025", text_fr: "2025"},
+                    {icon: "fas fa-gas-pump", text: "بنزين", text_en: "Petrol", text_fr: "Essence"},
+                    {icon: "fas fa-cogs", text: "أوتوماتيكي", text_en: "Automatic", text_fr: "Automatique"},
+                    {icon: "fas fa-tachometer-alt", text: "300 كلم", text_en: "300 km", text_fr: "300 km"},
+                    {icon: "fas fa-horse-head", text: "181 حصان", text_en: "181 HP", text_fr: "181 CV"}
+                ],
+                description: "Full Options",
+                description_en: "Full Options",
+                description_fr: "Full Options"
             }
         ];
+
+        // ترجمة النصوص
+        const translations = {
+            ar: {
+                algeria: "الجزائر",
+                china: "الصين",
+                europe: "أوروبا",
+                korea: "كوريا",
+                whatsapp: "واتساب",
+                tagline: "سيارات جديدة و مستعملة من أوروبا - الصين - كوريا إلى الجزائر",
+                ourServices: "خدماتنا المميزة",
+                service1: "سيارات من أوروبا - الصين - كوريا",
+                service2: "جديدة و أقل من 3 سنوات",
+                service3: "سرعة التوصيل",
+                service4: "وثائق و فواتير رسمية",
+                service5: "طريقة دفع آمنة",
+                availableCars: "السيارات المتوفرة ",
+                contactUs: "للتواصل والاستفسار",
+                france: "فرنسا",
+                skikda: "سكيكدة",
+                tlemcen: "تلمسان",
+                khaled: "خالد",
+                skikdaAddress: "مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال",
+                weeklyShipping: "شحن أسبوعي من فرنسا إلى الجزائر",
+                ourServices2: "خدماتنا",
+                serviceImport: "إستيراد كل أنواع السيارات",
+                serviceShipping: "شحن أسبوعي إلى الجزائر",
+                servicePayment: "دفع آمن",
+                allRights: "جميع الحقوق محفوظة.",
+                footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر",
+                details: "التفاصيل",
+                inquiry: "استفسار",
+                car: "سيارة"
+            },
+            en: {
+                algeria: "Algeria",
+                china: "China",
+                europe: "Europe",
+                korea: "South Korea",
+                whatsapp: "WhatsApp",
+                tagline: "New & Used Cars from Europe - China - Korea to Algeria",
+                ourServices: "Our Premium Services",
+                service1: "Cars from Europe - China - Korea",
+                service2: "New & Less than 3 years",
+                service3: "Fast Delivery",
+                service4: "Official Documents & Invoices",
+                service5: "Secure Payment",
+                availableCars: "Available Cars",
+                contactUs: "Contact & Inquiry",
+                france: "France",
+                skikda: "Skikda",
+                tlemcen: "Tlemcen",
+                khaled: "Khaled",
+                skikdaAddress: "Skikda Office: Municipal detachment No. 2 Ramdane Djamel",
+                weeklyShipping: "Weekly shipping from France to Algeria",
+                ourServices2: "Our Services",
+                serviceImport: "Import all types of cars",
+                serviceShipping: "Weekly shipping to Algeria",
+                servicePayment: "Secure payment",
+                allRights: "All rights reserved.",
+                footerTagline: "New & Used Cars from Europe - China - Korea to Algeria",
+                details: "Details",
+                inquiry: "Inquiry",
+                car: "Car"
+            },
+            fr: {
+                algeria: "Algérie",
+                china: "Chine",
+                europe: "Europe",
+                korea: "Corée du Sud",
+                whatsapp: "WhatsApp",
+                tagline: "Voitures neuves et d'occasion d'Europe - Chine - Corée vers l'Algérie",
+                ourServices: "Nos Services Premium",
+                service1: "Voitures d'Europe - Chine - Corée",
+                service2: "Neuve et moins de 3 ans",
+                service3: "Livraison rapide",
+                service4: "Documents et factures officiels",
+                service5: "Paiement sécurisé",
+                availableCars: "Voitures disponibles",
+                contactUs: "Contact et renseignements",
+                france: "France",
+                skikda: "Skikda",
+                tlemcen: "Tlemcen",
+                khaled: "Khaled",
+                skikdaAddress: "Bureau de Skikda: Détachement municipal N° 2 Ramdane Djamel",
+                weeklyShipping: "Expédition hebdomadaire de France vers l'Algérie",
+                ourServices2: "Nos Services",
+                serviceImport: "Importation de tous types de voitures",
+                serviceShipping: "Expédition hebdomadaire vers l'Algérie",
+                servicePayment: "Paiement sécurisé",
+                allRights: "Tous droits réservés.",
+                footerTagline: "Voitures neuves et d'occasion d'Europe - Chine - Corée vers l'Algérie",
+                details: "Détails",
+                inquiry: "Renseignement",
+                car: "Voiture"
+            }
+        };
+
+        let currentLang = 'ar';
+
+        // دالة لتغيير اتجاه الصفحة حسب اللغة
+        function setPageDirection(lang) {
+            const html = document.documentElement;
+            if (lang === 'ar') {
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+            } else {
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', lang);
+            }
+        }
+
+        // دالة لترجمة النصوص الثابتة
+        function translatePage(lang) {
+            currentLang = lang;
+            
+            // تغيير اتجاه الصفحة
+            setPageDirection(lang);
+            
+            // ترجمة جميع العناصر التي تحتوي على data-translate
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // تحديث عنوان الصفحة
+            if (lang === 'ar') {
+                document.title = 'خالد كارز إكسبور - استيراد السيارات من أوروبا والصين';
+            } else if (lang === 'en') {
+                document.title = 'Khaled Cars Export - Car Import from Europe and China';
+            } else if (lang === 'fr') {
+                document.title = 'Khaled Cars Export - Importation de voitures d\'Europe et de Chine';
+            }
+
+            // إعادة عرض السيارات باللغة الجديدة
+            displayCars();
+        }
+
+        // دالة تغيير اللغة
+        function changeLanguage(lang) {
+            translatePage(lang);
+        }
 
         // دالة لعرض السيارات
         function displayCars() {
@@ -957,13 +1175,35 @@
                 const carCard = document.createElement('div');
                 carCard.className = 'car-card';
                 
-                // إنشاء تفاصيل السيارة
+                // اختيار اسم السيارة والسعر حسب اللغة
+                let carName = car.name;
+                let carPrice = car.price;
+                let carDescription = car.description;
+                
+                if (currentLang === 'en') {
+                    carName = car.name_en || car.name;
+                    carPrice = car.price_en || car.price;
+                    carDescription = car.description_en || car.description;
+                } else if (currentLang === 'fr') {
+                    carName = car.name_fr || car.name;
+                    carPrice = car.price_fr || car.price;
+                    carDescription = car.description_fr || car.description;
+                }
+                
+                // إنشاء تفاصيل السيارة حسب اللغة
                 let detailsHTML = '';
                 car.details.forEach(detail => {
+                    let detailText = detail.text;
+                    if (currentLang === 'en') {
+                        detailText = detail.text_en || detail.text;
+                    } else if (currentLang === 'fr') {
+                        detailText = detail.text_fr || detail.text;
+                    }
+                    
                     detailsHTML += `
                         <li>
                             <i class="${detail.icon}"></i>
-                            <span>${detail.text}</span>
+                            <span>${detailText}</span>
                         </li>
                     `;
                 });
@@ -972,19 +1212,19 @@
                     <div class="car-img" style="background-image: url('${car.images[0]}')" onclick="openModal(${car.id}, 0)"></div>
                     <div class="car-content">
                         <div class="car-title">
-                            <h3>${car.name}</h3>
-                            <span class="car-price">${car.price}</span>
+                            <h3>${carName}</h3>
+                            <span class="car-price">${carPrice}</span>
                         </div>
-                        <p class="car-description" style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">${car.description}</p>
+                        <p class="car-description" style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">${carDescription}</p>
                         <div class="car-details">
                             <ul>${detailsHTML}</ul>
                         </div>
                         <div class="car-actions">
                             <button class="btn btn-primary" onclick="showDetails(${car.id})">
-                                <i class="fas fa-info-circle"></i> التفاصيل
+                                <i class="fas fa-info-circle"></i> ${translations[currentLang].details || 'التفاصيل'}
                             </button>
                             <button class="btn btn-outline" onclick="inquireAboutCar(${car.id})">
-                                <i class="fas fa-question-circle"></i> استفسار
+                                <i class="fas fa-question-circle"></i> ${translations[currentLang].inquiry || 'استفسار'}
                             </button>
                         </div>
                     </div>
@@ -1005,9 +1245,16 @@
                 const modalImg = document.getElementById('modalImage');
                 const caption = document.getElementById('modalCaption');
                 
+                let carName = car.name;
+                if (currentLang === 'en') {
+                    carName = car.name_en || car.name;
+                } else if (currentLang === 'fr') {
+                    carName = car.name_fr || car.name;
+                }
+                
                 modal.style.display = 'block';
                 modalImg.src = currentCarImages[currentImageIndex];
-                caption.innerHTML = `${car.name} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
+                caption.innerHTML = `${translations[currentLang].car || 'سيارة'}: ${carName} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
             }
         }
 
@@ -1024,10 +1271,9 @@
             
             const modalImg = document.getElementById('modalImage');
             const caption = document.getElementById('modalCaption');
-            const car = carsData.find(c => c.images === currentCarImages);
             
             modalImg.src = currentCarImages[currentImageIndex];
-            caption.innerHTML = `${car ? car.name : 'سيارة'} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
+            caption.innerHTML = `${translations[currentLang].car || 'سيارة'} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
         }
 
         // دالة لإغلاق نافذة الصور
@@ -1039,24 +1285,60 @@
         function inquireAboutCar(carId) {
             const car = carsData.find(c => c.id === carId);
             if (car) {
-                // تفاصيل السيارة
+                let carName = car.name;
+                let carPrice = car.price;
                 let detailsText = '';
-                car.details.forEach(detail => {
-                    detailsText += `${detail.text} - `;
-                });
+                
+                if (currentLang === 'en') {
+                    carName = car.name_en || car.name;
+                    carPrice = car.price_en || car.price;
+                    car.details.forEach(detail => {
+                        detailsText += `${detail.text_en || detail.text} - `;
+                    });
+                } else if (currentLang === 'fr') {
+                    carName = car.name_fr || car.name;
+                    carPrice = car.price_fr || car.price;
+                    car.details.forEach(detail => {
+                        detailsText += `${detail.text_fr || detail.text} - `;
+                    });
+                } else {
+                    car.details.forEach(detail => {
+                        detailsText += `${detail.text} - `;
+                    });
+                }
+                
                 detailsText = detailsText.slice(0, -3);
                 
-                // إنشاء نص الرسالة
-                const message = `السلام عليكم، أريد الاستفسار عن السيارة:
+                let message = '';
+                if (currentLang === 'en') {
+                    message = `Hello, I would like to inquire about the car:
+                    
+🚗 Model: ${carName}
+💰 Price: ${carPrice}
+📊 Specifications: ${detailsText}
+📝 Description: ${car.description_en || car.description}
+
+I would like to know more details about this car and import conditions.`;
+                } else if (currentLang === 'fr') {
+                    message = `Bonjour, je voudrais me renseigner sur la voiture:
+                    
+🚗 Modèle: ${carName}
+💰 Prix: ${carPrice}
+📊 Spécifications: ${detailsText}
+📝 Description: ${car.description_fr || car.description}
+
+Je voudrais connaître plus de détails sur cette voiture et les conditions d'importation.`;
+                } else {
+                    message = `السلام عليكم، أريد الاستفسار عن السيارة:
                 
-🚗 الموديل: ${car.name}
-💰 السعر: ${car.price}
+🚗 الموديل: ${carName}
+💰 السعر: ${carPrice}
 📊 المواصفات: ${detailsText}
 📝 الوصف: ${car.description}
 
 أريد معرفة المزيد من التفاصيل عن هذه السيارة وشروط الاستيراد.`;
+                }
                 
-                // فتح واتساب
                 window.open(`https://wa.me/213549883720?text=${encodeURIComponent(message)}`, '_blank');
             }
         }
@@ -1065,18 +1347,40 @@
         function showDetails(carId) {
             const car = carsData.find(c => c.id === carId);
             if (car) {
+                let carName = car.name;
+                let carPrice = car.price;
+                let carDescription = car.description;
                 let detailsText = '';
-                car.details.forEach(detail => {
-                    detailsText += `\n• ${detail.text}`;
-                });
                 
-                alert(`🚗 ${car.name}
+                if (currentLang === 'en') {
+                    carName = car.name_en || car.name;
+                    carPrice = car.price_en || car.price;
+                    carDescription = car.description_en || car.description;
+                    car.details.forEach(detail => {
+                        detailsText += `\n• ${detail.text_en || detail.text}`;
+                    });
+                } else if (currentLang === 'fr') {
+                    carName = car.name_fr || car.name;
+                    carPrice = car.price_fr || car.price;
+                    carDescription = car.description_fr || car.description;
+                    car.details.forEach(detail => {
+                        detailsText += `\n• ${detail.text_fr || detail.text}`;
+                    });
+                } else {
+                    car.details.forEach(detail => {
+                        detailsText += `\n• ${detail.text}`;
+                    });
+                }
                 
-💰 السعر: ${car.price}
-📊 المواصفات:${detailsText}
-📝 الوصف: ${car.description}
+                let title = currentLang === 'en' ? 'Car Details' : currentLang === 'fr' ? 'Détails de la voiture' : 'تفاصيل السيارة';
+                
+                alert(`${title}: ${carName}
+                
+💰 ${currentLang === 'en' ? 'Price' : currentLang === 'fr' ? 'Prix' : 'السعر'}: ${carPrice}
+📊 ${currentLang === 'en' ? 'Specifications' : currentLang === 'fr' ? 'Spécifications' : 'المواصفات'}:${detailsText}
+📝 ${currentLang === 'en' ? 'Description' : currentLang === 'fr' ? 'Description' : 'الوصف'}: ${carDescription}
 
-للاستفسار، اضغط على زر "استفسار" للإرسال عبر واتساب`);
+${currentLang === 'en' ? 'For inquiry, click on the "Inquiry" button to send via WhatsApp' : currentLang === 'fr' ? 'Pour toute demande, cliquez sur le bouton "Renseignement" pour envoyer via WhatsApp' : 'للاستفسار، اضغط على زر "استفسار" للإرسال عبر واتساب'}`);
             }
         }
 
@@ -1088,8 +1392,33 @@
             }
         }
 
+        // حفظ اللغة المختارة في localStorage
+        function saveLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // تحميل اللغة المفضلة
+        function loadPreferredLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang) {
+                document.getElementById('languageSelect').value = savedLang;
+                translatePage(savedLang);
+            } else {
+                translatePage('ar');
+            }
+        }
+
+        // تعديل دالة تغيير اللغة لحفظ التفضيل
+        const originalChangeLanguage = changeLanguage;
+        changeLanguage = function(lang) {
+            originalChangeLanguage(lang);
+            saveLanguage(lang);
+        }
+
         // عرض السيارات عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', displayCars);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPreferredLanguage();
+        });
     </script>
 </body>
 </html>
