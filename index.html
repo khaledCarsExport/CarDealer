@@ -28,11 +28,13 @@
             padding: 20px;
         }
         
-        /* ترويسة معدلة حسب الصورة */
+        /* ترويسة بالحجم الطبيعي - محتفظ بها كما هي */
         header {
-            background: linear-gradient(135deg, #003366, #1a4c7a);
+                   background: linear-gradient(135deg, #E9EEF3, #1F3A5F);
+
+
             color: white;
-            padding: 20px;
+            padding: 25px 30px;
             border-radius: 15px;
             margin-bottom: 30px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -40,63 +42,42 @@
             overflow: hidden;
         }
         
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            z-index: 0;
-        }
-        
-        header::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            z-index: 0;
-        }
-        
         .header-content {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             flex-wrap: wrap;
             position: relative;
             z-index: 1;
         }
         
-        /* تصميم اللوغو الجديد */
-        .logo-container {
+        /* اللوغو والأعلام معاً في جهة اليمين */
+        .logo-flags-wrapper {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             background: rgba(255, 255, 255, 0.1);
-            padding: 12px 20px;
-            border-radius: 50px;
+            padding: 10px 10px;
+            border-radius: 60px;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .logo-icon {
-            background-color: #ffcc00;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+        .logo-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: #003366;
-            font-size: 1.8rem;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            gap: 15px;
+        }
+        
+        .logo-image {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: contain;
+            background-color: white;
+            padding: 0px;
+            border: 3px solid #ffcc00;
+            box-shadow: 2 5px 15px rgba(0,0,0,0.3);
         }
         
         .logo-text {
@@ -109,127 +90,155 @@
             font-size: 1.8rem;
             font-weight: 800;
             letter-spacing: 2px;
-            color: white;
+            color: #FF0000;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
         .logo-text .cars {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #ffcc00;
+            color: #00B050;
             letter-spacing: 3px;
+text-align: center;
         }
         
         .logo-text .export {
-            font-size: 1rem;
+            font-size: 1.5rem;
             font-weight: 500;
-            color: #ffffffcc;
+            color: white;
             letter-spacing: 2px;
+text-align: center;
         }
         
-        /* معلومات الاتصال في الترويسة */
+        /* أعلام الدول - ملتصقة باللوغو */
+        .flags-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-right: 15px;
+            border-right: 2px solid rgba(255,204,0,0.5);
+        }
+        
+        .flag-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .flag-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .flag-icon:hover {
+            transform: translateY(-5px);
+            border-color: #ffcc00;
+            box-shadow: 0 5px 15px rgba(255,204,0,0.3);
+        }
+        
+        .flag-name {
+            font-size: 0.65rem;
+            color: #ffcc00;
+            font-weight: 600;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        
+        /* معلومات الاتصال */
         .contact-header {
             background: rgba(0, 0, 0, 0.3);
             padding: 15px 25px;
-            border-radius: 15px;
+            border-radius: 50px;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            max-width: 500px;
-        }
-        
-        .contact-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #ffcc00;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 8px;
-        }
-        
-        .contact-header h3 i {
-            font-size: 1.2rem;
         }
         
         .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
         .contact-item-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
+            gap: 10px;
+            font-size: 1rem;
+            padding: 8px 18px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item-header:hover {
+            background: rgba(255, 204, 0, 0.2);
+            transform: scale(1.05);
         }
         
         .contact-item-header i {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             background: #ffcc00;
             color: #003366;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
-        }
-        
-        .contact-item-header span {
-            color: white;
+            font-size: 0.9rem;
         }
         
         .contact-item-header .phone-number {
             direction: ltr;
             display: inline-block;
             font-family: 'Courier New', monospace;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
         }
         
         .whatsapp-badge {
             background-color: #25d366;
             color: white;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 0.75rem;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            margin-right: 5px;
+            gap: 5px;
         }
         
         /* الشعار الوصفي */
         .tagline {
-            margin-top: 15px;
+            margin-top: 20px;
             background: linear-gradient(90deg, #ffcc00, #ffaa00);
             color: #003366;
-            padding: 10px 20px;
+            padding: 12px 30px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             box-shadow: 0 5px 15px rgba(255,204,0,0.3);
-        }
-        
-        .tagline i {
-            font-size: 1.2rem;
         }
         
         .service-info {
             background-color: rgba(255, 255, 255, 0.15);
-            padding: 15px;
+            padding: 18px 25px;
             border-radius: 15px;
-            margin-top: 15px;
-            width: 100%;
+            margin-top: 20px;
         }
         
         .service-info h3 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -240,121 +249,21 @@
             list-style-type: none;
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 25px;
         }
         
         .service-info li {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
+            gap: 10px;
+            font-size: 1rem;
         }
         
         .service-info i {
             color: #ffcc00;
         }
         
-        /* قسم معلومات الاتصال في الصفحة */
-        .contact-section {
-            background: linear-gradient(135deg, #003366, #1a4c7a);
-            border-radius: 15px;
-            padding: 35px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            margin-bottom: 40px;
-            text-align: center;
-            color: white;
-        }
-        
-        .contact-section h2 {
-            color: white;
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        
-        .contact-section h2:after {
-            background-color: #ffcc00;
-        }
-        
-        .contact-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .contact-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            padding: 25px;
-            min-width: 280px;
-            flex: 1;
-        }
-        
-        .contact-card h3 {
-            color: #ffcc00;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-        }
-        
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .contact-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 12px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 50px;
-            direction: ltr;
-        }
-        
-        .contact-row i {
-            width: 35px;
-            height: 35px;
-            background: #ffcc00;
-            color: #003366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-        
-        .contact-row span {
-            font-family: 'Courier New', monospace;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        .location-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .location-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 5px 10px;
-        }
-        
-        .location-item i {
-            color: #ffcc00;
-        }
-        
-        /* باقي التنسيقات كما هي */
+        /* قسم السيارات - من النسخة الأصلية */
         .cars-section {
             margin-bottom: 40px;
         }
@@ -401,7 +310,7 @@
         .car-img {
             height: 220px;
             width: 100%;
-            background-size: contain;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-color: #f8f8f8;
@@ -488,12 +397,121 @@
             color: white;
         }
         
+        /* قسم الاتصال - من النسخة الأصلية */
+        .contact-section {
+            background: linear-gradient(135deg, #E9EEF3, #1F3A5F);
+
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            text-align: center;
+            color: white;
+        }
+        
+        .contact-section h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-section h2:after {
+            background-color: #ffcc00;
+        }
+        
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            min-width: 280px;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255,204,0,0.2);
+            border-color: #ffcc00;
+        }
+        
+        .contact-card h3 {
+            color: #ffcc00;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 50px;
+            direction: ltr;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-row:hover {
+            background: rgba(255,204,0,0.2);
+            transform: scale(1.02);
+        }
+        
+        .contact-row i {
+            width: 35px;
+            height: 35px;
+            background: #ffcc00;
+            color: #003366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .contact-row span {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .location-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px;
+        }
+        
+        .location-item i {
+            color: #ffcc00;
+        }
+        
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #1a5fb4;
+            background: linear-gradient(135deg, #E9EEF3, #1F3A5F);
+
             color: white;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-top: 30px;
         }
         
@@ -501,15 +519,29 @@
             .header-content {
                 flex-direction: column;
                 gap: 20px;
-                align-items: stretch;
             }
             
-            .logo-container {
+            .logo-flags-wrapper {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .flags-container {
+                border-right: none;
+                border-top: 2px solid rgba(255,204,0,0.5);
+                padding-right: 0;
+                padding-top: 15px;
+                margin-top: 10px;
+                width: 100%;
                 justify-content: center;
             }
             
+            .contact-header {
+                width: 100%;
+                                     }
+            
             .contact-grid {
-                grid-template-columns: 1fr;
+                justify-content: center;
             }
             
             .cars-grid {
@@ -519,43 +551,58 @@
             .contact-wrapper {
                 flex-direction: column;
             }
-            
-            .tagline {
-                font-size: 0.95rem;
-                text-align: center;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ترويسة معدلة بالكامل -->
+        <!-- الهيدر الجديد مع اللوغو من الإنترنت والأعلام الملتصقة -->
         <header>
             <div class="header-content">
-                <!-- اللوغو الجديد -->
-                <div class="logo-container">
-                                        <div class="logo-text">
-                        <span class="khaled">KHALED CARS EXPORT </span>
-                                           </div>
+                <!-- اللوغو + الأعلام معاً في جهة واحدة -->
+                <div class="logo-flags-wrapper">
+                    <!-- اللوغو من رابط الانترنت -->
+                    <div class="logo-container">
+
+                        <img src="https://i.ibb.co/N68V7Ybn/logo.jpg" alt="Khaled Cars Export Logo" class="logo-image" onerror="this.src='https://via.placeholder.com/70x70/003366/ffcc00?text=KCE'">
+                        <div class="logo-text">
+                            <span class="khaled">KHALED</span>
+                            <span class="cars">CARS</span>
+                            <span class="export">EXPORT</span>
+                        </div>
+                    </div>
+                    
+                    <!-- أعلام الدول - ملتصقة مباشرة باللوغو -->
+                    <div class="flags-container">
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/dz.png" alt="Algeria" class="flag-icon">
+                            <span class="flag-name">الجزائر</span>
+                        </div>
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/cn.png" alt="China" class="flag-icon">
+                            <span class="flag-name">الصين</span>
+                        </div>
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/eu.png" alt="European Union" class="flag-icon">
+                            <span class="flag-name">أوروبا</span>
+                        </div>
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/kr.png" alt="South Korea" class="flag-icon">
+                            <span class="flag-name">كوريا</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- معلومات الاتصال في الترويسة -->
+                <!-- معلومات الاتصال -->
                 <div class="contact-header">
-                    <h3>
-                        <i class="fas fa-headset"></i>
-                        تواصل معنا - Contact Us
-                    </h3>
                     <div class="contact-grid">
-                        <!-- واتساب -->
                         <div class="contact-item-header" onclick="window.open('https://wa.me/213549883720?text=السلام عليكم، أريد الاستفسار عن السيارات', '_blank')" style="cursor: pointer;">
-
                             <i class="fab fa-whatsapp"></i>
                             <span class="phone-number">+213549883720</span>
                             <span class="whatsapp-badge">
                                 <i class="fab fa-whatsapp"></i> واتساب
                             </span>
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -563,7 +610,7 @@
             <!-- الشعار الوصفي -->
             <div class="tagline">
                 <i class="fas fa-globe-europe"></i>
-                سيارات جديدة و مستعملة من أوروبا و الصين إلى الجزائر
+                سيارات جديدة و مستعملة من أوروبا - الصين - كوريا إلى الجزائر
                 <i class="fas fa-globe-asia"></i>
             </div>
             
@@ -571,18 +618,16 @@
             <div class="service-info">
                 <h3><i class="fas fa-star"></i> خدماتنا المميزة</h3>
                 <ul>
-                    <li><i class="fas fa-check-circle"></i> سيارات من أوروبا والصين إلى الجزائر</li>
+                    <li><i class="fas fa-check-circle"></i> سيارات من أوروبا - الصين - كوريا</li>
                     <li><i class="fas fa-check-circle"></i> جديدة و أقل من 3 سنوات</li>
                     <li><i class="fas fa-check-circle"></i> سرعة التوصيل</li>
                     <li><i class="fas fa-check-circle"></i> وثائق و فواتير رسمية</li>
                     <li><i class="fas fa-check-circle"></i> طريقة دفع آمنة</li>
-
-
                 </ul>
             </div>
         </header>
         
-        <!-- قسم السيارات -->
+        <!-- قسم السيارات - من النسخة الأصلية -->
         <section class="cars-section">
             <h2 class="section-title">السيارات المتوفرة للاستيراد</h2>
             
@@ -591,122 +636,123 @@
             </div>
         </section>
         
-        <!-- قسم الاتصال المعدل بالكامل -->
+        <!-- قسم الاتصال - من النسخة الأصلية -->
         <section class="contact-section">
             <h2 class="section-title" style="color: white;">للتواصل والاستفسار</h2>
             
-            
             <div class="contact-wrapper">
-<!-- بطاقة الجزائر -->
-<div class="contact-card">
-    <h3>
-        <i class="fas fa-flag"></i>
-        الجزائر - Algeria
-    </h3>
-    <div class="contact-details">
-        <!-- واتساب سكيكدة - يفتح رسالة واتساب -->
-        <div class="contact-row" onclick="window.open('https://wa.me/213549883720?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات', '_blank')" style="cursor: pointer;">
-            <i class="fab fa-whatsapp" style="color: #25d366;"></i>
-            <span>+213549883720</span>
-            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
-        </div>
-        
-        <!-- هاتف سكيكدة 1 - يتصل مباشرة -->
-        <div class="contact-row" onclick="window.location.href='tel:0549883720'" style="cursor: pointer;">
-            <i class="fas fa-phone" style="color: #4CAF50;"></i>
-            <span>0549883720</span>
-            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
-        </div>
-        
-        <!-- هاتف سكيكدة 2 - يتصل مباشرة -->
-        <div class="contact-row" onclick="window.location.href='tel:0780325968'" style="cursor: pointer;">
-            <i class="fas fa-phone" style="color: #4CAF50;"></i>
-            <span>0780325968</span>
-            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
-        </div>
-        
-        <!-- هاتف تلمسان - يتصل مباشرة -->
-        <div class="contact-row" onclick="window.location.href='tel:0659605045'" style="cursor: pointer;">
-            <i class="fas fa-phone" style="color: #4CAF50;"></i>
-            <span>0659605045</span>
-            <span style="font-size:0.9rem; color:#ffcc00;">تلمسان</span>
-        </div>
-    </div>
-    
-    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
-        <div class="location-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال</span>
-        </div>
-    </div>
-</div>
-
-<!-- بطاقة فرنسا/أوروبا -->
-<div class="contact-card">
-    <h3>
-        <i class="fas fa-flag"></i>
-        فرنسا - France
-    </h3>
-    <div class="contact-details">
-        <!-- واتساب خالد (رقم جزائري في فرنسا) - يفتح رسالة واتساب -->
-        <div class="contact-row" onclick="window.open('https://wa.me/213559369237?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات%20من%20فرنسا', '_blank')" style="cursor: pointer;">
-            <i class="fab fa-whatsapp" style="color: #25d366;"></i>
-            <span>+213559369237</span>
-            <span style="font-size:0.9rem; color:#ffcc00;">خالد</span>
-        </div>
-        
-        <!-- واتساب فرنسا - يفتح رسالة واتساب -->
-        <div class="contact-row" onclick="window.open('https://wa.me/33684208705?text=Bonjour%2C%20je%20voudrais%20me%20renseigner%20sur%20les%20voitures%20importées', '_blank')" style="cursor: pointer;">
-            <i class="fab fa-whatsapp" style="color: #25d366;"></i>
-            <span>+33684208705</span>
-            <span style="font-size:0.9rem; color:#ffcc00;">France</span>
-        </div>
-        
-       </div>
+                <!-- بطاقة الجزائر -->
+                <div class="contact-card">
+                    <h3>
+                        <i class="fas fa-flag"></i>
+                        الجزائر - Algeria
+                    </h3>
+                    <div class="contact-details">
+                        <!-- واتساب سكيكدة -->
+                        <div class="contact-row" onclick="window.open('https://wa.me/213549883720?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات', '_blank')" style="cursor: pointer;">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+213549883720</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+                        </div>
+                        
+                        <!-- هاتف سكيكدة 1 -->
+                        <div class="contact-row" onclick="window.location.href='tel:0549883720'" style="cursor: pointer;">
+                            <i class="fas fa-phone"></i>
+                            <span>0549883720</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+                        </div>
+                        
+                        <!-- هاتف سكيكدة 2 -->
+                        <div class="contact-row" onclick="window.location.href='tel:0780325968'" style="cursor: pointer;">
+                            <i class="fas fa-phone"></i>
+                            <span>0780325968</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+                        </div>
+                        
+                        <!-- هاتف تلمسان -->
+                        <div class="contact-row" onclick="window.location.href='tel:0659605045'" style="cursor: pointer;">
+                            <i class="fas fa-phone"></i>
+                            <span>0659605045</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;">تلمسان</span>
+                        </div>
+                    </div>
                     
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <div class="location-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- بطاقة فرنسا/أوروبا -->
+                <div class="contact-card">
+                    <h3>
+                        <i class="fas fa-flag"></i>
+                        فرنسا - France
+                    </h3>
+                    <div class="contact-details">
+                        <!-- واتساب خالد -->
+                        <div class="contact-row" onclick="window.open('https://wa.me/213559369237?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات%20من%20فرنسا', '_blank')" style="cursor: pointer;">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+213559369237</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;">خالد</span>
+                        </div>
+                        
+                        <!-- واتساب فرنسا -->
+                        <div class="contact-row" onclick="window.open('https://wa.me/33684208705?text=Bonjour%2C%20je%20voudrais%20me%20renseigner%20sur%20les%20voitures%20importées', '_blank')" style="cursor: pointer;">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+33684208705</span>
+                            <span style="font-size:0.9rem; color:#ffcc00;">France</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <div class="location-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>شحن أسبوعي من فرنسا إلى الجزائر</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- بطاقة معلومات إضافية -->
                 <div class="contact-card">
                     <h3>
-                        <i class="fas fa-info-circle" style="color: #ffcc00; font-size: 1.3rem;"></i>
-                        خدماتنا - Services
+                        <i class="fas fa-info-circle"></i>
+                        خدماتنا
                     </h3>
-                                       <div style="display: flex; align-items: center; gap: 10px;">
-
+                    <div style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-car" style="color: #ffcc00; font-size: 1.3rem;"></i>
                             <span>إستيراد كل أنواع السيارات</span>
                         </div>
-                    
-                            
                         <div style="display: flex; align-items: center; gap: 10px;">
-
                             <i class="fas fa-ship" style="color: #ffcc00; font-size: 1.3rem;"></i>
                             <span>شحن أسبوعي إلى الجزائر</span>
                         </div>
-                   
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-hand-holding-usd" style="color: #ffcc00; font-size: 1.3rem;"></i>
-                            <span>دفع آمن </span>
+                            <span>دفع آمن</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         
+        <!-- الفوتر - من النسخة الأصلية -->
         <footer>
             <p>© 2026 خالد كارز إكسبور - Khaled Cars Export. جميع الحقوق محفوظة.</p>
-            <p>سيارات جديدة ومستعملة من أوروبا والصين إلى الجزائر</p>
+            <p>سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر</p>
             <p style="margin-top: 10px; font-size: 0.9rem;">
-                <i class="fab fa-whatsapp"></i> +213 54 988 37 20 | 
-                <i class="fas fa-phone"></i> 0549 88 37 20 | 
-                <i class="fab fa-whatsapp"></i> +33 6 84 20 87 05
+                <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213549883720 | 
+                <i class="fas fa-phone" style="color: #4CAF50;"></i> 0549883720 | 
+                <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213559369237
             </p>
         </footer>
     </div>
 
     <script>
-        // بيانات السيارات
+        // بيانات السيارات - من النسخة الأصلية كاملة
         const carsData = [
             {
                 id: 1,
