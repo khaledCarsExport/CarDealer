@@ -28,11 +28,8 @@
             padding: 20px;
         }
         
-        /* ترويسة بالحجم الطبيعي - محتفظ بها كما هي */
         header {
-                   background: linear-gradient(135deg, #E9EEF3, #1F3A5F);
-
-
+            background: linear-gradient(135deg, #E9EEF3, #1F3A5F);
             color: white;
             padding: 25px 30px;
             border-radius: 15px;
@@ -51,7 +48,6 @@
             z-index: 1;
         }
         
-        /* اللوغو والأعلام معاً في جهة اليمين */
         .logo-flags-wrapper {
             display: flex;
             align-items: center;
@@ -99,7 +95,7 @@
             font-weight: 700;
             color: #00B050;
             letter-spacing: 3px;
-text-align: center;
+            text-align: center;
         }
         
         .logo-text .export {
@@ -107,10 +103,9 @@ text-align: center;
             font-weight: 500;
             color: white;
             letter-spacing: 2px;
-text-align: center;
+            text-align: center;
         }
         
-        /* أعلام الدول - ملتصقة باللوغو */
         .flags-container {
             display: flex;
             align-items: center;
@@ -151,7 +146,6 @@ text-align: center;
             border-radius: 20px;
         }
         
-        /* معلومات الاتصال */
         .contact-header {
             background: rgba(0, 0, 0, 0.3);
             padding: 15px 25px;
@@ -214,7 +208,6 @@ text-align: center;
             gap: 5px;
         }
         
-        /* الشعار الوصفي */
         .tagline {
             margin-top: 20px;
             background: linear-gradient(90deg, #ffcc00, #ffaa00);
@@ -263,7 +256,6 @@ text-align: center;
             color: #ffcc00;
         }
         
-        /* قسم السيارات - من النسخة الأصلية */
         .cars-section {
             margin-bottom: 40px;
         }
@@ -314,6 +306,12 @@ text-align: center;
             background-position: center;
             background-repeat: no-repeat;
             background-color: #f8f8f8;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .car-img:hover {
+            transform: scale(1.05);
         }
         
         .car-content {
@@ -321,7 +319,7 @@ text-align: center;
         }
         
         .car-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #1a5fb4;
             margin-bottom: 10px;
             display: flex;
@@ -330,7 +328,7 @@ text-align: center;
         }
         
         .car-price {
-            background-color: #1a5fb4;
+            background-color: #C9A227;
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
@@ -356,7 +354,7 @@ text-align: center;
         
         .car-details i {
             color: #2d7dd2;
-            width: 20px;
+            width: 25px;
         }
         
         .car-actions {
@@ -397,10 +395,8 @@ text-align: center;
             color: white;
         }
         
-        /* قسم الاتصال - من النسخة الأصلية */
         .contact-section {
             background: linear-gradient(135deg, #E9EEF3, #1F3A5F);
-
             border-radius: 15px;
             padding: 35px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -509,12 +505,88 @@ text-align: center;
             text-align: center;
             padding: 20px;
             background: linear-gradient(135deg, #E9EEF3, #1F3A5F);
-
             color: white;
             border-radius: 15px;
             margin-top: 30px;
         }
-        
+
+        /* Modal لعرض الصور */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            direction: ltr;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+            border: 3px solid #ffcc00;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #ffcc00;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: white;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: #ffcc00;
+            font-weight: bold;
+            font-size: 40px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(255,204,0,0.8);
+            color: black;
+        }
+
+        .caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: white;
+            padding: 10px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -538,7 +610,7 @@ text-align: center;
             
             .contact-header {
                 width: 100%;
-                                     }
+            }
             
             .contact-grid {
                 justify-content: center;
@@ -551,19 +623,19 @@ text-align: center;
             .contact-wrapper {
                 flex-direction: column;
             }
+            
+            .prev, .next {
+                font-size: 30px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- الهيدر الجديد مع اللوغو من الإنترنت والأعلام الملتصقة -->
         <header>
             <div class="header-content">
-                <!-- اللوغو + الأعلام معاً في جهة واحدة -->
                 <div class="logo-flags-wrapper">
-                    <!-- اللوغو من رابط الانترنت -->
                     <div class="logo-container">
-
                         <img src="https://i.ibb.co/N68V7Ybn/logo.jpg" alt="Khaled Cars Export Logo" class="logo-image" onerror="this.src='https://via.placeholder.com/70x70/003366/ffcc00?text=KCE'">
                         <div class="logo-text">
                             <span class="khaled">KHALED</span>
@@ -572,7 +644,6 @@ text-align: center;
                         </div>
                     </div>
                     
-                    <!-- أعلام الدول - ملتصقة مباشرة باللوغو -->
                     <div class="flags-container">
                         <div class="flag-item">
                             <img src="https://flagcdn.com/w40/dz.png" alt="Algeria" class="flag-icon">
@@ -593,7 +664,6 @@ text-align: center;
                     </div>
                 </div>
                 
-                <!-- معلومات الاتصال -->
                 <div class="contact-header">
                     <div class="contact-grid">
                         <div class="contact-item-header" onclick="window.open('https://wa.me/213549883720?text=السلام عليكم، أريد الاستفسار عن السيارات', '_blank')" style="cursor: pointer;">
@@ -607,14 +677,12 @@ text-align: center;
                 </div>
             </div>
             
-            <!-- الشعار الوصفي -->
             <div class="tagline">
                 <i class="fas fa-globe-europe"></i>
                 سيارات جديدة و مستعملة من أوروبا - الصين - كوريا إلى الجزائر
                 <i class="fas fa-globe-asia"></i>
             </div>
             
-            <!-- خدمات التوصيل -->
             <div class="service-info">
                 <h3><i class="fas fa-star"></i> خدماتنا المميزة</h3>
                 <ul>
@@ -627,49 +695,36 @@ text-align: center;
             </div>
         </header>
         
-        <!-- قسم السيارات - من النسخة الأصلية -->
         <section class="cars-section">
             <h2 class="section-title">السيارات المتوفرة للاستيراد</h2>
-            
-            <div class="cars-grid" id="cars-container">
-                <!-- السيارات سيتم إضافتها هنا عبر JavaScript -->
-            </div>
+            <div class="cars-grid" id="cars-container"></div>
         </section>
         
-        <!-- قسم الاتصال - من النسخة الأصلية -->
         <section class="contact-section">
             <h2 class="section-title" style="color: white;">للتواصل والاستفسار</h2>
             
             <div class="contact-wrapper">
-                <!-- بطاقة الجزائر -->
                 <div class="contact-card">
-                    <h3>
-                        <i class="fas fa-flag"></i>
-                        الجزائر - Algeria
-                    </h3>
+                    <h3><i class="fas fa-flag"></i> الجزائر - Algeria</h3>
                     <div class="contact-details">
-                        <!-- واتساب سكيكدة -->
                         <div class="contact-row" onclick="window.open('https://wa.me/213549883720?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات', '_blank')" style="cursor: pointer;">
                             <i class="fab fa-whatsapp"></i>
                             <span>+213549883720</span>
                             <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
                         </div>
                         
-                        <!-- هاتف سكيكدة 1 -->
                         <div class="contact-row" onclick="window.location.href='tel:0549883720'" style="cursor: pointer;">
                             <i class="fas fa-phone"></i>
                             <span>0549883720</span>
                             <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
                         </div>
                         
-                        <!-- هاتف سكيكدة 2 -->
                         <div class="contact-row" onclick="window.location.href='tel:0780325968'" style="cursor: pointer;">
                             <i class="fas fa-phone"></i>
                             <span>0780325968</span>
                             <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
                         </div>
                         
-                        <!-- هاتف تلمسان -->
                         <div class="contact-row" onclick="window.location.href='tel:0659605045'" style="cursor: pointer;">
                             <i class="fas fa-phone"></i>
                             <span>0659605045</span>
@@ -685,21 +740,15 @@ text-align: center;
                     </div>
                 </div>
                 
-                <!-- بطاقة فرنسا/أوروبا -->
                 <div class="contact-card">
-                    <h3>
-                        <i class="fas fa-flag"></i>
-                        فرنسا - France
-                    </h3>
+                    <h3><i class="fas fa-flag"></i> فرنسا - France</h3>
                     <div class="contact-details">
-                        <!-- واتساب خالد -->
                         <div class="contact-row" onclick="window.open('https://wa.me/213559369237?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات%20من%20فرنسا', '_blank')" style="cursor: pointer;">
                             <i class="fab fa-whatsapp"></i>
                             <span>+213559369237</span>
                             <span style="font-size:0.9rem; color:#ffcc00;">خالد</span>
                         </div>
                         
-                        <!-- واتساب فرنسا -->
                         <div class="contact-row" onclick="window.open('https://wa.me/33684208705?text=Bonjour%2C%20je%20voudrais%20me%20renseigner%20sur%20les%20voitures%20importées', '_blank')" style="cursor: pointer;">
                             <i class="fab fa-whatsapp"></i>
                             <span>+33684208705</span>
@@ -715,12 +764,8 @@ text-align: center;
                     </div>
                 </div>
                 
-                <!-- بطاقة معلومات إضافية -->
                 <div class="contact-card">
-                    <h3>
-                        <i class="fas fa-info-circle"></i>
-                        خدماتنا
-                    </h3>
+                    <h3><i class="fas fa-info-circle"></i> خدماتنا</h3>
                     <div style="display: flex; flex-direction: column; gap: 15px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <i class="fas fa-car" style="color: #ffcc00; font-size: 1.3rem;"></i>
@@ -739,7 +784,6 @@ text-align: center;
             </div>
         </section>
         
-        <!-- الفوتر - من النسخة الأصلية -->
         <footer>
             <p>© 2026 خالد كارز إكسبور - Khaled Cars Export. جميع الحقوق محفوظة.</p>
             <p>سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر</p>
@@ -751,15 +795,37 @@ text-align: center;
         </footer>
     </div>
 
+    <!-- Modal لعرض الصور -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="prev" onclick="changeImage(-1)">&#10094;</span>
+        <span class="next" onclick="changeImage(1)">&#10095;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="caption" id="modalCaption"></div>
+    </div>
+
     <script>
-        // بيانات السيارات - من النسخة الأصلية كاملة
+        // متغيرات لعرض الصور
+        let currentImageIndex = 0;
+        let currentCarImages = [];
+
+        // بيانات السيارات مع إضافة المزيد من الصور لكل سيارة
         const carsData = [
             {
                 id: 1,
-                name: "Renault Clio 5",
+                name: "Renault Clio 5 Equilibre",
                 price: "313 مليون",
-                image: "https://images.unsplash.com/photo-1770799296162-40fd8d53b1cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=120",
+                images: [
+                    "https://i.ibb.co/hxz5y65x/1.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/Swd4rmKZ/2.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/qY5b9XGZ/3.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/zhj0Rknt/4.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/wr4hnXXJ/5.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/Kj76pvRz/6.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+
+                ],
                 details: [
+                                {icon: "fas fa-calendar-alt", text: "2023  "},
                     {icon: "fas fa-gas-pump", text: "بنزين"},
                     {icon: "fas fa-cogs", text: "يدوي"},
                     {icon: "fas fa-tachometer-alt", text: "24245 كلم"},
@@ -769,68 +835,116 @@ text-align: center;
             },
             {
                 id: 2,
-                name: "هيونداي توسان 2023",
-                price: "$26,800",
-                image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                details: [
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "أوتوماتيك"},
-                    {icon: "fas fa-tachometer-alt", text: "15000 كلم"},
-                    {icon: "fas fa-horse-head", text: "190 حصان"}
+                name: "Peugeot 208 Active",
+                price: "339 مليون",
+                images: [
+                    "https://i.ibb.co/zy0dN1N/1.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/Hpt3P8Cb/2.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/pvmy0G8L/627076457-122119931481086655-4479522672578579393-n.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/r2yVNBfp/11.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+
                 ],
-                description: "سيارة دفع رباعي عملية مع مساحة واسعة وتصميم عصري"
+                details: [
+                                {icon: "fas fa-calendar-alt", text: "2024  "},
+
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "يدوي"},
+                    {icon: "fas fa-tachometer-alt", text: "15600 كلم"},
+                    {icon: "fas fa-horse-head", text: "75 حصان"}
+                ],
+                description: "السعر دون إحتساب مصاريف الجمركة"
             },
             {
                 id: 3,
-                name: "مرسيدس E-Class 2023",
-                price: "$65,000",
-                image: "https://images.unsplash.com/photo-1563720223485-8d6d5c5c8c6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                details: [
-                    {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "أوتوماتيك"},
-                    {icon: "fas fa-tachometer-alt", text: "8000 كلم"},
-                    {icon: "fas fa-horse-head", text: "255 حصان"}
+                name: "Peugeot 208 Active",
+                price: "329 مليون",
+                images: [
+                    "https://i.ibb.co/N2h4cmdV/photo-10.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/spWZYp4R/photo-13.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/GQ9j9wPp/photo-15.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/wNjtRZLX/photo-20.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/Mw6wVt8/photo-27.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/vtwjm6J/photo-28.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+
                 ],
-                description: "سيارة فاخرة بمستوى عالٍ من الراحة والتقنيات المتطورة"
+                details: [
+                                {icon: "fas fa-calendar-alt", text: "2024  "},
+
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "يدوي"},
+                    {icon: "fas fa-tachometer-alt", text: "17500 كلم"},
+                    {icon: "fas fa-horse-head", text: "75 حصان"}
+                ],
+                description: "السعر دون إحتساب مصاريف الجمركة"
             },
             {
                 id: 4,
-                name: "بيجو 308 2023",
-                price: "$24,300",
-                image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-                details: [
-                    {icon: "fas fa-gas-pump", text: "ديزل"},
-                    {icon: "fas fa-cogs", text: "يدوي"},
-                    {icon: "fas fa-tachometer-alt", text: "12000 كلم"},
-                    {icon: "fas fa-horse-head", text: "130 حصان"}
+                name: "Citroen C3 You",
+                price: "309 مليون",
+                images: [
+                    "https://i.ibb.co/nMNF8bMx/photo-2.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/QjPzPxsL/photo-4.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/vxyf5Gbj/photo-8.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/BKzy966B/photo-13.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/qFBKHMYn/photo-19.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/JwdQn4qs/photo-21.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
                 ],
-                description: "سيارة هاتشباك عملية بتصميم فرنسي أنيق"
+                details: [
+                                {icon: "fas fa-calendar-alt", text: "2024  "},
+
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "يدوي"},
+                    {icon: "fas fa-tachometer-alt", text: "13000 كلم"},
+                    {icon: "fas fa-horse-head", text: "83 حصان"}
+                ],
+                description: "السعر دون إحتساب مصاريف الجمركة"
             },
             {
                 id: 5,
-                name: "شيفروليه تاهو 2023",
-                price: "$52,000",
-                image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                name: "Renault Austral Evolution",
+                         price: "515 مليون",
+                images: [
+                    "https://i.ibb.co/ym0jqw6n/1.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/WN4vZjDL/2.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/GfLgK3rF/5.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/FkjYN5b8/7.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/B54nH7Q6/10.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/vxP32D5p/11.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                      ],
                 details: [
+                                {icon: "fas fa-calendar-alt", text: "2023  "},
+
                     {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "أوتوماتيك"},
-                    {icon: "fas fa-tachometer-alt", text: "5000 كلم"},
-                    {icon: "fas fa-horse-head", text: "355 حصان"}
+                    {icon: "fas fa-cogs", text: "يدوي"},
+                    {icon: "fas fa-tachometer-alt", text: "17349 كلم"},
+                    {icon: "fas fa-horse-head", text: "130 حصان"}
                 ],
-                description: "سيارة دفع رباعي كبيرة مع مساحة واسعة وقدرة جر عالية"
+                description: "السعر دون إحتساب مصاريف الجمركة"
             },
             {
                 id: 6,
-                name: "رينو كليو 2023",
-                price: "313 مليون",
-                image: "https://images.unsplash.com/photo-1770799296162-40fd8d53b1cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                name: "Geely Coolray",
+                price: "532 مليون",
+                images: [
+                    "https://i.ibb.co/gFzN42tk/4.png?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/hFC3g5tf/1.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/4Rm9YLzf/8.png?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/tpmv6xyr/3.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/tMfvqL7L/5.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/SDYfLVQT/6.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/FkrbWXD0/2.jpg?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                    "https://i.ibb.co/DgggGrxv/7.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+
+],
                 details: [
+                                {icon: "fas fa-calendar-alt", text: "2025  "},
+
                     {icon: "fas fa-gas-pump", text: "بنزين"},
-                    {icon: "fas fa-cogs", text: "يدوي"},
-                    {icon: "fas fa-tachometer-alt", text: "24245 كلم"},
-                    {icon: "fas fa-horse-head", text: "90 حصان"}
+                    {icon: "fas fa-cogs", text: "أوتوماتيكي"},
+                    {icon: "fas fa-tachometer-alt", text: "300 كلم"},
+                    {icon: "fas fa-horse-head", text: "181 حصان"}
                 ],
-                description: "السعر دون إحتساب مصاريف الجمركة"
+                description: "Full Options"
             }
         ];
 
@@ -839,7 +953,7 @@ text-align: center;
             const carsContainer = document.getElementById('cars-container');
             carsContainer.innerHTML = '';
             
-            carsData.forEach(car => {
+            carsData.forEach((car, index) => {
                 const carCard = document.createElement('div');
                 carCard.className = 'car-card';
                 
@@ -855,7 +969,7 @@ text-align: center;
                 });
                 
                 carCard.innerHTML = `
-                    <div class="car-img" style="background-image: url('${car.image}')"></div>
+                    <div class="car-img" style="background-image: url('${car.images[0]}')" onclick="openModal(${car.id}, 0)"></div>
                     <div class="car-content">
                         <div class="car-title">
                             <h3>${car.name}</h3>
@@ -869,7 +983,7 @@ text-align: center;
                             <button class="btn btn-primary" onclick="showDetails(${car.id})">
                                 <i class="fas fa-info-circle"></i> التفاصيل
                             </button>
-                            <button class="btn btn-outline" onclick="inquireAboutCar('${car.name}')">
+                            <button class="btn btn-outline" onclick="inquireAboutCar(${car.id})">
                                 <i class="fas fa-question-circle"></i> استفسار
                             </button>
                         </div>
@@ -880,17 +994,98 @@ text-align: center;
             });
         }
 
+        // دالة لفتح نافذة عرض الصور
+        function openModal(carId, imageIndex) {
+            const car = carsData.find(c => c.id === carId);
+            if (car) {
+                currentCarImages = car.images;
+                currentImageIndex = imageIndex;
+                
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImage');
+                const caption = document.getElementById('modalCaption');
+                
+                modal.style.display = 'block';
+                modalImg.src = currentCarImages[currentImageIndex];
+                caption.innerHTML = `${car.name} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
+            }
+        }
+
+        // دالة لتغيير الصورة
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            
+            if (currentImageIndex >= currentCarImages.length) {
+                currentImageIndex = 0;
+            }
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentCarImages.length - 1;
+            }
+            
+            const modalImg = document.getElementById('modalImage');
+            const caption = document.getElementById('modalCaption');
+            const car = carsData.find(c => c.images === currentCarImages);
+            
+            modalImg.src = currentCarImages[currentImageIndex];
+            caption.innerHTML = `${car ? car.name : 'سيارة'} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
+        }
+
+        // دالة لإغلاق نافذة الصور
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // دالة للاستفسار عن سيارة عبر واتساب
+        function inquireAboutCar(carId) {
+            const car = carsData.find(c => c.id === carId);
+            if (car) {
+                // تفاصيل السيارة
+                let detailsText = '';
+                car.details.forEach(detail => {
+                    detailsText += `${detail.text} - `;
+                });
+                detailsText = detailsText.slice(0, -3);
+                
+                // إنشاء نص الرسالة
+                const message = `السلام عليكم، أريد الاستفسار عن السيارة:
+                
+🚗 الموديل: ${car.name}
+💰 السعر: ${car.price}
+📊 المواصفات: ${detailsText}
+📝 الوصف: ${car.description}
+
+أريد معرفة المزيد من التفاصيل عن هذه السيارة وشروط الاستيراد.`;
+                
+                // فتح واتساب
+                window.open(`https://wa.me/213549883720?text=${encodeURIComponent(message)}`, '_blank');
+            }
+        }
+
         // دالة لعرض تفاصيل السيارة
         function showDetails(carId) {
             const car = carsData.find(c => c.id === carId);
             if (car) {
-                alert(`تفاصيل ${car.name}:\n\nالسعر: ${car.price}\n${car.description}\n\nللاستفسار، اتصل بنا:\n📱 واتساب: +213 54 988 37 20\n📞 سكيكدة: 0549 88 37 20 - 0780 32 59 68\n📞 تلمسان: 06 59 60 50 45\n🇫🇷 فرنسا: +33 6 84 20 87 05`);
+                let detailsText = '';
+                car.details.forEach(detail => {
+                    detailsText += `\n• ${detail.text}`;
+                });
+                
+                alert(`🚗 ${car.name}
+                
+💰 السعر: ${car.price}
+📊 المواصفات:${detailsText}
+📝 الوصف: ${car.description}
+
+للاستفسار، اضغط على زر "استفسار" للإرسال عبر واتساب`);
             }
         }
 
-        // دالة للاستفسار عن سيارة
-        function inquireAboutCar(carName) {
-            alert(`✅ تم تسجيل استفسارك حول ${carName}\n\nسيقوم فريق خالد كارز إكسبور بالاتصال بك في أقرب وقت.\n\n📞 للاستفسار الفوري: +213 54 988 37 20`);
+        // إغلاق المودال عند الضغط خارج الصورة
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
         }
 
         // عرض السيارات عند تحميل الصفحة
