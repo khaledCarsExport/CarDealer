@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جرد السيارات</title>
+    <title>خالد كارز إكسبور - استيراد السيارات من أوروبا والصين</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,933 +17,838 @@
         }
         
         body {
-            background-color: #f5f7fa;
+            background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
-            padding: 20px;
-            direction: rtl;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
             padding: 20px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+        
+        /* ترويسة معدلة حسب الصورة */
+        header {
+            background: linear-gradient(135deg, #003366, #1a4c7a);
             color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
         
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            z-index: 0;
         }
         
-        header p {
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* تصميم اللوغو الجديد */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo-icon {
+            background-color: #ffcc00;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #003366;
+            font-size: 1.8rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .logo-text .khaled {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .logo-text .cars {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffcc00;
+            letter-spacing: 3px;
+        }
+        
+        .logo-text .export {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffffcc;
+            letter-spacing: 2px;
+        }
+        
+        /* معلومات الاتصال في الترويسة */
+        .contact-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 500px;
+        }
+        
+        .contact-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffcc00;
             font-size: 1.1rem;
-            opacity: 0.9;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 8px;
         }
         
-        .app-container {
+        .contact-header h3 i {
+            font-size: 1.2rem;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .contact-item-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .contact-item-header i {
+            width: 25px;
+            height: 25px;
+            background: #ffcc00;
+            color: #003366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        
+        .contact-item-header span {
+            color: white;
+        }
+        
+        .contact-item-header .phone-number {
+            direction: ltr;
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+        
+        .whatsapp-badge {
+            background-color: #25d366;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-right: 5px;
+        }
+        
+        /* الشعار الوصفي */
+        .tagline {
+            margin-top: 15px;
+            background: linear-gradient(90deg, #ffcc00, #ffaa00);
+            color: #003366;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(255,204,0,0.3);
+        }
+        
+        .tagline i {
+            font-size: 1.2rem;
+        }
+        
+        .service-info {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .service-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffcc00;
+        }
+        
+        .service-info ul {
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .service-info li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .service-info i {
+            color: #ffcc00;
+        }
+        
+        /* قسم معلومات الاتصال في الصفحة */
+        .contact-section {
+            background: linear-gradient(135deg, #003366, #1a4c7a);
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-bottom: 40px;
+            text-align: center;
+            color: white;
+        }
+        
+        .contact-section h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .contact-section h2:after {
+            background-color: #ffcc00;
+        }
+        
+        .contact-wrapper {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
         }
         
-        .form-section {
-            flex: 1;
-            min-width: 300px;
-            background-color: white;
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
             padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            min-width: 280px;
+            flex: 1;
         }
         
-        .inventory-section {
-            flex: 2;
-            min-width: 300px;
-        }
-        
-        h2 {
-            color: #2a5298;
+        .contact-card h3 {
+            color: #ffcc00;
+            font-size: 1.3rem;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
-            font-size: 1.8rem;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #444;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border 0.3s;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #2a5298;
-            box-shadow: 0 0 0 2px rgba(42, 82, 152, 0.1);
-        }
-        
-        .image-upload {
-            border: 2px dashed #ccc;
-            padding: 20px;
-            text-align: center;
-            border-radius: 6px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .image-upload:hover {
-            border-color: #2a5298;
-            background-color: #f9faff;
-        }
-        
-        .image-upload i {
-            font-size: 2rem;
-            color: #2a5298;
-            margin-bottom: 10px;
-        }
-        
-        .image-preview {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 10px;
-            margin-top: 15px;
+            justify-content: center;
         }
         
-        .preview-item {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: #2a5298;
-            color: white;
-            border: none;
-            border-radius: 6px;
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 50px;
+            direction: ltr;
+        }
+        
+        .contact-row i {
+            width: 35px;
+            height: 35px;
+            background: #ffcc00;
+            color: #003366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1rem;
+        }
+        
+        .contact-row span {
+            font-family: 'Courier New', monospace;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .location-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .location-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px;
+        }
+        
+        .location-item i {
+            color: #ffcc00;
+        }
+        
+        /* باقي التنسيقات كما هي */
+        .cars-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
             text-align: center;
+            margin-bottom: 30px;
+            color: #1a5fb4;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
         }
         
-        .btn:hover {
-            background-color: #1e3c72;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background-color: #2d7dd2;
         }
         
-        .btn-generate {
-            background-color: #28a745;
-            margin-top: 20px;
-            width: 100%;
-        }
-        
-        .btn-generate:hover {
-            background-color: #218838;
-        }
-        
-        .btn-refresh {
-            background-color: #17a2b8;
-            margin-bottom: 20px;
-        }
-        
-        .btn-refresh:hover {
-            background-color: #138496;
-        }
-        
-        .car-list {
+        .cars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
         
         .car-card {
             background-color: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
         .car-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
         
-        .car-images {
-            height: 180px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .car-main-image {
+        .car-img {
+            height: 220px;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #f8f8f8;
         }
         
-        .car-thumbnails {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            display: flex;
-            gap: 5px;
-        }
-        
-        .thumbnail {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 3px;
-            border: 2px solid white;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-        }
-        
-        .thumbnail.active {
-            opacity: 1;
-            border-color: #2a5298;
-        }
-        
-        .car-details {
+        .car-content {
             padding: 20px;
         }
         
         .car-title {
-            font-size: 1.4rem;
-            color: #2a5298;
-            margin-bottom: 15px;
-        }
-        
-        .car-specs {
-            list-style: none;
-            margin-bottom: 15px;
-        }
-        
-        .car-specs li {
-            margin-bottom: 8px;
+            font-size: 1.3rem;
+            color: #1a5fb4;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px dashed #eee;
-            padding-bottom: 5px;
+            align-items: center;
         }
         
-        .car-specs strong {
-            color: #555;
-        }
-        
-        .car-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        
-        .tag {
-            background-color: #f0f4ff;
-            color: #2a5298;
+        .car-price {
+            background-color: #1a5fb4;
+            color: white;
             padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        
+        .car-details {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .car-details ul {
+            list-style-type: none;
+        }
+        
+        .car-details li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .car-details i {
+            color: #2d7dd2;
+            width: 20px;
         }
         
         .car-actions {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
             margin-top: 15px;
         }
         
-        .btn-edit {
-            background-color: #ffc107;
-            color: #333;
-            flex: 1;
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .btn-edit:hover {
-            background-color: #e0a800;
+        .btn-primary {
+            background-color: #1a5fb4;
+            color: white;
         }
         
-        .btn-delete {
-            background-color: #dc3545;
-            flex: 1;
+        .btn-primary:hover {
+            background-color: #0f4a94;
         }
         
-        .btn-delete:hover {
-            background-color: #c82333;
+        .btn-outline {
+            background-color: transparent;
+            color: #1a5fb4;
+            border: 2px solid #1a5fb4;
         }
         
-        .code-output {
-            margin-top: 30px;
-            background-color: #1e1e1e;
-            color: #d4d4d4;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            display: none;
-        }
-        
-        .code-output h3 {
-            color: #fff;
-            margin-bottom: 15px;
-            font-family: 'Cairo', sans-serif;
-        }
-        
-        .code-output.active {
-            display: block;
-        }
-        
-        .copy-btn {
-            background-color: #6c757d;
-            margin-top: 10px;
-        }
-        
-        .copy-btn:hover {
-            background-color: #5a6268;
+        .btn-outline:hover {
+            background-color: #1a5fb4;
+            color: white;
         }
         
         footer {
             text-align: center;
-            margin-top: 40px;
             padding: 20px;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
+            background-color: #1a5fb4;
+            color: white;
+            border-radius: 10px;
+            margin-top: 30px;
         }
         
         @media (max-width: 768px) {
-            .app-container {
+            .header-content {
                 flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
             }
             
-            .car-list {
+            .logo-container {
+                justify-content: center;
+            }
+            
+            .contact-grid {
                 grid-template-columns: 1fr;
             }
             
-            header h1 {
-                font-size: 2rem;
+            .cars-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-wrapper {
+                flex-direction: column;
+            }
+            
+            .tagline {
+                font-size: 0.95rem;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- ترويسة معدلة بالكامل -->
         <header>
-            <h1><i class="fas fa-car"></i> جرد السيارات</h1>
-            <p>أداة لإدارة جرد السيارات مع مستعرض صور وتوليد كود HTML</p>
+            <div class="header-content">
+                <!-- اللوغو الجديد -->
+                <div class="logo-container">
+                                        <div class="logo-text">
+                        <span class="khaled">KHALED CARS EXPORT </span>
+                                           </div>
+                </div>
+                
+                <!-- معلومات الاتصال في الترويسة -->
+                <div class="contact-header">
+                    <h3>
+                        <i class="fas fa-headset"></i>
+                        تواصل معنا - Contact Us
+                    </h3>
+                    <div class="contact-grid">
+                        <!-- واتساب -->
+                        <div class="contact-item-header" onclick="window.open('https://wa.me/213549883720?text=السلام عليكم، أريد الاستفسار عن السيارات', '_blank')" style="cursor: pointer;">
+
+                            <i class="fab fa-whatsapp"></i>
+                            <span class="phone-number">+213549883720</span>
+                            <span class="whatsapp-badge">
+                                <i class="fab fa-whatsapp"></i> واتساب
+                            </span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الشعار الوصفي -->
+            <div class="tagline">
+                <i class="fas fa-globe-europe"></i>
+                سيارات جديدة و مستعملة من أوروبا و الصين إلى الجزائر
+                <i class="fas fa-globe-asia"></i>
+            </div>
+            
+            <!-- خدمات التوصيل -->
+            <div class="service-info">
+                <h3><i class="fas fa-star"></i> خدماتنا المميزة</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> سيارات من أوروبا والصين إلى الجزائر</li>
+                    <li><i class="fas fa-check-circle"></i> جديدة و أقل من 3 سنوات</li>
+                    <li><i class="fas fa-check-circle"></i> سرعة التوصيل</li>
+                    <li><i class="fas fa-check-circle"></i> وثائق و فواتير رسمية</li>
+                    <li><i class="fas fa-check-circle"></i> طريقة دفع آمنة</li>
+
+
+                </ul>
+            </div>
         </header>
         
-        <div class="app-container">
-            <section class="form-section">
-                <h2><i class="fas fa-plus-circle"></i> إضافة سيارة جديدة</h2>
-                <form id="carForm">
-                    <div class="form-group">
-                        <label for="carModel">الموديل (مثال: Renault Clio 5)</label>
-                        <input type="text" id="carModel" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carTrim">الطراز / النسخة (مثال: Équilibre)</label>
-                        <input type="text" id="carTrim">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carYear">سنة الصنع</label>
-                        <input type="number" id="carYear" min="2000" max="2030" value="2024" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carEngine">المحرك (مثال: 1.0 TCE)</label>
-                        <input type="text" id="carEngine" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carPower">القوة (حصان)</label>
-                        <input type="text" id="carPower" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carTransmission">ناقل الحركة</label>
-                        <select id="carTransmission">
-                            <option value="Manual">يدوي</option>
-                            <option value="Automatic">أوتوماتيك</option>
-                            <option value="Semi-Automatic">شبه أوتوماتيك</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carFuel">نوع الوقود</label>
-                        <select id="carFuel">
-                            <option value="Petrol">بنزين</option>
-                            <option value="Diesel">ديزل</option>
-                            <option value="Electric">كهربائي</option>
-                            <option value="Hybrid">هجين</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carMileage">المسافة المقطوعة (كم)</label>
-                        <input type="text" id="carMileage" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="carFeatures">مميزات إضافية (مثال: Camera: 360)</label>
-                        <textarea id="carFeatures" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>رفع صور السيارة</label>
-                        <div class="image-upload" id="imageUpload">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>انقر لرفع الصور أو اسحبها هنا</p>
-                            <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
-                        </div>
-                        <div class="image-preview" id="imagePreview"></div>
-                    </div>
-                    
-                    <button type="submit" class="btn"><i class="fas fa-car-side"></i> إضافة السيارة</button>
-                </form>
-                
-                <button class="btn btn-generate" id="generateCodeBtn"><i class="fas fa-code"></i> توليد كود HTML</button>
-            </section>
+        <!-- قسم السيارات -->
+        <section class="cars-section">
+            <h2 class="section-title">السيارات المتوفرة للاستيراد</h2>
             
-            <section class="inventory-section">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h2><i class="fas fa-clipboard-list"></i> المخزون الحالي</h2>
-                    <button class="btn btn-refresh" id="refreshBtn"><i class="fas fa-redo"></i> تحديث</button>
-                </div>
-                
-                <div class="car-list" id="carList">
-                    <!-- Cars will be loaded here -->
-                </div>
-                
-                <div class="code-output" id="codeOutput">
-                    <h3>كود HTML للمخزون</h3>
-                    <pre id="generatedCode"></pre>
-                    <button class="btn copy-btn" id="copyCodeBtn"><i class="far fa-copy"></i> نسخ الكود</button>
-                </div>
-            </section>
+            <div class="cars-grid" id="cars-container">
+                <!-- السيارات سيتم إضافتها هنا عبر JavaScript -->
+            </div>
+        </section>
+        
+        <!-- قسم الاتصال المعدل بالكامل -->
+        <section class="contact-section">
+            <h2 class="section-title" style="color: white;">للتواصل والاستفسار</h2>
+            
+            
+            <div class="contact-wrapper">
+<!-- بطاقة الجزائر -->
+<div class="contact-card">
+    <h3>
+        <i class="fas fa-flag"></i>
+        الجزائر - Algeria
+    </h3>
+    <div class="contact-details">
+        <!-- واتساب سكيكدة - يفتح رسالة واتساب -->
+        <div class="contact-row" onclick="window.open('https://wa.me/213549883720?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات', '_blank')" style="cursor: pointer;">
+            <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+            <span>+213549883720</span>
+            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
         </div>
         
+        <!-- هاتف سكيكدة 1 - يتصل مباشرة -->
+        <div class="contact-row" onclick="window.location.href='tel:0549883720'" style="cursor: pointer;">
+            <i class="fas fa-phone" style="color: #4CAF50;"></i>
+            <span>0549883720</span>
+            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+        </div>
+        
+        <!-- هاتف سكيكدة 2 - يتصل مباشرة -->
+        <div class="contact-row" onclick="window.location.href='tel:0780325968'" style="cursor: pointer;">
+            <i class="fas fa-phone" style="color: #4CAF50;"></i>
+            <span>0780325968</span>
+            <span style="font-size:0.9rem; color:#ffcc00;">سكيكدة</span>
+        </div>
+        
+        <!-- هاتف تلمسان - يتصل مباشرة -->
+        <div class="contact-row" onclick="window.location.href='tel:0659605045'" style="cursor: pointer;">
+            <i class="fas fa-phone" style="color: #4CAF50;"></i>
+            <span>0659605045</span>
+            <span style="font-size:0.9rem; color:#ffcc00;">تلمسان</span>
+        </div>
+    </div>
+    
+    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+        <div class="location-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال</span>
+        </div>
+    </div>
+</div>
+
+<!-- بطاقة فرنسا/أوروبا -->
+<div class="contact-card">
+    <h3>
+        <i class="fas fa-flag"></i>
+        فرنسا - France
+    </h3>
+    <div class="contact-details">
+        <!-- واتساب خالد (رقم جزائري في فرنسا) - يفتح رسالة واتساب -->
+        <div class="contact-row" onclick="window.open('https://wa.me/213559369237?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات%20من%20فرنسا', '_blank')" style="cursor: pointer;">
+            <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+            <span>+213559369237</span>
+            <span style="font-size:0.9rem; color:#ffcc00;">خالد</span>
+        </div>
+        
+        <!-- واتساب فرنسا - يفتح رسالة واتساب -->
+        <div class="contact-row" onclick="window.open('https://wa.me/33684208705?text=Bonjour%2C%20je%20voudrais%20me%20renseigner%20sur%20les%20voitures%20importées', '_blank')" style="cursor: pointer;">
+            <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+            <span>+33684208705</span>
+            <span style="font-size:0.9rem; color:#ffcc00;">France</span>
+        </div>
+        
+       </div>
+                    
+                </div>
+                
+                <!-- بطاقة معلومات إضافية -->
+                <div class="contact-card">
+                    <h3>
+                        <i class="fas fa-info-circle" style="color: #ffcc00; font-size: 1.3rem;"></i>
+                        خدماتنا - Services
+                    </h3>
+                                       <div style="display: flex; align-items: center; gap: 10px;">
+
+                            <i class="fas fa-car" style="color: #ffcc00; font-size: 1.3rem;"></i>
+                            <span>إستيراد كل أنواع السيارات</span>
+                        </div>
+                    
+                            
+                        <div style="display: flex; align-items: center; gap: 10px;">
+
+                            <i class="fas fa-ship" style="color: #ffcc00; font-size: 1.3rem;"></i>
+                            <span>شحن أسبوعي إلى الجزائر</span>
+                        </div>
+                   
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-hand-holding-usd" style="color: #ffcc00; font-size: 1.3rem;"></i>
+                            <span>دفع آمن </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <footer>
-            <p>تم إنشاء هذا الموقع لعرض جرد السيارات وتوليد كود HTML للنشر على GitHub</p>
-            <p>جميع الحقوق محفوظة &copy; <span id="currentYear"></span></p>
+            <p>© 2026 خالد كارز إكسبور - Khaled Cars Export. جميع الحقوق محفوظة.</p>
+            <p>سيارات جديدة ومستعملة من أوروبا والصين إلى الجزائر</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <i class="fab fa-whatsapp"></i> +213 54 988 37 20 | 
+                <i class="fas fa-phone"></i> 0549 88 37 20 | 
+                <i class="fab fa-whatsapp"></i> +33 6 84 20 87 05
+            </p>
         </footer>
     </div>
 
     <script>
-        // Sample initial cars data
-        const initialCars = [
+        // بيانات السيارات
+        const carsData = [
             {
                 id: 1,
-                model: "Renault Clio 5",
-                trim: "Équilibre",
-                year: 2023,
-                engine: "1.0 TCE",
-                power: "90 ch",
-                transmission: "Manual",
-                fuel: "Petrol",
-                mileage: "50.0 km",
-                features: "",
-                images: ["https://images.unsplash.com/photo-1593941707882-a5bba5338fe2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"]
+                name: "Renault Clio 5",
+                price: "313 مليون",
+                image: "https://images.unsplash.com/photo-1770799296162-40fd8d53b1cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=120",
+                details: [
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "يدوي"},
+                    {icon: "fas fa-tachometer-alt", text: "24245 كلم"},
+                    {icon: "fas fa-horse-head", text: "90 حصان"}
+                ],
+                description: "السعر دون إحتساب مصاريف الجمركة"
             },
             {
                 id: 2,
-                model: "Citroen C3",
-                trim: "",
-                year: 2023,
-                engine: "1.2 puretech",
-                power: "100 ch",
-                transmission: "Manual",
-                fuel: "Petrol",
-                mileage: "8.5 km",
-                features: "",
-                images: ["https://images.unsplash.com/photo-1599393166885-8dcc2ad46d92?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"]
+                name: "هيونداي توسان 2023",
+                price: "$26,800",
+                image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                details: [
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "أوتوماتيك"},
+                    {icon: "fas fa-tachometer-alt", text: "15000 كلم"},
+                    {icon: "fas fa-horse-head", text: "190 حصان"}
+                ],
+                description: "سيارة دفع رباعي عملية مع مساحة واسعة وتصميم عصري"
             },
             {
                 id: 3,
-                model: "Opel Corsa",
-                trim: "Phase 2",
-                year: 2024,
-                engine: "1.2",
-                power: "100 ch",
-                transmission: "Manual",
-                fuel: "Petrol",
-                mileage: "19.5 km",
-                features: "Camera: 360",
-                images: [
-                    "https://images.unsplash.com/photo-1609521263045-881f6e480ca2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                    "https://images.unsplash.com/photo-1609521263045-881f6e480ca2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                ]
+                name: "مرسيدس E-Class 2023",
+                price: "$65,000",
+                image: "https://images.unsplash.com/photo-1563720223485-8d6d5c5c8c6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                details: [
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "أوتوماتيك"},
+                    {icon: "fas fa-tachometer-alt", text: "8000 كلم"},
+                    {icon: "fas fa-horse-head", text: "255 حصان"}
+                ],
+                description: "سيارة فاخرة بمستوى عالٍ من الراحة والتقنيات المتطورة"
             },
             {
                 id: 4,
-                model: "Peugeot 208",
-                trim: "Équilibre",
-                year: 2024,
-                engine: "1.2 PureTech",
-                power: "75 ch",
-                transmission: "Manual",
-                fuel: "Petrol",
-                mileage: "17.5 km",
-                features: "",
-                images: ["https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"]
+                name: "بيجو 308 2023",
+                price: "$24,300",
+                image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                details: [
+                    {icon: "fas fa-gas-pump", text: "ديزل"},
+                    {icon: "fas fa-cogs", text: "يدوي"},
+                    {icon: "fas fa-tachometer-alt", text: "12000 كلم"},
+                    {icon: "fas fa-horse-head", text: "130 حصان"}
+                ],
+                description: "سيارة هاتشباك عملية بتصميم فرنسي أنيق"
+            },
+            {
+                id: 5,
+                name: "شيفروليه تاهو 2023",
+                price: "$52,000",
+                image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                details: [
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "أوتوماتيك"},
+                    {icon: "fas fa-tachometer-alt", text: "5000 كلم"},
+                    {icon: "fas fa-horse-head", text: "355 حصان"}
+                ],
+                description: "سيارة دفع رباعي كبيرة مع مساحة واسعة وقدرة جر عالية"
+            },
+            {
+                id: 6,
+                name: "رينو كليو 2023",
+                price: "313 مليون",
+                image: "https://images.unsplash.com/photo-1770799296162-40fd8d53b1cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                details: [
+                    {icon: "fas fa-gas-pump", text: "بنزين"},
+                    {icon: "fas fa-cogs", text: "يدوي"},
+                    {icon: "fas fa-tachometer-alt", text: "24245 كلم"},
+                    {icon: "fas fa-horse-head", text: "90 حصان"}
+                ],
+                description: "السعر دون إحتساب مصاريف الجمركة"
             }
         ];
 
-        let cars = JSON.parse(localStorage.getItem('carInventory')) || initialCars;
-        let imageFiles = [];
-        let nextCarId = cars.length > 0 ? Math.max(...cars.map(car => car.id)) + 1 : 5;
-
-        // Set current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            displayCars();
-            setupEventListeners();
-        });
-
-        // Display all cars in the inventory
+        // دالة لعرض السيارات
         function displayCars() {
-            const carList = document.getElementById('carList');
-            carList.innerHTML = '';
+            const carsContainer = document.getElementById('cars-container');
+            carsContainer.innerHTML = '';
             
-            if (cars.length === 0) {
-                carList.innerHTML = '<p style="text-align: center; padding: 30px; color: #666;">لا توجد سيارات في المخزون. أضف سيارة جديدة!</p>';
-                return;
-            }
-            
-            cars.forEach(car => {
-                const carCard = createCarCard(car);
-                carList.appendChild(carCard);
-            });
-        }
-
-        // Create HTML for a car card
-        function createCarCard(car) {
-            const carCard = document.createElement('div');
-            carCard.className = 'car-card';
-            carCard.dataset.id = car.id;
-            
-            // Create thumbnails if multiple images exist
-            let thumbnailsHTML = '';
-            if (car.images && car.images.length > 1) {
-                thumbnailsHTML = `
-                    <div class="car-thumbnails">
-                        ${car.images.map((img, index) => `
-                            <img src="${img}" class="thumbnail ${index === 0 ? 'active' : ''}" 
-                                 data-index="${index}" alt="صورة ${index + 1}">
-                        `).join('')}
+            carsData.forEach(car => {
+                const carCard = document.createElement('div');
+                carCard.className = 'car-card';
+                
+                // إنشاء تفاصيل السيارة
+                let detailsHTML = '';
+                car.details.forEach(detail => {
+                    detailsHTML += `
+                        <li>
+                            <i class="${detail.icon}"></i>
+                            <span>${detail.text}</span>
+                        </li>
+                    `;
+                });
+                
+                carCard.innerHTML = `
+                    <div class="car-img" style="background-image: url('${car.image}')"></div>
+                    <div class="car-content">
+                        <div class="car-title">
+                            <h3>${car.name}</h3>
+                            <span class="car-price">${car.price}</span>
+                        </div>
+                        <p class="car-description" style="color: #666; margin-bottom: 15px; font-size: 0.95rem;">${car.description}</p>
+                        <div class="car-details">
+                            <ul>${detailsHTML}</ul>
+                        </div>
+                        <div class="car-actions">
+                            <button class="btn btn-primary" onclick="showDetails(${car.id})">
+                                <i class="fas fa-info-circle"></i> التفاصيل
+                            </button>
+                            <button class="btn btn-outline" onclick="inquireAboutCar('${car.name}')">
+                                <i class="fas fa-question-circle"></i> استفسار
+                            </button>
+                        </div>
                     </div>
                 `;
-            }
-            
-            carCard.innerHTML = `
-                <div class="car-images">
-                    <img src="${car.images[0]}" class="car-main-image" alt="${car.model}">
-                    ${thumbnailsHTML}
-                </div>
-                <div class="car-details">
-                    <h3 class="car-title">${car.model} ${car.trim ? `<span style="font-size: 0.9rem; color: #777;">(${car.trim})</span>` : ''}</h3>
-                    <ul class="car-specs">
-                        ${car.trim ? `<li><strong>الطراز</strong> <span>${car.trim}</span></li>` : ''}
-                        <li><strong>السنة</strong> <span>${car.year}</span></li>
-                        <li><strong>المحرك</strong> <span>${car.engine}</span></li>
-                        <li><strong>القوة</strong> <span>${car.power}</span></li>
-                    </ul>
-                    <div class="car-tags">
-                        <span class="tag">${car.transmission}</span>
-                        <span class="tag">${car.fuel}</span>
-                        <span class="tag">${car.mileage}</span>
-                    </div>
-                    ${car.features ? `<p><strong>مميزات إضافية:</strong> ${car.features}</p>` : ''}
-                    <div class="car-actions">
-                        <button class="btn btn-edit edit-car" data-id="${car.id}"><i class="fas fa-edit"></i> تعديل</button>
-                        <button class="btn btn-delete delete-car" data-id="${car.id}"><i class="fas fa-trash"></i> حذف</button>
-                    </div>
-                </div>
-            `;
-            
-            // Add event listeners for thumbnails
-            const thumbnails = carCard.querySelectorAll('.thumbnail');
-            thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', function() {
-                    const index = this.dataset.index;
-                    const mainImage = carCard.querySelector('.car-main-image');
-                    mainImage.src = car.images[index];
-                    
-                    // Update active thumbnail
-                    carCard.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
-            return carCard;
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Form submission
-            document.getElementById('carForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                addCar();
-            });
-            
-            // Image upload
-            document.getElementById('imageUpload').addEventListener('click', function() {
-                document.getElementById('fileInput').click();
-            });
-            
-            document.getElementById('fileInput').addEventListener('change', function(e) {
-                handleImageUpload(e.target.files);
-            });
-            
-            // Drag and drop for images
-            const uploadArea = document.getElementById('imageUpload');
-            uploadArea.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                uploadArea.style.borderColor = '#2a5298';
-                uploadArea.style.backgroundColor = '#f0f4ff';
-            });
-            
-            uploadArea.addEventListener('dragleave', function() {
-                uploadArea.style.borderColor = '#ccc';
-                uploadArea.style.backgroundColor = '';
-            });
-            
-            uploadArea.addEventListener('drop', function(e) {
-                e.preventDefault();
-                uploadArea.style.borderColor = '#ccc';
-                uploadArea.style.backgroundColor = '';
                 
-                if (e.dataTransfer.files.length) {
-                    handleImageUpload(e.dataTransfer.files);
-                }
-            });
-            
-            // Generate HTML code
-            document.getElementById('generateCodeBtn').addEventListener('click', generateHTMLCode);
-            
-            // Copy code to clipboard
-            document.getElementById('copyCodeBtn').addEventListener('click', copyCodeToClipboard);
-            
-            // Refresh button
-            document.getElementById('refreshBtn').addEventListener('click', function() {
-                displayCars();
-                document.getElementById('codeOutput').classList.remove('active');
-            });
-            
-            // Event delegation for edit and delete buttons
-            document.getElementById('carList').addEventListener('click', function(e) {
-                if (e.target.closest('.edit-car')) {
-                    const carId = parseInt(e.target.closest('.edit-car').dataset.id);
-                    editCar(carId);
-                }
-                
-                if (e.target.closest('.delete-car')) {
-                    const carId = parseInt(e.target.closest('.delete-car').dataset.id);
-                    deleteCar(carId);
-                }
+                carsContainer.appendChild(carCard);
             });
         }
 
-        // Handle image upload
-        function handleImageUpload(files) {
-            const preview = document.getElementById('imagePreview');
-            preview.innerHTML = '';
-            imageFiles = [];
-            
-            for (let i = 0; i < Math.min(files.length, 5); i++) {
-                const file = files[i];
-                if (!file.type.match('image.*')) continue;
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.className = 'preview-item';
-                    img.src = e.target.result;
-                    preview.appendChild(img);
-                };
-                reader.readAsDataURL(file);
-                imageFiles.push(file);
+        // دالة لعرض تفاصيل السيارة
+        function showDetails(carId) {
+            const car = carsData.find(c => c.id === carId);
+            if (car) {
+                alert(`تفاصيل ${car.name}:\n\nالسعر: ${car.price}\n${car.description}\n\nللاستفسار، اتصل بنا:\n📱 واتساب: +213 54 988 37 20\n📞 سكيكدة: 0549 88 37 20 - 0780 32 59 68\n📞 تلمسان: 06 59 60 50 45\n🇫🇷 فرنسا: +33 6 84 20 87 05`);
             }
         }
 
-        // Add a new car
-        function addCar() {
-            const model = document.getElementById('carModel').value;
-            const trim = document.getElementById('carTrim').value;
-            const year = parseInt(document.getElementById('carYear').value);
-            const engine = document.getElementById('carEngine').value;
-            const power = document.getElementById('carPower').value;
-            const transmission = document.getElementById('carTransmission').value;
-            const fuel = document.getElementById('carFuel').value;
-            const mileage = document.getElementById('carMileage').value;
-            const features = document.getElementById('carFeatures').value;
-            
-            // Use placeholder images if no images uploaded
-            let carImages = [];
-            if (imageFiles.length > 0) {
-                carImages = Array.from(imageFiles).map(file => URL.createObjectURL(file));
-            } else {
-                // Default car image if none uploaded
-                carImages = ['https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'];
-            }
-            
-            const newCar = {
-                id: nextCarId++,
-                model,
-                trim,
-                year,
-                engine,
-                power,
-                transmission,
-                fuel,
-                mileage,
-                features,
-                images: carImages
-            };
-            
-            cars.push(newCar);
-            saveToLocalStorage();
-            displayCars();
-            resetForm();
-            
-            // Show success message
-            alert(`تمت إضافة ${model} إلى المخزون بنجاح!`);
+        // دالة للاستفسار عن سيارة
+        function inquireAboutCar(carName) {
+            alert(`✅ تم تسجيل استفسارك حول ${carName}\n\nسيقوم فريق خالد كارز إكسبور بالاتصال بك في أقرب وقت.\n\n📞 للاستفسار الفوري: +213 54 988 37 20`);
         }
 
-        // Edit a car
-        function editCar(carId) {
-            const car = cars.find(c => c.id === carId);
-            if (!car) return;
-            
-            // For simplicity, we'll just delete and re-add with editing
-            // In a more advanced version, you'd populate the form with car data
-            const confirmEdit = confirm(`هل تريد تعديل ${car.model}؟ في هذه النسخة البسيطة، يمكنك حذفها وإضافتها من جديد.`);
-            if (confirmEdit) {
-                deleteCar(carId);
-                
-                // Populate form with car data
-                document.getElementById('carModel').value = car.model;
-                document.getElementById('carTrim').value = car.trim;
-                document.getElementById('carYear').value = car.year;
-                document.getElementById('carEngine').value = car.engine;
-                document.getElementById('carPower').value = car.power;
-                document.getElementById('carTransmission').value = car.transmission;
-                document.getElementById('carFuel').value = car.fuel;
-                document.getElementById('carMileage').value = car.mileage;
-                document.getElementById('carFeatures').value = car.features;
-                
-                // Scroll to form
-                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        // Delete a car
-        function deleteCar(carId) {
-            const car = cars.find(c => c.id === carId);
-            if (!car) return;
-            
-            const confirmDelete = confirm(`هل أنت متأكد من حذف ${car.model}؟`);
-            if (!confirmDelete) return;
-            
-            cars = cars.filter(c => c.id !== carId);
-            saveToLocalStorage();
-            displayCars();
-            
-            // Show message
-            alert(`تم حذف ${car.model} من المخزون.`);
-        }
-
-        // Reset the form
-        function resetForm() {
-            document.getElementById('carForm').reset();
-            document.getElementById('imagePreview').innerHTML = '';
-            document.getElementById('fileInput').value = '';
-            imageFiles = [];
-            document.getElementById('carYear').value = 2024;
-        }
-
-        // Generate HTML code for the inventory
-        function generateHTMLCode() {
-            let htmlCode = `<!DOCTYPE html>
-<html lang="fr" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventaire des Voitures</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        .car {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .car h2 {
-            margin-top: 0;
-            color: #3498db;
-        }
-        .car ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .car li {
-            margin-bottom: 8px;
-        }
-        .tags {
-            margin: 15px 0;
-            font-weight: bold;
-            color: #7f8c8d;
-        }
-        .actions {
-            margin-top: 15px;
-        }
-        .actions button {
-            padding: 8px 15px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .edit-btn {
-            background-color: #f39c12;
-            color: white;
-        }
-        .delete-btn {
-            background-color: #e74c3c;
-            color: white;
-        }
-        hr {
-            border: none;
-            border-top: 1px dashed #ddd;
-            margin: 30px 0;
-        }
-    </style>
-</head>
-<body>
-    <h1>Inventaire des Voitures</h1>
-    
-`;
-            
-            cars.forEach((car, index) => {
-                htmlCode += `
-    <div class="car">
-        <h2>${car.model} ${car.trim ? `- ${car.trim}` : ''}</h2>
-        <ul>
-            ${car.trim ? `<li><strong>${car.trim}</strong> ${car.year}</li>` : `<li><strong>Année:</strong> ${car.year}</li>`}
-            <li><strong>Moteur:</strong> ${car.engine}</li>
-            <li><strong>Puissance:</strong> ${car.power}</li>
-        </ul>
-        <div class="tags">${car.transmission} | ${car.fuel} | ${car.mileage}</div>
-        ${car.features ? `<p><strong>Fonctionnalités:</strong> ${car.features}</p>` : ''}
-        <div class="actions">
-            <button class="edit-btn">Modifier</button>
-            <button class="delete-btn">Supprimer</button>
-        </div>
-    </div>
-`;
-                
-                if (index < cars.length - 1) {
-                    htmlCode += '    <hr>\n\n';
-                }
-            });
-            
-            htmlCode += `
-    <div style="text-align: center; margin-top: 30px;">
-        <button style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            Actualiser
-        </button>
-    </div>
-</body>
-</html>`;
-            
-            document.getElementById('generatedCode').textContent = htmlCode;
-            document.getElementById('codeOutput').classList.add('active');
-            
-            // Scroll to code output
-            document.getElementById('codeOutput').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Copy code to clipboard
-        function copyCodeToClipboard() {
-            const code = document.getElementById('generatedCode').textContent;
-            navigator.clipboard.writeText(code).then(() => {
-                const copyBtn = document.getElementById('copyCodeBtn');
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
-                copyBtn.style.backgroundColor = '#28a745';
-                
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                    copyBtn.style.backgroundColor = '';
-                }, 2000);
-            });
-        }
-
-        // Save cars to localStorage
-        function saveToLocalStorage() {
-            // Convert image URLs to strings for storage
-            const carsToSave = cars.map(car => {
-                const carCopy = {...car};
-                // If images are blob URLs, we can't save them to localStorage
-                // In a real app, you would upload images to a server
-                // For this demo, we'll keep only the first image if it's a URL
-                if (carCopy.images && carCopy.images.length > 0) {
-                    // Keep only external URLs for localStorage
-                    carCopy.images = carCopy.images.filter(img => img.startsWith('http'));
-                    if (carCopy.images.length === 0) {
-                        // Add a placeholder if no external URLs
-                        carCopy.images = ['https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'];
-                    }
-                }
-                return carCopy;
-            });
-            
-            localStorage.setItem('carInventory', JSON.stringify(carsToSave));
-        }
+        // عرض السيارات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', displayCars);
     </script>
 </body>
 </html>
