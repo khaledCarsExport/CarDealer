@@ -1097,6 +1097,25 @@
         <i class="fas fa-phone" style="color: #4CAF50;"></i> 0549883720 | 
         <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213559369237
     </p>
+    
+    <!-- ===== إضافة عداد الزوار وتاريخ آخر تحديث ===== -->
+    <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 0.95rem;">
+        
+        <!-- عداد الزوار -->
+        <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 50px;">
+            <i class="fas fa-users" style="color: #ffcc00; font-size: 1.2rem;"></i>
+            <span style="color: #fff;" data-translate="visitors">عدد الزوار</span>
+            <span style="background: #ffcc00; color: #003366; padding: 3px 12px; border-radius: 30px; font-weight: 700; font-family: 'Courier New', monospace; font-size: 1.1rem;" id="visitorCounter">0</span>
+        </div>
+        
+        <!-- تاريخ آخر تحديث -->
+        <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 50px;">
+            <i class="fas fa-calendar-alt" style="color: #ffcc00; font-size: 1.2rem;"></i>
+            <span style="color: #fff;" data-translate="lastUpdate">آخر تحديث</span>
+            <span style="background: #ffcc00; color: #003366; padding: 3px 12px; border-radius: 30px; font-weight: 700; direction: ltr; display: inline-block;" id="lastUpdateDate">18/02/2026</span>
+        </div>
+        
+    </div>
 </footer>
     </div>
 
@@ -1247,7 +1266,9 @@
                 footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر",
                 details: "التفاصيل",
                 inquiry: "استفسار",
-                car: "سيارة"
+                car: "سيارة",
+                visitors: "عدد الزوار",
+                lastUpdate: "آخر تحديث"
             },
             en: {
                 algeria: "Algeria",
@@ -1278,7 +1299,9 @@
                 footerTagline: "New & Used Cars from Europe - China - Korea to Algeria",
                 details: "Details",
                 inquiry: "Inquiry",
-                car: "Car"
+                car: "Car",
+                visitors: "Visitors",
+                lastUpdate: "Last Update"
             },
             fr: {
                 algeria: "Algérie",
@@ -1309,7 +1332,9 @@
                 footerTagline: "Voitures neuves et d'occasion d'Europe - Chine - Corée vers l'Algérie",
                 details: "Détails",
                 inquiry: "Renseignement",
-                car: "Voiture"
+                car: "Voiture",
+                visitors: "Visiteurs",
+                lastUpdate: "Dernière mise à jour"
             }
         };
 
@@ -1353,11 +1378,15 @@
 
             // إعادة عرض السيارات باللغة الجديدة
             displayCars();
+            
+            // تحديث التاريخ حسب اللغة
+            updateDateForLanguage(lang);
         }
 
         // دالة تغيير اللغة
         function changeLanguage(lang) {
             translatePage(lang);
+            saveLanguage(lang);
         }
 
         // دالة لعرض السيارات
@@ -1602,16 +1631,117 @@ ${currentLang === 'en' ? 'For inquiry, click on the "Inquiry" button to send via
             }
         }
 
-        // تعديل دالة تغيير اللغة لحفظ التفضيل
-        const originalChangeLanguage = changeLanguage;
-        changeLanguage = function(lang) {
-            originalChangeLanguage(lang);
-            saveLanguage(lang);
+        // ========== عداد الزوار وتاريخ آخر تحديث ==========
+
+        // دالة لعداد الزوار
+        function updateVisitorCounter() {
+            const counterElement = document.getElementById('visitorCounter');
+            
+            // استخدام localStorage لتخزين عدد الزيارات
+            let visitorCount = localStorage.getItem('visitorCount');
+            
+            if (visitorCount) {
+                visitorCount = parseInt(visitorCount) + 1;
+            } else {
+                visitorCount = 1; // أول زيارة
+            }
+            
+            // حفظ العدد الجديد
+            localStorage.setItem('visitorCount', visitorCount);
+            
+            // عرض العدد مع تنسيق (إضافة فواصل للأرقام)
+            counterElement.textContent = visitorCount.toLocaleString();
+            
+            // منع زيادة العداد عند تحديث الصفحة خلال نفس الجلسة
+            if (!sessionStorage.getItem('sessionVisited')) {
+                sessionStorage.setItem('sessionVisited', 'true');
+            } else {
+                // إذا كان قد زار في نفس الجلسة، نعرض العدد الحالي فقط دون زيادة
+                counterElement.textContent = visitorCount.toLocaleString();
+            }
         }
+
+        // دالة لعرض تاريخ آخر تحديث
+        function displayLastUpdateDate() {
+            const dateElement = document.getElementById('lastUpdateDate');
+            
+            // تاريخ آخر تعديل للملف
+            const lastUpdate = '18/02/2026'; // صيغة: يوم/شهر/سنة
+            
+            dateElement.textContent = lastUpdate;
+            
+            // إضافة تأثير تمرير
+            dateElement.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#ffaa00';
+                this.style.transition = '0.3s';
+            });
+            
+            dateElement.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '#ffcc00';
+            });
+        }
+
+        // دالة لتحديث التاريخ حسب اللغة
+        function updateDateForLanguage(lang) {
+            const dateElement = document.getElementById('lastUpdateDate');
+            if (!dateElement) return;
+            
+            if (lang === 'ar') {
+                // التاريخ بالعربية: 18 فبراير 2026
+                const arabicMonths = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+                dateElement.textContent = `18 ${arabicMonths[1]} 2026`;
+                dateElement.style.direction = 'rtl';
+            } else if (lang === 'en') {
+                // التاريخ بالإنجليزية: 18/02/2026
+                dateElement.textContent = '18/02/2026';
+                dateElement.style.direction = 'ltr';
+            } else if (lang === 'fr') {
+                // التاريخ بالفرنسية: 18/02/2026
+                dateElement.textContent = '18/02/2026';
+                dateElement.style.direction = 'ltr';
+            }
+        }
+
+        // دالة لإعادة تعيين العداد (للمطور)
+        function resetVisitorCounter() {
+            if (confirm('هل تريد إعادة تعيين عداد الزوار؟')) {
+                localStorage.removeItem('visitorCount');
+                localStorage.removeItem('visitorCount_backup');
+                location.reload();
+            }
+        }
+
+        // إضافة زر سري لإعادة تعيين العداد
+        let clickCount = 0;
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'visitorCounter' || e.target.closest('#visitorCounter')) {
+                clickCount++;
+                if (clickCount >= 5) {
+                    resetVisitorCounter();
+                    clickCount = 0;
+                }
+                
+                // إعادة تعيين العد بعد 3 ثوان
+                setTimeout(() => {
+                    clickCount = 0;
+                }, 3000);
+            }
+        });
 
         // عرض السيارات عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             loadPreferredLanguage();
+            
+            // تحديث عداد الزوار
+            updateVisitorCounter();
+            
+            // عرض تاريخ آخر تحديث
+            displayLastUpdateDate();
+            
+            // تحديث التاريخ حسب اللغة الحالية
+            setTimeout(() => {
+                updateDateForLanguage(currentLang || 'ar');
+            }, 100);
         });
     </script>
 </body>
