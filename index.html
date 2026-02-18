@@ -146,66 +146,126 @@
             border-radius: 20px;
         }
         
-        .contact-header {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 25px;
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        
-        .contact-grid {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .contact-item-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-            padding: 8px 18px;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .contact-item-header:hover {
-            background: rgba(255, 204, 0, 0.2);
-            transform: scale(1.05);
-        }
-        
-        .contact-item-header i {
-            width: 30px;
-            height: 30px;
-            background: #ffcc00;
-            color: #003366;
-            border-radius: 50%;
+        /* ===== أيقونات التواصل الاجتماعي المصغرة مع الواتساب ===== */
+        .social-header {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            margin: 0 15px;
         }
-        
-        .contact-item-header .phone-number {
-            direction: ltr;
-            display: inline-block;
-            font-family: 'Courier New', monospace;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: white;
-        }
-        
-        .whatsapp-badge {
-            background-color: #25d366;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            display: inline-flex;
+
+        .social-header-link {
+            display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-header-link i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* ألوان المنصات */
+        .social-header-link .fa-facebook-f {
+            color: #1877F2 !important;
+            background: white !important;
+        }
+
+        .social-header-link .fa-youtube {
+            color: #FF0000 !important;
+            background: white !important;
+        }
+
+        .social-header-link .fa-instagram {
+            color: white !important;
+            background: radial-gradient(circle at 30% 107%, 
+                #fdf497 0%, #fdf497 5%, 
+                #fd5949 45%, 
+                #d6249f 60%, 
+                #285AEB 90%) !important;
+        }
+
+        .social-header-link .fa-tiktok {
+            color: #010101 !important;
+            background: white !important;
+            text-shadow: 2px 2px 0 #25F4EE, -2px -2px 0 #FE2C55 !important;
+        }
+
+        .social-header-link .fa-whatsapp {
+            color: #25D366 !important;
+            background: white !important;
+        }
+
+        /* ايقونة واد كنيس كصورة */
+        .social-header-link .custom-ouedkniss {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .social-header-link .custom-ouedkniss img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .social-header-link:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        .social-header-link:hover i,
+        .social-header-link:hover .custom-ouedkniss {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-header-link:hover .fa-facebook-f {
+            background: #1877F2 !important;
+            color: white !important;
+        }
+
+        .social-header-link:hover .fa-youtube {
+            background: #FF0000 !important;
+            color: white !important;
+        }
+
+        .social-header-link:hover .fa-whatsapp {
+            background: #25D366 !important;
+            color: white !important;
+        }
+
+        .social-header-link:hover .fa-tiktok {
+            background: #010101 !important;
+            color: white !important;
+            text-shadow: 2px 2px 0 #25F4EE, -2px -2px 0 #FE2C55 !important;
+        }
+
+        .social-header-link:hover .custom-ouedkniss {
+            background: #FF6600 !important;
         }
         
         .tagline {
@@ -618,10 +678,133 @@
             font-weight: 600;
         }
 
+        /* تأثير بسيط للعداد */
+        .counter-number {
+            transition: all 0.3s ease;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .counter-number:hover {
+            transform: scale(1.05);
+            background-color: #ffaa00 !important;
+        }
+
+        .social-icons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0 20px;
+            padding: 10px;
+            flex-wrap: wrap;
+        }
+
+        .social-icon-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-link i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 42px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-link .fa-facebook-f {
+            color: #1877F2 !important;
+            background: white !important;
+        }
+
+        .social-icon-link .fa-youtube {
+            color: #FF0000 !important;
+            background: white !important;
+        }
+
+        .social-icon-link .fa-instagram {
+            color: white !important;
+            background: radial-gradient(circle at 30% 107%, 
+                #fdf497 0%, #fdf497 5%, 
+                #fd5949 45%, 
+                #d6249f 60%, 
+                #285AEB 90%) !important;
+        }
+
+        .social-icon-link .fa-tiktok {
+            color: #010101 !important;
+            background: white !important;
+            text-shadow: 4px 4px 0 #25F4EE, -4px -4px 0 #FE2C55 !important;
+        }
+
+        .social-icon-link .fa-whatsapp {
+            color: #25D366 !important;
+            background: white !important;
+        }
+
+        .social-icon-link .custom-ouedkniss-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-link .custom-ouedkniss-large img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .social-icon-link:hover .fa-facebook-f {
+            background: #1877F2 !important;
+            color: white !important;
+        }
+
+        .social-icon-link:hover .fa-youtube {
+            background: #FF0000 !important;
+            color: white !important;
+        }
+
+        .social-icon-link:hover .fa-whatsapp {
+            background: #25D366 !important;
+            color: white !important;
+        }
+
+        .social-icon-link:hover .fa-tiktok {
+            background: #010101 !important;
+            color: white !important;
+            text-shadow: 4px 4px 0 #25F4EE, -4px -4px 0 #FE2C55 !important;
+        }
+
+        .social-icon-link:hover .custom-ouedkniss-large {
+            background: #FF6600 !important;
+        }
+
+        .social-icon-link:hover {
+            transform: translateY(-10px) scale(1.15);
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                gap: 20px;
+                gap: 15px;
             }
             
             .logo-flags-wrapper {
@@ -636,14 +819,6 @@
                 padding-top: 15px;
                 margin-top: 10px;
                 width: 100%;
-                justify-content: center;
-            }
-            
-            .contact-header {
-                width: 100%;
-            }
-            
-            .contact-grid {
                 justify-content: center;
             }
             
@@ -666,231 +841,40 @@
                 margin-bottom: 15px;
                 width: fit-content;
             }
-/* ================ أيقونات التواصل الاجتماعي - في وسط الهيدر ================ */
 
-/* ================ أيقونات التواصل الاجتماعي - النسخة النهائية ================ */
+            .social-header {
+                margin: 10px 0;
+                width: 100%;
+            }
+            
+            .social-header-link,
+            .social-header-link i,
+            .social-header-link .custom-ouedkniss {
+                width: 40px;
+                height: 40px;
+            }
 
-/* الحاوية الرئيسية للأيقونات */
-.social-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 8px 25px;
-    border-radius: 60px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 204, 0, 0.3);
-    margin: 0 20px;
-}
+            .social-header-link .custom-ouedkniss img {
+                width: 34px;
+                height: 34px;
+            }
+            
+            .social-icon-link,
+            .social-icon-link i,
+            .social-icon-link .custom-ouedkniss-large {
+                width: 65px;
+                height: 65px;
+            }
 
-/* روابط الأيقونات */
-.social-header-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-/* تنسيق جميع الأيقونات */
-.social-header-link i {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    font-size: 36px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-/* ===== الألوان الحقيقية لكل منصة ===== */
-
-/* فيسبوك - أزرق */
-.social-header-link .fa-facebook-f {
-    color: #1877F2 !important;
-    background: white !important;
-}
-
-/* يوتيوب - أحمر */
-.social-header-link .fa-youtube {
-    color: #FF0000 !important;
-    background: white !important;
-}
-
-/* انستغرام - تدرج ألوان */
-.social-header-link .fa-instagram {
-    color: white !important;
-    background: radial-gradient(circle at 30% 107%, 
-        #fdf497 0%, #fdf497 5%, 
-        #fd5949 45%, 
-        #d6249f 60%, 
-        #285AEB 90%) !important;
-}
-
-/* تيك توك - أسود مع تأثير نيون */
-.social-header-link .fa-tiktok {
-    color: #010101 !important;
-    background: white !important;
-    text-shadow: 3px 3px 0 #25F4EE, -3px -3px 0 #FE2C55 !important;
-}
-
-/* ===== تأثيرات التحويم ===== */
-
-/* فيسبوك */
-.social-header-link:hover .fa-facebook-f {
-    background: #1877F2 !important;
-    color: white !important;
-}
-
-/* يوتيوب */
-.social-header-link:hover .fa-youtube {
-    background: #FF0000 !important;
-    color: white !important;
-}
-
-/* انستغرام - يبقى كما هو */
-.social-header-link:hover .fa-instagram {
-    color: white !important;
-}
-
-/* تيك توك */
-.social-header-link:hover .fa-tiktok {
-    background: #010101 !important;
-    color: white !important;
-    text-shadow: 3px 3px 0 #25F4EE, -3px -3px 0 #FE2C55 !important;
-}
-
-/* تأثير الحركة */
-.social-header-link:hover {
-    transform: translateY(-8px) scale(1.15);
-}
-
-.social-header-link:hover i {
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-}
-
-/* ===== أيقونات الفوتر - أكبر حجماً ===== */
-
-.social-icons-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin: 30px 0 20px;
-    padding: 10px;
-    flex-wrap: wrap;
-}
-
-.social-icon-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.social-icon-link i {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    font-size: 42px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-/* نفس الألوان للفوتر */
-.social-icon-link .fa-facebook-f {
-    color: #1877F2 !important;
-    background: white !important;
-}
-
-.social-icon-link .fa-youtube {
-    color: #FF0000 !important;
-    background: white !important;
-}
-
-.social-icon-link .fa-instagram {
-    color: white !important;
-    background: radial-gradient(circle at 30% 107%, 
-        #fdf497 0%, #fdf497 5%, 
-        #fd5949 45%, 
-        #d6249f 60%, 
-        #285AEB 90%) !important;
-}
-
-.social-icon-link .fa-tiktok {
-    color: #010101 !important;
-    background: white !important;
-    text-shadow: 4px 4px 0 #25F4EE, -4px -4px 0 #FE2C55 !important;
-}
-
-/* تأثيرات التحويم للفوتر */
-.social-icon-link:hover .fa-facebook-f {
-    background: #1877F2 !important;
-    color: white !important;
-}
-
-.social-icon-link:hover .fa-youtube {
-    background: #FF0000 !important;
-    color: white !important;
-}
-
-.social-icon-link:hover .fa-tiktok {
-    background: #010101 !important;
-    color: white !important;
-    text-shadow: 4px 4px 0 #25F4EE, -4px -4px 0 #FE2C55 !important;
-}
-
-.social-icon-link:hover {
-    transform: translateY(-10px) scale(1.15);
-}
-
-/* ===== للشاشات الصغيرة ===== */
-@media (max-width: 992px) {
-    .social-header {
-        margin: 15px 0;
-        width: 100%;
-    }
-}
-
-@media (max-width: 768px) {
-    .social-header-link,
-    .social-header-link i {
-        width: 55px;
-        height: 55px;
-        font-size: 30px;
-    }
-    
-    .social-icon-link,
-    .social-icon-link i {
-        width: 65px;
-        height: 65px;
-        font-size: 36px;
-    }
-    
-    .social-header {
-        gap: 12px;
-        padding: 8px 15px;
-    }
-    
-    .social-icons-container {
-        gap: 20px;
-    }
-}
-
-
+            .social-icon-link .custom-ouedkniss-large img {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .social-icons-container {
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -902,89 +886,86 @@
                 <option value="fr">🇫🇷 Français</option>
             </select>
         </div>
-<header>
-    <div class="header-content">
-        <!-- اللوغو والأعلام -->
-        <div class="logo-flags-wrapper">
-            <div class="logo-container">
-                <img src="https://i.ibb.co/N68V7Ybn/logo.jpg" alt="Khaled Cars Export Logo" class="logo-image" onerror="this.src='https://via.placeholder.com/70x70/003366/ffcc00?text=KCE'">
-                <div class="logo-text">
-                    <span class="khaled">KHALED</span>
-                    <span class="cars">CARS</span>
-                    <span class="export">EXPORT</span>
+
+        <header>
+            <div class="header-content">
+                <div class="logo-flags-wrapper">
+                    <div class="logo-container">
+                        <img src="https://i.ibb.co/N68V7Ybn/logo.jpg" alt="Khaled Cars Export Logo" class="logo-image" onerror="this.src='https://via.placeholder.com/70x70/003366/ffcc00?text=KCE'">
+                        <div class="logo-text">
+                            <span class="khaled">KHALED</span>
+                            <span class="cars">CARS</span>
+                            <span class="export">EXPORT</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flags-container">
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/dz.png" alt="Algeria" class="flag-icon">
+                            <span class="flag-name" data-translate="algeria">الجزائر</span>
+                        </div>
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/cn.png" alt="China" class="flag-icon">
+                            <span class="flag-name" data-translate="china">الصين</span>
+                        </div>
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/eu.png" alt="European Union" class="flag-icon">
+                            <span class="flag-name" data-translate="europe">أوروبا</span>
+                        </div>
+                        <div class="flag-item">
+                            <img src="https://flagcdn.com/w40/kr.png" alt="South Korea" class="flag-icon">
+                            <span class="flag-name" data-translate="korea">كوريا</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أيقونات التواصل الاجتماعي المصغرة مع الواتساب -->
+                <div class="social-header">
+                    <a href="https://web.facebook.com/profile.php?id=61582599671882" target="_blank" rel="noopener noreferrer" class="social-header-link" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/khaledcarsexport/" target="_blank" rel="noopener noreferrer" class="social-header-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@KhaledCarsExport" target="_blank" rel="noopener noreferrer" class="social-header-link" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@khaled.cars.export" target="_blank" rel="noopener noreferrer" class="social-header-link" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <!-- ايقونة واتساب -->
+                    <a href="https://wa.me/213549883720?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات" target="_blank" rel="noopener noreferrer" class="social-header-link" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <!-- ايقونة واد كنيس كصورة -->
+                    <a href="https://www.ouedkniss.com/store/37400/khaled-cars-export/accueil" target="_blank" rel="noopener noreferrer" class="social-header-link" title="Ouedkniss">
+                        <span class="custom-ouedkniss">
+                            <img src="https://i.ibb.co/CpLxKrxq/Capture-d-cran-2026-02-18-105440.png" alt="Ouedkniss">
+                        </span>
+                    </a>
                 </div>
             </div>
             
-            <div class="flags-container">
-                <div class="flag-item">
-                    <img src="https://flagcdn.com/w40/dz.png" alt="Algeria" class="flag-icon">
-                    <span class="flag-name" data-translate="algeria">الجزائر</span>
-                </div>
-                <div class="flag-item">
-                    <img src="https://flagcdn.com/w40/cn.png" alt="China" class="flag-icon">
-                    <span class="flag-name" data-translate="china">الصين</span>
-                </div>
-                <div class="flag-item">
-                    <img src="https://flagcdn.com/w40/eu.png" alt="European Union" class="flag-icon">
-                    <span class="flag-name" data-translate="europe">أوروبا</span>
-                </div>
-                <div class="flag-item">
-                    <img src="https://flagcdn.com/w40/kr.png" alt="South Korea" class="flag-icon">
-                    <span class="flag-name" data-translate="korea">كوريا</span>
-                </div>
+            <div class="tagline" id="tagline">
+                <i class="fas fa-globe-europe"></i>
+                <span data-translate="tagline">سيارات جديدة و مستعملة من أوروبا - الصين - كوريا إلى الجزائر</span>
+                <i class="fas fa-globe-asia"></i>
             </div>
-        </div>
-
-        <!-- أيقونات التواصل الاجتماعي - في المنتصف بين اللوغو والواتساب -->
-        <div class="social-header">
-            <a href="https://web.facebook.com/profile.php?id=61582599671882" target="_blank" rel="noopener noreferrer" class="social-header-link" title="Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="https://www.instagram.com/khaledcarsexport/" target="_blank" rel="noopener noreferrer" class="social-header-link" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.youtube.com/@KhaledCarsExport" target="_blank" rel="noopener noreferrer" class="social-header-link" title="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://www.tiktok.com/@khaled.cars.export" target="_blank" rel="noopener noreferrer" class="social-header-link" title="TikTok">
-                <i class="fab fa-tiktok"></i>
-            </a>
-        </div>
-        
-        <!-- رقم الواتساب -->
-        <div class="contact-header">
-            <div class="contact-grid">
-                <div class="contact-item-header" onclick="window.open('https://wa.me/213549883720?text=السلام عليكم، أريد الاستفسار عن السيارات', '_blank')" style="cursor: pointer;">
-                    <i class="fab fa-whatsapp"></i>
-                    <span class="phone-number">+213549883720</span>
-                    <span class="whatsapp-badge">
-                        <i class="fab fa-whatsapp"></i> <span data-translate="whatsapp">واتساب</span>
-                    </span>
-                </div>
+            
+            <div class="service-info">
+                <h3><i class="fas fa-star"></i> <span data-translate="ourServices">خدماتنا المميزة</span></h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service1">سيارات من أوروبا - الصين - كوريا</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service2">جديدة و أقل من 3 سنوات</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service3">سرعة التوصيل</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service4">وثائق و فواتير رسمية</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span data-translate="service5">طريقة دفع آمنة</span></li>
+                </ul>
             </div>
-        </div>
-    </div>
-    
-    <div class="tagline" id="tagline">
-        <i class="fas fa-globe-europe"></i>
-        <span data-translate="tagline">سيارات جديدة و مستعملة من أوروبا - الصين - كوريا إلى الجزائر</span>
-        <i class="fas fa-globe-asia"></i>
-    </div>
-    
-    <div class="service-info">
-        <h3><i class="fas fa-star"></i> <span data-translate="ourServices">خدماتنا المميزة</span></h3>
-        <ul>
-            <li><i class="fas fa-check-circle"></i> <span data-translate="service1">سيارات من أوروبا - الصين - كوريا</span></li>
-            <li><i class="fas fa-check-circle"></i> <span data-translate="service2">جديدة و أقل من 3 سنوات</span></li>
-            <li><i class="fas fa-check-circle"></i> <span data-translate="service3">سرعة التوصيل</span></li>
-            <li><i class="fas fa-check-circle"></i> <span data-translate="service4">وثائق و فواتير رسمية</span></li>
-            <li><i class="fas fa-check-circle"></i> <span data-translate="service5">طريقة دفع آمنة</span></li>
-        </ul>
-    </div>
-</header>
+        </header>
         
         <section class="cars-section">
-            <h2 class="section-title" data-translate="availableCars">السيارات المتوفرة </h2>
+            <h2 class="section-title" data-translate="availableCars">السيارات المتوفرة</h2>
             <div class="cars-grid" id="cars-container"></div>
         </section>
         
@@ -1072,51 +1053,58 @@
             </div>
         </section>
         
-       <footer>
-    <p>© 2026 خالد كارز إكسبور - Khaled Cars Export. <span data-translate="allRights">جميع الحقوق محفوظة.</span></p>
-    <p data-translate="footerTagline">سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر</p>
-    
-    <!-- أيقونات التواصل الاجتماعي داخل الفوتر -->
-    <div class="social-icons-container">
-        <a href="https://web.facebook.com/profile.php?id=61582599671882" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="Facebook">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://www.instagram.com/khaledcarsexport/" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="Instagram">
-            <i class="fab fa-instagram"></i>
-        </a>
-        <a href="https://www.youtube.com/@KhaledCarsExport" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="YouTube">
-            <i class="fab fa-youtube"></i>
-        </a>
-        <a href="https://www.tiktok.com/@khaled.cars.export" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="TikTok">
-            <i class="fab fa-tiktok"></i>
-        </a>
-    </div>
-    
-    <p style="margin-top: 10px; font-size: 0.9rem;">
-        <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213549883720 | 
-        <i class="fas fa-phone" style="color: #4CAF50;"></i> 0549883720 | 
-        <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213559369237
-    </p>
-    
-    <!-- ===== إضافة عداد الزوار وتاريخ آخر تحديث ===== -->
-    <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 0.95rem;">
-        
-        <!-- عداد الزوار -->
-        <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 50px;">
-            <i class="fas fa-users" style="color: #ffcc00; font-size: 1.2rem;"></i>
-            <span style="color: #fff;" data-translate="visitors">عدد الزوار</span>
-            <span style="background: #ffcc00; color: #003366; padding: 3px 12px; border-radius: 30px; font-weight: 700; font-family: 'Courier New', monospace; font-size: 1.1rem;" id="visitorCounter">0</span>
-        </div>
-        
-        <!-- تاريخ آخر تحديث -->
-        <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 50px;">
-            <i class="fas fa-calendar-alt" style="color: #ffcc00; font-size: 1.2rem;"></i>
-            <span style="color: #fff;" data-translate="lastUpdate">آخر تحديث</span>
-            <span style="background: #ffcc00; color: #003366; padding: 3px 12px; border-radius: 30px; font-weight: 700; direction: ltr; display: inline-block;" id="lastUpdateDate">18/02/2026</span>
-        </div>
-        
-    </div>
-</footer>
+        <footer>
+            <p>© 2026 خالد كارز إكسبور - Khaled Cars Export. <span data-translate="allRights">جميع الحقوق محفوظة.</span></p>
+            <p data-translate="footerTagline">سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر</p>
+            
+            <div class="social-icons-container">
+                <a href="https://web.facebook.com/profile.php?id=61582599671882" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/khaledcarsexport/" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/@KhaledCarsExport" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@khaled.cars.export" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="https://wa.me/213549883720?text=السلام%20عليكم%2C%20أريد%20الاستفسار%20عن%20السيارات" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://www.ouedkniss.com/store/37400/khaled-cars-export/accueil" target="_blank" rel="noopener noreferrer" class="social-icon-link" title="Ouedkniss">
+                    <span class="custom-ouedkniss-large">
+                        <img src="https://i.ibb.co/CpLxKrxq/Capture-d-cran-2026-02-18-105440.png" alt="Ouedkniss">
+                    </span>
+                </a>
+            </div>
+            
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213549883720 | 
+                <i class="fas fa-phone" style="color: #4CAF50;"></i> 0549883720 | 
+                <i class="fab fa-whatsapp" style="color: #25d366;"></i> +213559369237
+            </p>
+            
+            <!-- ===== عداد الزوار الإجمالي وتاريخ آخر تحديث ===== -->
+            <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; font-size: 0.95rem;">
+                
+                <!-- عداد الزوار الإجمالي (كل الأوقات) -->
+                <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 50px;">
+                    <i class="fas fa-users" style="color: #ffcc00; font-size: 1.2rem;"></i>
+                    <span style="color: #fff;" data-translate="totalVisitors">إجمالي الزوار</span>
+                    <span class="counter-number" style="background: #ffcc00; color: #003366; padding: 3px 12px; border-radius: 30px; font-weight: 700; font-family: 'Courier New', monospace; font-size: 1.1rem;" id="visitorCounter">0</span>
+                </div>
+                
+                <!-- تاريخ آخر تحديث -->
+                <div style="display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 50px;">
+                    <i class="fas fa-calendar-alt" style="color: #ffcc00; font-size: 1.2rem;"></i>
+                    <span style="color: #fff;" data-translate="lastUpdate">آخر تحديث</span>
+                    <span style="background: #ffcc00; color: #003366; padding: 3px 12px; border-radius: 30px; font-weight: 700; direction: ltr; display: inline-block;" id="lastUpdateDate">18/02/2026</span>
+                </div>
+                
+            </div>
+        </footer>
     </div>
 
     <!-- Modal لعرض الصور -->
@@ -1134,6 +1122,7 @@
         let currentCarImages = [];
 
         // بيانات السيارات
+          // بيانات السيارات
         const carsData = [
     {
         id: 1,
@@ -1235,6 +1224,8 @@
     }
 ];
 
+
+
         // ترجمة النصوص
         const translations = {
             ar: {
@@ -1250,7 +1241,7 @@
                 service3: "سرعة التوصيل",
                 service4: "وثائق و فواتير رسمية",
                 service5: "طريقة دفع آمنة",
-                availableCars: "السيارات المتوفرة ",
+                availableCars: "السيارات المتوفرة",
                 contactUs: "للتواصل والاستفسار",
                 france: "فرنسا",
                 skikda: "سكيكدة",
@@ -1267,7 +1258,7 @@
                 details: "التفاصيل",
                 inquiry: "استفسار",
                 car: "سيارة",
-                visitors: "عدد الزوار",
+                totalVisitors: "إجمالي الزوار",
                 lastUpdate: "آخر تحديث"
             },
             en: {
@@ -1300,7 +1291,7 @@
                 details: "Details",
                 inquiry: "Inquiry",
                 car: "Car",
-                visitors: "Visitors",
+                totalVisitors: "Total Visitors",
                 lastUpdate: "Last Update"
             },
             fr: {
@@ -1333,14 +1324,13 @@
                 details: "Détails",
                 inquiry: "Renseignement",
                 car: "Voiture",
-                visitors: "Visiteurs",
+                totalVisitors: "Visiteurs totaux",
                 lastUpdate: "Dernière mise à jour"
             }
         };
 
         let currentLang = 'ar';
 
-        // دالة لتغيير اتجاه الصفحة حسب اللغة
         function setPageDirection(lang) {
             const html = document.documentElement;
             if (lang === 'ar') {
@@ -1352,14 +1342,10 @@
             }
         }
 
-        // دالة لترجمة النصوص الثابتة
         function translatePage(lang) {
             currentLang = lang;
-            
-            // تغيير اتجاه الصفحة
             setPageDirection(lang);
             
-            // ترجمة جميع العناصر التي تحتوي على data-translate
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.getAttribute('data-translate');
                 if (translations[lang] && translations[lang][key]) {
@@ -1367,7 +1353,6 @@
                 }
             });
 
-            // تحديث عنوان الصفحة
             if (lang === 'ar') {
                 document.title = 'خالد كارز إكسبور - استيراد السيارات من أوروبا والصين';
             } else if (lang === 'en') {
@@ -1376,29 +1361,25 @@
                 document.title = 'Khaled Cars Export - Importation de voitures d\'Europe et de Chine';
             }
 
-            // إعادة عرض السيارات باللغة الجديدة
             displayCars();
-            
-            // تحديث التاريخ حسب اللغة
             updateDateForLanguage(lang);
         }
 
-        // دالة تغيير اللغة
         function changeLanguage(lang) {
             translatePage(lang);
             saveLanguage(lang);
         }
 
-        // دالة لعرض السيارات
         function displayCars() {
             const carsContainer = document.getElementById('cars-container');
+            if (!carsContainer) return;
+            
             carsContainer.innerHTML = '';
             
-            carsData.forEach((car, index) => {
+            carsData.forEach((car) => {
                 const carCard = document.createElement('div');
                 carCard.className = 'car-card';
                 
-                // اختيار اسم السيارة والسعر حسب اللغة
                 let carName = car.name;
                 let carPrice = car.price;
                 let carDescription = car.description;
@@ -1413,7 +1394,6 @@
                     carDescription = car.description_fr || car.description;
                 }
                 
-                // إنشاء تفاصيل السيارة حسب اللغة
                 let detailsHTML = '';
                 car.details.forEach(detail => {
                     let detailText = detail.text;
@@ -1444,10 +1424,10 @@
                         </div>
                         <div class="car-actions">
                             <button class="btn btn-primary" onclick="showDetails(${car.id})">
-                                <i class="fas fa-info-circle"></i> ${translations[currentLang].details || 'التفاصيل'}
+                                <i class="fas fa-info-circle"></i> ${translations[currentLang].details}
                             </button>
                             <button class="btn btn-outline" onclick="inquireAboutCar(${car.id})">
-                                <i class="fas fa-question-circle"></i> ${translations[currentLang].inquiry || 'استفسار'}
+                                <i class="fas fa-question-circle"></i> ${translations[currentLang].inquiry}
                             </button>
                         </div>
                     </div>
@@ -1457,7 +1437,6 @@
             });
         }
 
-        // دالة لفتح نافذة عرض الصور
         function openModal(carId, imageIndex) {
             const car = carsData.find(c => c.id === carId);
             if (car) {
@@ -1477,11 +1456,10 @@
                 
                 modal.style.display = 'block';
                 modalImg.src = currentCarImages[currentImageIndex];
-                caption.innerHTML = `${translations[currentLang].car || 'سيارة'}: ${carName} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
+                caption.innerHTML = `${translations[currentLang].car}: ${carName} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
             }
         }
 
-        // دالة لتغيير الصورة
         function changeImage(direction) {
             currentImageIndex += direction;
             
@@ -1496,15 +1474,13 @@
             const caption = document.getElementById('modalCaption');
             
             modalImg.src = currentCarImages[currentImageIndex];
-            caption.innerHTML = `${translations[currentLang].car || 'سيارة'} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
+            caption.innerHTML = `${translations[currentLang].car} - ${currentImageIndex + 1} / ${currentCarImages.length}`;
         }
 
-        // دالة لإغلاق نافذة الصور
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        // دالة للاستفسار عن سيارة عبر واتساب
         function inquireAboutCar(carId) {
             const car = carsData.find(c => c.id === carId);
             if (car) {
@@ -1539,34 +1515,27 @@
 🚗 Model: ${carName}
 💰 Price: ${carPrice}
 📊 Specifications: ${detailsText}
-📝 Description: ${car.description_en || car.description}
-
-I would like to know more details about this car and import conditions.`;
+📝 Description: ${car.description_en || car.description}`;
                 } else if (currentLang === 'fr') {
                     message = `Bonjour, je voudrais me renseigner sur la voiture:
                     
 🚗 Modèle: ${carName}
 💰 Prix: ${carPrice}
 📊 Spécifications: ${detailsText}
-📝 Description: ${car.description_fr || car.description}
-
-Je voudrais connaître plus de détails sur cette voiture et les conditions d'importation.`;
+📝 Description: ${car.description_fr || car.description}`;
                 } else {
                     message = `السلام عليكم، أريد الاستفسار عن السيارة:
                 
 🚗 الموديل: ${carName}
 💰 السعر: ${carPrice}
 📊 المواصفات: ${detailsText}
-📝 الوصف: ${car.description}
-
-أريد معرفة المزيد من التفاصيل عن هذه السيارة وشروط الاستيراد.`;
+📝 الوصف: ${car.description}`;
                 }
                 
                 window.open(`https://wa.me/213549883720?text=${encodeURIComponent(message)}`, '_blank');
             }
         }
 
-        // دالة لعرض تفاصيل السيارة
         function showDetails(carId) {
             const car = carsData.find(c => c.id === carId);
             if (car) {
@@ -1601,13 +1570,10 @@ Je voudrais connaître plus de détails sur cette voiture et les conditions d'im
                 
 💰 ${currentLang === 'en' ? 'Price' : currentLang === 'fr' ? 'Prix' : 'السعر'}: ${carPrice}
 📊 ${currentLang === 'en' ? 'Specifications' : currentLang === 'fr' ? 'Spécifications' : 'المواصفات'}:${detailsText}
-📝 ${currentLang === 'en' ? 'Description' : currentLang === 'fr' ? 'Description' : 'الوصف'}: ${carDescription}
-
-${currentLang === 'en' ? 'For inquiry, click on the "Inquiry" button to send via WhatsApp' : currentLang === 'fr' ? 'Pour toute demande, cliquez sur le bouton "Renseignement" pour envoyer via WhatsApp' : 'للاستفسار، اضغط على زر "استفسار" للإرسال عبر واتساب'}`);
+📝 ${currentLang === 'en' ? 'Description' : currentLang === 'fr' ? 'Description' : 'الوصف'}: ${carDescription}`);
             }
         }
 
-        // إغلاق المودال عند الضغط خارج الصورة
         window.onclick = function(event) {
             const modal = document.getElementById('imageModal');
             if (event.target == modal) {
@@ -1615,12 +1581,10 @@ ${currentLang === 'en' ? 'For inquiry, click on the "Inquiry" button to send via
             }
         }
 
-        // حفظ اللغة المختارة في localStorage
         function saveLanguage(lang) {
             localStorage.setItem('preferredLanguage', lang);
         }
 
-        // تحميل اللغة المفضلة
         function loadPreferredLanguage() {
             const savedLang = localStorage.getItem('preferredLanguage');
             if (savedLang) {
@@ -1631,87 +1595,61 @@ ${currentLang === 'en' ? 'For inquiry, click on the "Inquiry" button to send via
             }
         }
 
-        // ========== عداد الزوار وتاريخ آخر تحديث ==========
+        // ========== عداد الزوار الإجمالي ==========
 
-        // دالة لعداد الزوار
         function updateVisitorCounter() {
             const counterElement = document.getElementById('visitorCounter');
+            if (!counterElement) return;
             
-            // استخدام localStorage لتخزين عدد الزيارات
             let visitorCount = localStorage.getItem('visitorCount');
+            const sessionVisited = sessionStorage.getItem('sessionVisited');
             
-            if (visitorCount) {
-                visitorCount = parseInt(visitorCount) + 1;
-            } else {
-                visitorCount = 1; // أول زيارة
-            }
-            
-            // حفظ العدد الجديد
-            localStorage.setItem('visitorCount', visitorCount);
-            
-            // عرض العدد مع تنسيق (إضافة فواصل للأرقام)
-            counterElement.textContent = visitorCount.toLocaleString();
-            
-            // منع زيادة العداد عند تحديث الصفحة خلال نفس الجلسة
-            if (!sessionStorage.getItem('sessionVisited')) {
+            if (!sessionVisited) {
+                if (visitorCount) {
+                    visitorCount = parseInt(visitorCount) + 1;
+                } else {
+                    visitorCount = 1;
+                }
+                
+                localStorage.setItem('visitorCount', visitorCount);
                 sessionStorage.setItem('sessionVisited', 'true');
             } else {
-                // إذا كان قد زار في نفس الجلسة، نعرض العدد الحالي فقط دون زيادة
-                counterElement.textContent = visitorCount.toLocaleString();
+                visitorCount = visitorCount ? parseInt(visitorCount) : 1;
             }
+            
+            counterElement.textContent = visitorCount.toLocaleString();
         }
 
-        // دالة لعرض تاريخ آخر تحديث
         function displayLastUpdateDate() {
             const dateElement = document.getElementById('lastUpdateDate');
+            if (!dateElement) return;
             
-            // تاريخ آخر تعديل للملف
-            const lastUpdate = '18/02/2026'; // صيغة: يوم/شهر/سنة
-            
+            const lastUpdate = '18/02/2026';
             dateElement.textContent = lastUpdate;
-            
-            // إضافة تأثير تمرير
-            dateElement.addEventListener('mouseenter', function() {
-                this.style.backgroundColor = '#ffaa00';
-                this.style.transition = '0.3s';
-            });
-            
-            dateElement.addEventListener('mouseleave', function() {
-                this.style.backgroundColor = '#ffcc00';
-            });
         }
 
-        // دالة لتحديث التاريخ حسب اللغة
         function updateDateForLanguage(lang) {
             const dateElement = document.getElementById('lastUpdateDate');
             if (!dateElement) return;
             
             if (lang === 'ar') {
-                // التاريخ بالعربية: 18 فبراير 2026
                 const arabicMonths = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
                 dateElement.textContent = `18 ${arabicMonths[1]} 2026`;
                 dateElement.style.direction = 'rtl';
-            } else if (lang === 'en') {
-                // التاريخ بالإنجليزية: 18/02/2026
-                dateElement.textContent = '18/02/2026';
-                dateElement.style.direction = 'ltr';
-            } else if (lang === 'fr') {
-                // التاريخ بالفرنسية: 18/02/2026
+            } else {
                 dateElement.textContent = '18/02/2026';
                 dateElement.style.direction = 'ltr';
             }
         }
 
-        // دالة لإعادة تعيين العداد (للمطور)
         function resetVisitorCounter() {
             if (confirm('هل تريد إعادة تعيين عداد الزوار؟')) {
                 localStorage.removeItem('visitorCount');
-                localStorage.removeItem('visitorCount_backup');
+                sessionStorage.removeItem('sessionVisited');
                 location.reload();
             }
         }
 
-        // إضافة زر سري لإعادة تعيين العداد
         let clickCount = 0;
         document.addEventListener('click', function(e) {
             if (e.target.id === 'visitorCounter' || e.target.closest('#visitorCounter')) {
@@ -1721,24 +1659,17 @@ ${currentLang === 'en' ? 'For inquiry, click on the "Inquiry" button to send via
                     clickCount = 0;
                 }
                 
-                // إعادة تعيين العد بعد 3 ثوان
                 setTimeout(() => {
                     clickCount = 0;
                 }, 3000);
             }
         });
 
-        // عرض السيارات عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             loadPreferredLanguage();
-            
-            // تحديث عداد الزوار
             updateVisitorCounter();
-            
-            // عرض تاريخ آخر تحديث
             displayLastUpdateDate();
             
-            // تحديث التاريخ حسب اللغة الحالية
             setTimeout(() => {
                 updateDateForLanguage(currentLang || 'ar');
             }, 100);
