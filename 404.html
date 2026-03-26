@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خالد كارز إكسبور - استيراد السيارات من أوروبا والصين</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            var(--primary): #1A5FB4; 
+            --primary-dark: #0D3261;
+            --secondary: #FFC107; 
+            --accent: #E63946;
+            --bg-light: #F4F7F9;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --white: #FFFFFF;
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-lg: 0 15px 30px rgba(26, 95, 180, 0.15);
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
+        header {
+            background: linear-gradient(135deg, #1A5FB4 0%, #0D3261 100%);
+            color: var(--white);
+            padding: 30px 40px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .language-selector {
+            position: absolute; top: 20px; left: 30px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            padding: 8px 15px; border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 100;
+        }
+        .language-selector select {
+            background: transparent; color: white; border: none;
+            font-weight: 700; outline: none; cursor: pointer;
+        }
+        .language-selector select option { color: var(--text-main); }
+
+        .header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .brand-box { display: flex; align-items: center; gap: 20px; }
+        .logo-img { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--secondary); background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); object-fit: contain; }
+        .brand-text .title { font-size: 2.2rem; font-weight: 900; color: var(--white); line-height: 1.1; }
+        .brand-text .subtitle { color: var(--secondary); font-weight: 700; letter-spacing: 2px; font-size: 1.1rem; }
+
+        .flags-box { display: flex; gap: 10px; align-items: center; border-right: 2px solid rgba(255,193,7,0.4); padding-right: 20px; }
+        .flag-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .flag-item img { width: 40px; border-radius: 8px; box-shadow: var(--shadow-sm); }
+        .flag-item span { font-size: 0.7rem; font-weight: 700; color: var(--secondary); background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 10px; }
+
+        .social-header { display: flex; gap: 12px; background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 50px; }
+        .social-link { width: 40px; height: 40px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; text-decoration: none; box-shadow: var(--shadow-sm); }
+        .social-link:hover { transform: translateY(-5px); }
+        .social-link .fa-facebook-f { color: #1877F2; }
+        .social-link .fa-instagram { color: #E1306C; }
+        .social-link .fa-youtube { color: #FF0000; }
+        .social-link .fa-tiktok { color: #000000; }
+        .social-link .fa-whatsapp { color: #25D366; }
+        .custom-ok img { width: 30px; height: 30px; border-radius: 50%; }
+
+        .services-box { background: rgba(255,255,255,0.1); border-radius: var(--radius); padding: 20px; margin-top: 30px; border: 1px solid rgba(255,255,255,0.2); }
+        .services-box h3 { color: var(--secondary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .services-list { display: flex; flex-wrap: wrap; gap: 20px; list-style: none; }
+        .services-list li { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+        .services-list i { color: var(--secondary); }
+
+        .section-title { text-align: center; color: #1A5FB4; font-size: 2rem; font-weight: 800; margin-bottom: 40px; }
+        .cars-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        
+        .car-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #E2E8F0; transition: 0.3s; display: flex; flex-direction: column; }
+        .car-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); border-color: #1A5FB4; }
+        
+        .car-img-box { position: relative; height: 230px; cursor: pointer; overflow: hidden; }
+        .car-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .car-card:hover .car-img { transform: scale(1.08); }
+        
+        .photo-count { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 10px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .car-price { position: absolute; bottom: 15px; right: 15px; background: var(--secondary); color: #0D3261; padding: 5px 15px; border-radius: 8px; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        .car-info { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+        .car-name { font-size: 1.3rem; font-weight: 800; color: #1A5FB4; margin-bottom: 15px; }
+        .car-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; }
+        
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .spec-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
+        .spec-item i { color: #1A5FB4; width: 16px; }
+
+        .card-actions { display: flex; gap: 10px; margin-top: auto; }
+        .btn { flex: 1; padding: 12px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-outline { background: #F8FAFC; color: #1A5FB4; border: 1px solid #1A5FB4; }
+        .btn-outline:hover { background: #1A5FB4; color: white; }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-whatsapp:hover { background: #1EBE5D; }
+
+        .contact-section { margin-top: 60px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .contact-card { background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow-sm); border-top: 4px solid var(--secondary); text-align: center; }
+        .contact-card h3 { color: #1A5FB4; margin-bottom: 20px; font-size: 1.4rem; }
+        .contact-row { display: flex; align-items: center; justify-content: center; gap: 15px; background: var(--bg-light); padding: 12px; border-radius: 10px; margin-bottom: 10px; text-decoration: none; color: var(--text-main); font-weight: 700; transition: 0.3s; }
+        .contact-row:hover { background: #1A5FB4; color: white; }
+        .contact-row i { color: var(--secondary); font-size: 1.2rem; }
+        .address-box { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #CCC; color: var(--text-muted); font-weight: 600; }
+
+        footer { text-align: center; padding: 40px 20px; background: #0D3261; color: white; border-radius: var(--radius); margin-top: 40px; }
+        .footer-socials { display: flex; justify-content: center; gap: 15px; margin: 25px 0; flex-wrap: wrap; }
+        .footer-socials .social-link { width: 55px; height: 55px; font-size: 1.8rem; }
+
+        .modal { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; }
+        .modal-img { max-width: 90%; max-height: 80vh; border-radius: 10px; border: 3px solid var(--secondary); }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; cursor: pointer; }
+        .prev-btn { left: 20px; } .next-btn { right: 20px; }
+        .modal-caption { color: white; margin-top: 15px; font-size: 1.2rem; }
+
+        @media (max-width: 900px) {
+            .header-top { justify-content: center; text-align: center; flex-direction: column; }
+            .flags-box { border-right: none; border-bottom: 2px solid rgba(255,193,7,0.4); padding-right: 0; padding-bottom: 15px; }
+            .language-selector { position: relative; top: 0; left: 0; display: inline-block; margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="language-selector">
+            <select id="languageSelect" onchange="changeLanguage(this.value)">
+                <option value="ar" selected>🇸🇦 العربية</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="fr">🇫🇷 Français</option>
+            </select>
+        </div>
+
+        <div class="header-top">
+            <div class="brand-box">
+                <img src="https://i.ibb.co/N68V7Ybn/logo.jpg" alt="Logo" class="logo-img">
+                <div class="brand-text">
+                    <h1 class="title">KHALED CARS</h1>
+                    <div class="subtitle">EXPORT</div>
+                </div>
+            </div>
+
+            <div class="flags-box">
+                <div class="flag-item">
+                    <img src="https://flagcdn.com/w40/dz.png" alt="Algeria">
+                    <span data-translate="algeria">الجزائر</span>
+                </div>
+                <div class="flag-item">
+                    <img src="https://flagcdn.com/w40/cn.png" alt="China">
+                    <span data-translate="china">الصين</span>
+                </div>
+                <div class="flag-item">
+                    <img src="https://flagcdn.com/w40/eu.png" alt="Europe">
+                    <span data-translate="europe">أوروبا</span>
+                </div>
+                <div class="flag-item">
+                    <img src="https://flagcdn.com/w40/kr.png" alt="Korea">
+                    <span data-translate="korea">كوريا</span>
+                </div>
+            </div>
+
+            <div class="social-header">
+                <a href="https://web.facebook.com/profile.php?id=61582599671882" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/khaledcarsexport/" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@KhaledCarsExport" class="social-link"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.tiktok.com/@khaled.cars.export" class="social-link"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/213549883720" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.ouedkniss.com/store/37400/khaled-cars-export/accueil" class="social-link custom-ok">
+                    <img src="https://i.ibb.co/CpLxKrxq/Capture-d-cran-2026-02-18-105440.png" alt="Ouedkniss">
+                </a>
+            </div>
+        </div>
+
+        <div class="services-box">
+            <h3 data-translate="ourServices"><i class="fas fa-star"></i> خدماتنا المميزة</h3>
+            <ul class="services-list">
+                <li><i class="fas fa-check-circle"></i> <span data-translate="service1">سيارات من أوروبا - الصين - كوريا</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-translate="service2">جديدة و أقل من 3 سنوات</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-translate="service3">سرعة التوصيل</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-translate="service4">وثائق و فواتير رسمية</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-translate="service5">طريقة دفع آمنة</span></li>
+            </ul>
+        </div>
+    </header>
+
+    <h2 class="section-title" data-translate="availableCars">السيارات المتوفرة</h2>
+    <div class="cars-grid" id="cars-container"></div>
+
+    <section class="contact-section">
+        <h2 class="section-title" data-translate="contactUs">للتواصل والاستفسار</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3><i class="fas fa-flag" style="color:var(--secondary);"></i> <span data-translate="algeria">الجزائر</span></h3>
+                <a href="https://wa.me/213549883720" class="contact-row"><i class="fab fa-whatsapp"></i> +213549883720 (<span data-translate="skikda">سكيكدة</span>)</a>
+                <a href="tel:0549883720" class="contact-row"><i class="fas fa-phone"></i> 0549883720 (<span data-translate="skikda">سكيكدة</span>)</a>
+                <a href="tel:0780325968" class="contact-row"><i class="fas fa-phone"></i> 0780325968 (<span data-translate="skikda">سكيكدة</span>)</a>
+                <a href="tel:0659605045" class="contact-row"><i class="fas fa-phone"></i> 0659605045 (<span data-translate="tlemcen">تلمسان</span>)</a>
+                <div class="address-box"><i class="fas fa-map-marker-alt" style="color:var(--secondary);"></i> <span data-translate="skikdaAddress">مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال</span></div>
+            </div>
+
+            <div class="contact-card">
+                <h3><i class="fas fa-flag" style="color:var(--secondary);"></i> <span data-translate="france">فرنسا</span></h3>
+                <a href="https://wa.me/213559369237" class="contact-row"><i class="fab fa-whatsapp"></i> +213559369237 (<span data-translate="khaled">خالد</span>)</a>
+                <a href="https://wa.me/33684208705" class="contact-row"><i class="fab fa-whatsapp"></i> +33684208705 (France)</a>
+                <div class="address-box"><i class="fas fa-ship" style="color:var(--secondary);"></i> <span data-translate="weeklyShipping">شحن أسبوعي من فرنسا إلى الجزائر</span></div>
+            </div>
+
+            <div class="contact-card">
+                <h3><i class="fas fa-info-circle" style="color:var(--secondary);"></i> <span data-translate="ourServices2">خدماتنا</span></h3>
+                <div style="display:flex; flex-direction:column; gap:15px; text-align:right; font-weight:700;">
+                    <div><i class="fas fa-car" style="color:var(--secondary); font-size:1.5rem; margin-left:10px;"></i> <span data-translate="serviceImport">إستيراد كل أنواع السيارات</span></div>
+                    <div><i class="fas fa-ship" style="color:var(--secondary); font-size:1.5rem; margin-left:10px;"></i> <span data-translate="serviceShipping">شحن أسبوعي إلى الجزائر</span></div>
+                    <div><i class="fas fa-hand-holding-usd" style="color:var(--secondary); font-size:1.5rem; margin-left:10px;"></i> <span data-translate="servicePayment">دفع آمن</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Khaled Cars Export. <span data-translate="allRights">جميع الحقوق محفوظة.</span></p>
+        <p data-translate="footerTagline">سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر</p>
+        
+        <div class="footer-socials">
+            <a href="https://web.facebook.com/profile.php?id=61582599671882" class="social-link"><i class="fab fa-facebook-f" style="color:#1877F2;"></i></a>
+            <a href="https://www.instagram.com/khaledcarsexport/" class="social-link"><i class="fab fa-instagram" style="color:#E1306C;"></i></a>
+            <a href="https://www.youtube.com/@KhaledCarsExport" class="social-link"><i class="fab fa-youtube" style="color:#FF0000;"></i></a>
+            <a href="https://www.tiktok.com/@khaled.cars.export" class="social-link"><i class="fab fa-tiktok" style="color:#000;"></i></a>
+            <a href="https://wa.me/213549883720" class="social-link"><i class="fab fa-whatsapp" style="color:#25D366;"></i></a>
+            <a href="https://www.ouedkniss.com/store/37400/khaled-cars-export/accueil" class="social-link custom-ok">
+                <img src="https://i.ibb.co/CpLxKrxq/Capture-d-cran-2026-02-18-105440.png" alt="Ouedkniss" style="width:35px; border-radius:50%;">
+            </a>
+        </div>
+    </footer>
+</div>
+
+<div id="imageModal" class="modal">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <button class="nav-btn prev-btn" onclick="changeImage(-1)"><i class="fas fa-chevron-left"></i></button>
+    <img id="modalImage" class="modal-img" src="">
+    <button class="nav-btn next-btn" onclick="changeImage(1)"><i class="fas fa-chevron-right"></i></button>
+    <div id="modalCaption" class="modal-caption"></div>
+</div>
+
+<script>
+    const translations = {
+        ar: {
+            algeria: "الجزائر", china: "الصين", europe: "أوروبا", korea: "كوريا",
+            ourServices: "خدماتنا المميزة", service1: "سيارات من أوروبا - الصين - كوريا",
+            service2: "جديدة و أقل من 3 سنوات", service3: "سرعة التوصيل",
+            service4: "وثائق و فواتير رسمية", service5: "طريقة دفع آمنة",
+            availableCars: "السيارات المتوفرة", contactUs: "للتواصل والاستفسار",
+            france: "فرنسا", skikda: "سكيكدة", tlemcen: "تلمسان", khaled: "خالد",
+            skikdaAddress: "مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال",
+            weeklyShipping: "شحن أسبوعي من فرنسا إلى الجزائر", ourServices2: "خدماتنا",
+            serviceImport: "إستيراد كل أنواع السيارات", serviceShipping: "شحن أسبوعي إلى الجزائر",
+            servicePayment: "دفع آمن", allRights: "جميع الحقوق محفوظة.",
+            footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر",
+            details: "التفاصيل والصور", inquiry: "حجز / استفسار", car: "سيارة"
+        },
+        en: {
+            algeria: "Algeria", china: "China", europe: "Europe", korea: "South Korea",
+            ourServices: "Our Premium Services", service1: "Cars from Europe, China, Korea",
+            service2: "New & Less than 3 years", service3: "Fast Delivery",
+            service4: "Official Documents & Invoices", service5: "Secure Payment",
+            availableCars: "Available Cars", contactUs: "Contact & Inquiry",
+            france: "France", skikda: "Skikda", tlemcen: "Tlemcen", khaled: "Khaled",
+            skikdaAddress: "Skikda Office: Municipal detachment No. 2 Ramdane Djamel",
+            weeklyShipping: "Weekly shipping from France to Algeria", ourServices2: "Our Services",
+            serviceImport: "Import all types of cars", serviceShipping: "Weekly shipping to Algeria",
+            servicePayment: "Secure payment", allRights: "All rights reserved.",
+            footerTagline: "New & Used Cars from Europe - China - Korea to Algeria",
+            details: "View Photos", inquiry: "Inquire Now", car: "Car"
+        },
+        fr: {
+            algeria: "Algérie", china: "Chine", europe: "Europe", korea: "Corée du Sud",
+            ourServices: "Nos Services Premium", service1: "Voitures d'Europe, Chine, Corée",
+            service2: "Neuve et moins de 3 ans", service3: "Livraison rapide",
+            service4: "Documents et factures officiels", service5: "Paiement sécurisé",
+            availableCars: "Voitures disponibles", contactUs: "Contact et renseignements",
+            france: "France", skikda: "Skikda", tlemcen: "Tlemcen", khaled: "Khaled",
+            skikdaAddress: "Bureau de Skikda: Détachement municipal N° 2 Ramdane Djamel",
+            weeklyShipping: "Expédition hebdomadaire de France vers l'Algérie", ourServices2: "Nos Services",
+            serviceImport: "Importation de tous types de voitures", serviceShipping: "Expédition hebdomadaire vers l'Algérie",
+            servicePayment: "Paiement sécurisé", allRights: "Tous droits réservés.",
+            footerTagline: "Voitures neuves et d'occasion d'Europe - Chine - Corée vers l'Algérie",
+            details: "Voir les photos", inquiry: "Renseignement", car: "Voiture"
+        }
+    };
+
+    let currentLang = 'ar';
+
+    // تم إرجاع جميع روابط الصور الأصلية بالكامل لكل سيارة
+    const carsData = [
+  {
+    "id": 18,
+    "name": "Citroen C3 YOU",
+    "name_en": "Citroen C3 YOU",
+    "name_fr": "Citroen C3 YOU",
+    "price": "369 مليون",
+    "price_en": "369 M",
+    "price_fr": "369 M",
+    "images": [
+      "https://i.ibb.co/S7X12Nq8/Whats-App-Image-2026-03-23-at-21-10-35.jpg",
+      "https://i.ibb.co/KczgGcKM/Whats-App-Image-2026-03-23-at-21-10-36.jpg",
+      "https://i.ibb.co/RTwFD0DC/Whats-App-Image-2026-03-23-at-21-10-35-1.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2025",
+        "text_en": "2025",
+        "text_fr": "2025"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "9724 كم",
+        "text_en": "9724 km",
+        "text_fr": "9724 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.2 100 حصان",
+        "text_en": "1.2 Puretech 100 HP",
+        "text_fr": "1.2 Puretech 100 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane"
+  },
+  {
+    "id": 17,
+    "name": "Citroen C3 YOU",
+    "name_en": "Citroen C3 YOU",
+    "name_fr": "Citroen C3 YOU",
+    "price": "310 مليون",
+    "price_en": "310 M",
+    "price_fr": "310 M",
+    "images": [
+      "https://i.ibb.co/fGNpKwQ5/Whats-App-Image-2026-03-23-at-20-29-36.jpg",
+      "https://i.ibb.co/6RfbFKrp/Whats-App-Image-2026-03-23-at-20-29-36-1.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "9735 كم",
+        "text_en": "9735 km",
+        "text_fr": "9735 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.2 83 حصان",
+        "text_en": "1.2 Puretech 83 HP",
+        "text_fr": "1.2 Puretech 83 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane"
+  },
+  {
+    "id": 15,
+    "name": "Renault Arkana Evolution",
+    "price": "485 مليون",
+    "price_en": "485 M",
+    "price_fr": "485 M",
+    "images": [
+      "https://i.ibb.co/vvRy9WW3/GZ965-JE-1.jpg",
+      "https://i.ibb.co/1YJNvp4H/GZ965-JE-2.jpg",
+      "https://i.ibb.co/svVvyXtp/GZ965-JE-3.jpg",
+      "https://i.ibb.co/KjwF78P8/GZ965-JE-4.jpg",
+      "https://i.ibb.co/LzPV0MFS/GZ965-JE-8.jpg",
+      "https://i.ibb.co/MDxgbfSP/GZ965-JE-10.jpg",
+      "https://i.ibb.co/JwvQwsdw/GZ965-JE-14.jpg",
+      "https://i.ibb.co/FbSxcdcW/GZ965-JE-16.jpg",
+      "https://i.ibb.co/BD0mQCT/GZ965-JE-15.jpg",
+      "https://i.ibb.co/PZ6GVPq1/GZ965-JE-12.jpg",
+      "https://i.ibb.co/6RWZPxLk/GZ965-JE-13.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "أوتوماتيك",
+        "text_en": "Automatic",
+        "text_fr": "Automatique"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "36800 كم",
+        "text_en": "36800 km",
+        "text_fr": "36800 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.3 140 حصان",
+        "text_en": "1.3 TCe 140 HP",
+        "text_fr": "1.3 TCe 140 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Renault Arkana Evolution",
+    "name_fr": "Renault Arkana Evolution"
+  },
+  {
+    "id": 16,
+    "name": "Renault Arkana Evolution",
+    "price": "479 مليون",
+    "price_en": "479 M",
+    "price_fr": "479 M",
+    "images": [
+      "https://i.ibb.co/CpFw10Y0/GZ184-JV-1.jpg",
+      "https://i.ibb.co/HftMjMRr/GZ184-JV-4.jpg",
+      "https://i.ibb.co/PZbG75xg/GZ184-JV-14.jpg",
+      "https://i.ibb.co/mCXDSbgd/GZ184-JV-10.jpg",
+      "https://i.ibb.co/TBkd3mzT/GZ184-JV-16.jpg",
+      "https://i.ibb.co/qY8wmw8d/GZ184-JV-15.jpg",
+      "https://i.ibb.co/rRDtfjP4/GZ184-JV-11.jpg",
+      "https://i.ibb.co/KjNs6zY1/GZ184-JV-9.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "أوتوماتيك",
+        "text_en": "Automatic",
+        "text_fr": "Automatique"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "39850 كم",
+        "text_en": "39850 km",
+        "text_fr": "39850 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.3 140 حصان",
+        "text_en": "1.3 TCE 140 HP",
+        "text_fr": "1.3 TCE 140 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Renault Arkana Evolution",
+    "name_fr": "Renault Arkana Evolution"
+  },
+  {
+    "id": 2,
+    "name": "Renault Austral Evolution",
+    "price": "515 مليون",
+    "price_en": "515 M",
+    "price_fr": "515 M",
+    "images": [
+      "https://i.ibb.co/ym0jqw6n/1.jpg",
+      "https://i.ibb.co/WN4vZjDL/2.jpg",
+      "https://i.ibb.co/GfLgK3rF/5.jpg",
+      "https://i.ibb.co/FkjYN5b8/7.jpg",
+      "https://i.ibb.co/B54nH7Q6/10.jpg",
+      "https://i.ibb.co/vxP32D5p/11.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2023",
+        "text_en": "2023",
+        "text_fr": "2023"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "17349 كم",
+        "text_en": "17349 km",
+        "text_fr": "17349 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.2 هجين- 130 حصان",
+        "text_en": "1.2 Hybrid 130 HP",
+        "text_fr": "1.2 Hybride 130 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Renault Austral Evolution",
+    "name_fr": "Renault Austral Evolution"
+  },
+  {
+    "id": 12,
+    "name": "LIVAN X3 PRO",
+    "price": "235 مليون",
+    "price_en": "235 M",
+    "price_fr": "235 M",
+    "images": [
+      "https://i.ibb.co/ZRTW5WtH/01.jpg",
+      "https://i.ibb.co/nsfL0fvZ/02.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2026",
+        "text_en": "2026",
+        "text_fr": "2026"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "0 كم",
+        "text_en": "0 km",
+        "text_fr": "0 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.5 113 حصان",
+        "text_en": "1.5 113 HP",
+        "text_fr": "1.5 113 CH"
+      }
+    ],
+    "description": "متوفر للحجز",
+    "description_en": "Available for booking",
+    "description_fr": "Disponible sur commande"
+  },
+  {
+    "id": 13,
+    "name": "Volkswagen Tharu XR",
+    "price": "615 مليون",
+    "price_en": "615 M",
+    "price_fr": "615 M",
+    "images": [
+      "https://i.ibb.co/8nLFqkGM/650288545-122125783581086655-6713858372043815022-n.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2026",
+        "text_en": "2026",
+        "text_fr": "2026"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "أوتوماتيك",
+        "text_en": "Automatic",
+        "text_fr": "Automatique"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "0 كم",
+        "text_en": "0 km",
+        "text_fr": "0 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.5 160 حصان",
+        "text_en": "1.5 160 HP",
+        "text_fr": "1.5 160 CH"
+      }
+    ],
+    "description": "متوفرة حالا",
+    "description_en": "Available now",
+    "description_fr": "Disponible immédiatement"
+  },
+  {
+    "id": 10,
+    "name": "Chery Tiggo 2 pro",
+    "price": "321 مليون",
+    "price_en": "321 M",
+    "price_fr": "321 M",
+    "images": [
+      "https://i.ibb.co/hR07D6pY/1.jpg",
+      "https://i.ibb.co/RpKcc6cp/2.jpg",
+      "https://i.ibb.co/WdTd5pb/3.jpg",
+      "https://i.ibb.co/k2QBMyCH/4.jpg",
+      "https://i.ibb.co/YB822Js5/5.jpg",
+      "https://i.ibb.co/JFxGFWkz/6.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "62000 كم",
+        "text_en": "62000 km",
+        "text_fr": "62000 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.5 108 حصان",
+        "text_en": "1.5 108 HP",
+        "text_fr": "1.5 108 CH"
+      }
+    ],
+    "description": "البطاقة الرمادية",
+    "description_en": "Registration card included",
+    "description_fr": "Carte grise incluse"
+  },
+  {
+    "id": 9,
+    "name": "Citroën C4 2024",
+    "price": "469 مليون",
+    "price_en": "469 M",
+    "price_fr": "469 M",
+    "images": [
+      "https://i.ibb.co/STZH5kq/image.png",
+      "https://i.ibb.co/JRKCkPKJ/1.png",
+      "https://i.ibb.co/pTbHRVJ/13.png",
+      "https://i.ibb.co/1twfDXFk/15.jpg",
+      "https://i.ibb.co/YBy2pz0m/8.jpg",
+      "https://i.ibb.co/YTpxGRM3/6.jpg",
+      "https://i.ibb.co/6cvmkBz3/2.jpg",
+      "https://i.ibb.co/WWbNjhH1/5.jpg",
+      "https://i.ibb.co/mFMs0wpM/9.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "1200 كم",
+        "text_en": "1200 km",
+        "text_fr": "1200 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.2 130 حصان",
+        "text_en": "1.2 Puretech 130 HP",
+        "text_fr": "1.2 Puretech 130 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Citroën C4 2024",
+    "name_fr": "Citroën C4 2024"
+  },
+  {
+    "id": 8,
+    "name": "Dacia Logan Essential",
+    "price": "364 مليون",
+    "price_en": "364 M",
+    "price_fr": "364 M",
+    "images": [
+      "https://i.ibb.co/YFcBh0ch/LOGAN.png",
+      "https://i.ibb.co/bD3hMYn/ft.png"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2026",
+        "text_en": "2026",
+        "text_fr": "2026"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "0 كم",
+        "text_en": "0 km",
+        "text_fr": "0 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.0 100 حصان",
+        "text_en": "1.0 TCe 100 HP",
+        "text_fr": "1.0 TCe 100 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Dacia Logan Essential",
+    "name_fr": "Dacia Logan Essential"
+  },
+  {
+    "id": 11,
+    "name": "Fiat Tipo Sedan Life",
+    "price": "475 مليون",
+    "price_en": "475 M",
+    "price_fr": "475 M",
+    "images": [
+      "https://i.ibb.co/7tqbd2fj/1.jpg",
+      "https://i.ibb.co/v6jdV2gW/2.jpg",
+      "https://i.ibb.co/8gRVxN6z/3.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2026",
+        "text_en": "2026",
+        "text_fr": "2026"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "500 كم",
+        "text_en": "500 km",
+        "text_fr": "500 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.4",
+        "text_en": "1.4",
+        "text_fr": "1.4"
+      }
+    ],
+    "description": "البطاقة الرمادية",
+    "description_en": "Registration card included",
+    "description_fr": "Carte grise incluse",
+    "name_en": "Fiat Tipo Sedan Life",
+    "name_fr": "Fiat Tipo Sedan Life"
+  },
+  {
+    "id": 4,
+    "name": "Renault Clio 5 Equilibre",
+    "price": "312 مليون",
+    "price_en": "312 M",
+    "price_fr": "312 M",
+    "images": [
+      "https://i.ibb.co/wNjsZPb8/new.png",
+      "https://i.ibb.co/zhj0Rknt/4.png",
+      "https://i.ibb.co/hxz5y65x/1.png",
+      "https://i.ibb.co/Swd4rmKZ/2.jpg",
+      "https://i.ibb.co/qY5b9XGZ/3.png",
+      "https://i.ibb.co/wr4hnXXJ/5.png",
+      "https://i.ibb.co/Kj76pvRz/6.png",
+      "https://i.ibb.co/1t5QDmNt/table.png"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2023",
+        "text_en": "2023",
+        "text_fr": "2023"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "65900 كم",
+        "text_en": "65900 km",
+        "text_fr": "65900 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.0 - 90 حصان",
+        "text_en": "1.0 TCe 90 HP",
+        "text_fr": "1.0 TCe 90 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Renault Clio 5 Equilibre",
+    "name_fr": "Renault Clio 5 Equilibre"
+  },
+  {
+    "id": 5,
+    "name": "Renault Clio 5 Equilibre",
+    "price": "349 مليون",
+    "price_en": "349 M",
+    "price_fr": "349 M",
+    "images": [
+      "https://i.ibb.co/3ydQ3bjN/10.png",
+      "https://i.ibb.co/9kLYpnsV/11.png",
+      "https://i.ibb.co/HppxVmSV/1.png",
+      "https://i.ibb.co/sJD2Lv30/2.png",
+      "https://i.ibb.co/qYF55CnK/4.png",
+      "https://i.ibb.co/bRb5Nty4/5.png",
+      "https://i.ibb.co/prhPQYPQ/6.png",
+      "https://i.ibb.co/ksVtFvZH/7.png",
+      "https://i.ibb.co/MyPNHHST/8.png",
+      "https://i.ibb.co/svKRgbT9/9.png",
+      "https://i.ibb.co/1t5QDmNt/table.png"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2023",
+        "text_en": "2023",
+        "text_fr": "2023"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "أوتوماتيك",
+        "text_en": "Automatic",
+        "text_fr": "Automatique"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "37040 كم",
+        "text_en": "37040 km",
+        "text_fr": "37040 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.0 - 90 حصان",
+        "text_en": "1.0 TCe 90 HP",
+        "text_fr": "1.0 TCe 90 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Renault Clio 5 Equilibre",
+    "name_fr": "Renault Clio 5 Equilibre"
+  },
+  {
+    "id": 7,
+    "name": "Peugeot 208 Active",
+    "price": "329 مليون",
+    "price_en": "329 M",
+    "price_fr": "329 M",
+    "images": [
+      "https://i.ibb.co/N2h4cmdV/photo-10.jpg",
+      "https://i.ibb.co/spWZYp4R/photo-13.jpg",
+      "https://i.ibb.co/GQ9j9wPp/photo-15.jpg",
+      "https://i.ibb.co/wNjtRZLX/photo-20.jpg",
+      "https://i.ibb.co/Mw6wVt8/photo-27.jpg",
+      "https://i.ibb.co/vtwjm6J/photo-28.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "17500 كم",
+        "text_en": "17500 km",
+        "text_fr": "17500 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.2 - 75 حصان",
+        "text_en": "1.2 Puretech 75 HP",
+        "text_fr": "1.2 Puretech 75 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane",
+    "name_en": "Peugeot 208 Active",
+    "name_fr": "Peugeot 208 Active"
+  },
+  {
+    "id": 1,
+    "name": "Renault Arkana Evolution",
+    "price": "--- مليون",
+    "price_en": "--- M",
+    "price_fr": "--- M",
+    "images": [
+      "https://i.ibb.co/yFCxGZzV/Chat-GPT-Image-15-mars-2026-13-58-55.png",
+      "https://i.ibb.co/VYs2h3Gn/2.png",
+      "https://i.ibb.co/jj72S6K/3.png",
+      "https://i.ibb.co/vx4LFfVn/4.png",
+      "https://i.ibb.co/jPqPGJ3L/5.png",
+      "https://i.ibb.co/ZpBdZmdv/6.png",
+      "https://i.ibb.co/sG047pL/7.png"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "52000 كم",
+        "text_en": "52000 km",
+        "text_fr": "52000 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "140 حصان",
+        "text_en": "140 HP",
+        "text_fr": "140 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane"
+  },
+  {
+    "id": 3,
+    "name": "Citroen C3 You",
+    "price": "--- مليون",
+    "price_en": "--- M",
+    "price_fr": "--- M",
+    "images": [
+      "https://i.ibb.co/gKBhY0T/8a4a0fbb-db27-47e0-9074-5a61ad3e2ab2.png",
+      "https://i.ibb.co/nMNF8bMx/photo-2.jpg",
+      "https://i.ibb.co/QjPzPxsL/photo-4.jpg",
+      "https://i.ibb.co/vxyf5Gbj/photo-8.jpg",
+      "https://i.ibb.co/BKzy966B/photo-13.jpg",
+      "https://i.ibb.co/qFBKHMYn/photo-19.jpg",
+      "https://i.ibb.co/JwdQn4qs/photo-21.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "13000 كم",
+        "text_en": "13000 km",
+        "text_fr": "13000 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.2 - 83 حصان",
+        "text_en": "1.2 83 HP",
+        "text_fr": "1.2 83 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane"
+  },
+  {
+    "id": 6,
+    "name": "Peugeot 208 Active",
+    "price": "--- مليون",
+    "price_en": "--- M",
+    "price_fr": "--- M",
+    "images": [
+      "https://i.ibb.co/fVdCfMfq/Chat-GPT-Image-15-mars-2026-09-56-45.png",
+      "https://i.ibb.co/zy0dN1N/1.jpg",
+      "https://i.ibb.co/Hpt3P8Cb/2.jpg",
+      "https://i.ibb.co/pvmy0G8L/627076457-122119931481086655-4479522672578579393-n.jpg",
+      "https://i.ibb.co/r2yVNBfp/11.jpg"
+    ],
+    "details": [
+      {
+        "icon": "fas fa-calendar-alt",
+        "text": "2024",
+        "text_en": "2024",
+        "text_fr": "2024"
+      },
+      {
+        "icon": "fas fa-gas-pump",
+        "text": "بنزين",
+        "text_en": "Petrol",
+        "text_fr": "Essence"
+      },
+      {
+        "icon": "fas fa-cogs",
+        "text": "يدوي",
+        "text_en": "Manual",
+        "text_fr": "Manuelle"
+      },
+      {
+        "icon": "fas fa-tachometer-alt",
+        "text": "15600 كم",
+        "text_en": "15600 km",
+        "text_fr": "15600 km"
+      },
+      {
+        "icon": "fas fa-horse-head",
+        "text": "1.2 - 75 حصان",
+        "text_en": "1.2 75 HP",
+        "text_fr": "1.2 75 CH"
+      }
+    ],
+    "description": "السعر دون إحتساب مصاريف الجمركة",
+    "description_en": "Price excludes customs fees",
+    "description_fr": "Prix hors frais de douane"
+  }
+];
+
+    function changeLanguage(lang) {
+        currentLang = lang;
+        const html = document.documentElement;
+        
+        if (lang === 'ar') {
+            html.setAttribute('dir', 'rtl');
+            html.setAttribute('lang', 'ar');
+        } else {
+            html.setAttribute('dir', 'ltr');
+            html.setAttribute('lang', lang);
+        }
+        
+        document.querySelectorAll('[data-translate]').forEach(el => {
+            const key = el.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
+            }
+        });
+        
+        renderCars();
+    }
+
+    function renderCars() {
+        const container = document.getElementById('cars-container');
+        container.innerHTML = '';
+        
+        const langDetails = translations[currentLang];
+
+        carsData.forEach(car => {
+            let cPrice = currentLang === 'en' ? car.price_en : (currentLang === 'fr' ? car.price_fr : car.price);
+            let cDesc = currentLang === 'en' ? car.description_en : (currentLang === 'fr' ? car.description_fr : car.description);
+            
+            let specsHtml = car.details.map(d => {
+                let text = currentLang === 'en' ? d.text_en : (currentLang === 'fr' ? d.text_fr : d.text);
+                return `<div class="spec-item"><i class="${d.icon}"></i> <span>${text}</span></div>`;
+            }).join('');
+
+            let msg = `أريد الاستفسار عن: ${car.name}`;
+            if(currentLang === 'en') msg = `Hello, I'm inquiring about: ${car.name}`;
+            if(currentLang === 'fr') msg = `Bonjour, je me renseigne sur: ${car.name}`;
+            
+            // إضافة مؤشر عدد الصور فوق الصورة الرئيسية
+            const imagesCount = car.images.length;
+            const imagesCountHtml = imagesCount > 1 ? `<div class="photo-count"><i class="far fa-images"></i> ${imagesCount}</div>` : '';
+
+            const cardHtml = `
+                <div class="car-card">
+                    <div class="car-img-box" onclick="openModal(${car.id})">
+                        <img src="${car.images[0]}" alt="${car.name}" class="car-img">
+                        ${imagesCountHtml}
+                        <div class="car-price">${cPrice}</div>
+                    </div>
+                    
+                    <div class="car-info">
+                        <h3 class="car-name">${car.name}</h3>
+                        <p class="car-desc">${cDesc}</p>
+                        
+                        <div class="specs-grid">
+                            ${specsHtml}
+                        </div>
+                        
+                        <div class="card-actions">
+                            <button class="btn btn-outline" onclick="openModal(${car.id})">
+                                <i class="fas fa-camera"></i> ${langDetails.details}
+                            </button>
+                            <a href="https://wa.me/213549883720?text=${encodeURIComponent(msg)}" class="btn btn-whatsapp" target="_blank">
+                                <i class="fab fa-whatsapp"></i> ${langDetails.inquiry}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += cardHtml;
+        });
+    }
+
+    let currentImages = [];
+    let currentIndex = 0;
+
+    function openModal(carId) {
+        const car = carsData.find(c => c.id === carId);
+        if(car && car.images.length > 0) {
+            currentImages = car.images;
+            currentIndex = 0;
+            updateModalView(car.name);
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+
+    function changeImage(dir) {
+        currentIndex += dir;
+        if (currentIndex >= currentImages.length) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = currentImages.length - 1;
+        updateModalView(document.getElementById('modalCaption').innerText.split('-')[0].trim());
+    }
+
+    function updateModalView(carName) {
+        document.getElementById('modalImage').src = currentImages[currentIndex];
+        document.getElementById('modalCaption').innerText = `${carName} - ${currentIndex + 1}/${currentImages.length}`;
+    }
+
+    window.onclick = function(e) { if (e.target == document.getElementById('imageModal')) closeModal(); }
+
+    window.onload = function() {
+        changeLanguage('ar'); 
+    };
+</script>
+
+</body>
+</html>
