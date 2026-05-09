@@ -275,13 +275,13 @@
 
 <button class="floating-calc-btn" onclick="openCalcModal()">
     <i class="fas fa-database"></i>
-    <span data-translate="calcButton">حاسبة الجمركة الذكية</span>
+    <span data-translate="calcButton">حاسبة الجمركة</span>
 </button>
 
 <div id="calcModal" class="modal" style="z-index: 10000;">
     <div class="calc-modal-content">
         <span class="close-btn" onclick="closeCalcModal()" style="position: absolute; right: 20px; top: 15px; font-size: 30px;">&times;</span>
-        <h2 data-translate="calcTitle"><i class="fas fa-database"></i> حاسبة الجمركة الذكية</h2>
+        <h2 data-translate="calcTitle"><i class="fas fa-database"></i> حاسبة الجمركة</h2>
         
         <div class="form-group" id="offlineDbUploadBox" style="background: #fff3cd; padding: 15px; border-radius: 10px; border: 1px solid #ffeeba;">
             <label style="color: #856404; font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> للتشغيل أوفلاين، الرجاء اختيار ملف (khaled_cars.db):</label>
@@ -333,13 +333,13 @@
 <script>
     const translations = {
         ar: { tabAll: "الكل", tabReady: "البطاقة الرمادية", tabEurope: "الحجز من أوروبا", tabChina: "الحجز من الصين", tabSold: "تم البيع", sold: "تم البيع", details: "التفاصيل والصور", inquiry: "حجز / استفسار", ourServices: "خدماتنا المميزة", service1: "سيارات من أوروبا - الصين - كوريا", service2: "جديدة و أقل من 3 سنوات", service3: "سرعة التوصيل", service4: "وثائق و فواتير رسمية", service5: "طريقة دفع آمنة", availableCars: "السيارات المتوفرة", contactUs: "للتواصل والاستفسار", algeria: "الجزائر", china: "الصين", europe: "أوروبا", korea: "كوريا", france: "فرنسا", skikda: "سكيكدة", tlemcen: "تلمسان", skikdaAddress: "مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال", ourServices2: "خدماتنا", serviceImport: "إستيراد كل أنواع السيارات", serviceShipping: "شحن أسبوعي إلى الجزائر", allRights: "جميع الحقوق محفوظة.", footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر",
-        calcButton: "حاسبة الجمركة الذكية", calcTitle: "حاسبة الجمركة الذكية", searchLabel: "ابحث عن سيارة (النوع أو الموديل):", originLabel: "مكان الصنع:", originEurope: "أوروبا (Europe)", originOther: "خارج أوروبا (آسيا، الصين...)", bankRate: "سعر الصرف البنكي التقريبي (1€ = دينار):", doSearch: "ابحث واحسب" },
+        calcButton: "حاسبة الجمركة", calcTitle: "حاسبة الجمركة", searchLabel: "ابحث عن سيارة (النوع أو الموديل):", originLabel: "مكان الصنع:", originEurope: "أوروبا (Europe)", originOther: "خارج أوروبا (آسيا، الصين...)", bankRate: "سعر الصرف البنكي التقريبي (1€ = دينار):", doSearch: "ابحث واحسب" },
         
         en: { tabAll: "All", tabReady: "Ready Card", tabEurope: "EU Booking", tabChina: "China Booking", tabSold: "Sold", sold: "Sold", details: "View Photos", inquiry: "Inquire Now", ourServices: "Our Services", service1: "Cars from EU, China, Korea", service2: "New & Under 3 Years", service3: "Fast Delivery", service4: "Official Docs", service5: "Secure Payment", availableCars: "Available Cars", contactUs: "Contact Us", algeria: "Algeria", china: "China", europe: "Europe", korea: "Korea", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Skikda Office", ourServices2: "Services", serviceImport: "Import Cars", serviceShipping: "Weekly Shipping", allRights: "All Rights Reserved.", footerTagline: "New & Used Cars to Algeria",
-        calcButton: "Smart Customs Calculator", calcTitle: "Smart Customs Calculator", searchLabel: "Search Car (Brand or Model):", originLabel: "Origin:", originEurope: "Europe", originOther: "Outside Europe (Asia, China...)", bankRate: "Est. Bank Exchange Rate (1€ = DZD):", doSearch: "Search & Calculate" },
+        calcButton: "Customs Calculator", calcTitle: "Customs Calculator", searchLabel: "Search Car (Brand or Model):", originLabel: "Origin:", originEurope: "Europe", originOther: "Outside Europe (Asia, China...)", bankRate: "Est. Bank Exchange Rate (1€ = DZD):", doSearch: "Search & Calculate" },
         
         fr: { tabAll: "Tout", tabReady: "Carte Grise", tabEurope: "Booking Europe", tabChina: "Booking Chine", tabSold: "Vendu", sold: "Vendu", details: "Voir Photos", inquiry: "Renseignement", ourServices: "Nos Services", service1: "Voitures d'Europe, Chine", service2: "Neuve et -3 ans", service3: "Livraison rapide", service4: "Docs officiels", service5: "Paiement sécurisé", availableCars: "Voitures Disponibles", contactUs: "Contact", algeria: "Algérie", china: "Chine", europe: "Europe", korea: "Corée", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Bureau Skikda", ourServices2: "Nos Services", serviceImport: "Importation", serviceShipping: "Expédition", allRights: "Tous Droits Réservés.", footerTagline: "Voitures neuves et d'occasion vers l'Algérie",
-        calcButton: "Calculateur Douane Intelligent", calcTitle: "Calculateur Intelligent", searchLabel: "Rechercher une voiture (Marque ou Modèle):", originLabel: "Origine:", originEurope: "Europe", originOther: "Hors Europe (Asie, Chine...)", bankRate: "Taux bancaire estimé (1€ = DZD):", doSearch: "Chercher & Calculer" }
+        calcButton: "Calculateur Douane", calcTitle: "Calculateur Intelligent", searchLabel: "Rechercher une voiture (Marque ou Modèle):", originLabel: "Origine:", originEurope: "Europe", originOther: "Hors Europe (Asie, Chine...)", bankRate: "Taux bancaire estimé (1€ = DZD):", doSearch: "Chercher & Calculer" }
     };
 
     const carsData = [
