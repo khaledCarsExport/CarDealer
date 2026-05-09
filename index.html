@@ -315,7 +315,7 @@
         
         <div class="form-group">
             <label id="bankRateLabel" data-translate="bankRate">سعر الصرف البنكي التقريبي (1€ = دينار):</label>
-            <input type="number" id="calcBankRate" value="148" step="0.5" onchange="calculateSelectedDbCar()" onkeyup="calculateSelectedDbCar()">
+            <input type="number" id="calcBankRate" value="155.129" step="0.0001" onchange="calculateSelectedDbCar()" onkeyup="calculateSelectedDbCar()">
         </div>
 
         <div id="finalDbCalc" class="calc-result-box" style="display:none; background: #F8FAFC; border: 2px dashed var(--primary); padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
@@ -1105,8 +1105,7 @@
     async function loadDatabaseAuto() {
         try {
             const sqlPromise = initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
-            // إضافة كود زمني للرابط يجبر المتصفح على جلب أحدث نسخة دائماً
-const dataPromise = fetch("khaled_cars.db?v=" + new Date().getTime()).then(res => {
+            const dataPromise = fetch("khaled_cars.db?v=" + new Date().getTime()).then(res => {
                 if(!res.ok) throw new Error("Fetch failed");
                 return res.arrayBuffer();
             });
@@ -1124,6 +1123,7 @@ const dataPromise = fetch("khaled_cars.db?v=" + new Date().getTime()).then(res =
         document.getElementById('dbDropdownArea').innerHTML = '';
         document.getElementById('finalDbCalc').style.display = 'none';
         document.getElementById('searchCarName').value = '';
+        document.getElementById('searchOrigin').value = 'Europe'; // تعيين القيمة الافتراضية
         onOriginChange();
     }
 
@@ -1134,13 +1134,20 @@ const dataPromise = fetch("khaled_cars.db?v=" + new Date().getTime()).then(res =
     function onOriginChange() {
         const origin = document.getElementById('searchOrigin').value;
         const label = document.getElementById('bankRateLabel');
+        const rateInput = document.getElementById('calcBankRate');
+
         if (origin === 'Europe') {
             label.innerHTML = 'سعر الصرف البنكي التقريبي (1€ = دينار):';
+            rateInput.value = 155.129; // السعر الافتراضي للأورو
         } else {
             label.innerHTML = 'سعر الصرف البنكي التقريبي (1$ = دينار):';
+            rateInput.value = 132.2133; // السعر الافتراضي للدولار
         }
         
-        if (document.getElementById('searchCarName').value.trim() !== '') {
+        // إعادة حساب النتيجة إذا كانت هناك سيارة محددة مسبقاً
+        if (document.getElementById('selectedDbCar') && document.getElementById('selectedDbCar').value) {
+            calculateSelectedDbCar();
+        } else if (document.getElementById('searchCarName').value.trim() !== '') {
             searchCarInDB();
         }
     }
@@ -1302,7 +1309,6 @@ const dataPromise = fetch("khaled_cars.db?v=" + new Date().getTime()).then(res =
         finalBox.style.display = 'block';
     }
 
-    // إغلاق النوافذ عند النقر خارجها
     window.onclick = function(event) {
         if (event.target == document.getElementById('imageModal')) closeModal();
         if (event.target == document.getElementById('calcModal')) closeCalcModal();
