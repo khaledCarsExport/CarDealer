@@ -1002,6 +1002,10 @@
     let currentLang = 'ar';
     let currentFilter = 'all';
 
+    // المتغيرات الافتراضية لأسعار الصرف (في حال لم يتم استخراجها من القاعدة)
+    let eurRate = 155.129;
+    let usdRate = 132.2133;
+
     function changeLanguage(lang) {
         currentLang = lang;
         document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -1080,6 +1084,27 @@
     // --- وظائف حاسبة الجمركة بقاعدة البيانات ---
     let db = null;
 
+    // استخراج أسعار الصرف من القاعدة
+    function extractExchangeRates() {
+        try {
+            const resEur = db.exec("SELECT taux_dc FROM cars WHERE pays_origine='Europe' AND taux_dc IS NOT NULL LIMIT 1");
+            if (resEur.length > 0 && resEur[0].values.length > 0) {
+                let val = parseFloat(resEur[0].values[0][0]);
+                if (!isNaN(val) && val > 0) eurRate = val;
+            }
+            
+            const resUsd = db.exec("SELECT taux_dc FROM cars WHERE pays_origine='Autres pays' AND taux_dc IS NOT NULL LIMIT 1");
+            if (resUsd.length > 0 && resUsd[0].values.length > 0) {
+                let val = parseFloat(resUsd[0].values[0][0]);
+                if (!isNaN(val) && val > 0) usdRate = val;
+            }
+            // تحديث الحقل مباشرة بعد الاستخراج
+            onOriginChange();
+        } catch (e) {
+            console.log("استخدام قيم الصرف الافتراضية.");
+        }
+    }
+
     document.getElementById('dbFileInput').addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -1094,6 +1119,8 @@
                 
                 document.getElementById('offlineDbUploadBox').style.display = 'none';
                 alert(currentLang === 'ar' ? 'تم ربط قاعدة البيانات بنجاح! يمكنك الآن البحث.' : 'Database linked successfully!');
+                
+                extractExchangeRates(); // جلب الأسعار عند الرفع اليدوي
             } catch (e) {
                 console.error(e);
                 alert("حدث خطأ في قراءة ملف قاعدة البيانات.");
@@ -1112,6 +1139,8 @@
             const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
             db = new SQL.Database(new Uint8Array(buf));
             document.getElementById('offlineDbUploadBox').style.display = 'none';
+            
+            extractExchangeRates(); // جلب الأسعار التلقائي
         } catch (e) {
             console.log("التحميل التلقائي غير مدعوم محلياً، يرجى رفع الملف يدوياً.");
         }
@@ -1123,7 +1152,7 @@
         document.getElementById('dbDropdownArea').innerHTML = '';
         document.getElementById('finalDbCalc').style.display = 'none';
         document.getElementById('searchCarName').value = '';
-        document.getElementById('searchOrigin').value = 'Europe'; // تعيين القيمة الافتراضية
+        document.getElementById('searchOrigin').value = 'Europe';
         onOriginChange();
     }
 
@@ -1138,13 +1167,12 @@
 
         if (origin === 'Europe') {
             label.innerHTML = 'سعر الصرف البنكي التقريبي (1€ = دينار):';
-            rateInput.value = 155.129; // السعر الافتراضي للأورو
+            rateInput.value = eurRate; // القيمة من القاعدة أو الافتراضية
         } else {
             label.innerHTML = 'سعر الصرف البنكي التقريبي (1$ = دينار):';
-            rateInput.value = 132.2133; // السعر الافتراضي للدولار
+            rateInput.value = usdRate; // القيمة من القاعدة أو الافتراضية
         }
         
-        // إعادة حساب النتيجة إذا كانت هناك سيارة محددة مسبقاً
         if (document.getElementById('selectedDbCar') && document.getElementById('selectedDbCar').value) {
             calculateSelectedDbCar();
         } else if (document.getElementById('searchCarName').value.trim() !== '') {
@@ -1282,7 +1310,7 @@
                 finalBox.style.display = 'block';
                 return;
             }
-        } else if (isEssenceSmall) {
+        } else if (isEssenceSmall || car.energie === 'HYB' || car.energie === 'ELC') {
             if (age === 'neuf') {
                 customsFeesDZD = (priceDZD * 0.4042) + 2500;
             } else {
@@ -1295,7 +1323,11 @@
                 customsFeesDZD = (priceDZD * 1.2258) + 2500;
             }
         } else {
-            customsFeesDZD = priceDZD * taxRate;
+            if (age === 'neuf') {
+                customsFeesDZD = (priceDZD * 0.4042) + 2500;
+            } else {
+                customsFeesDZD = (priceDZD * 0.2021) + 2500;
+            }
         }
 
         const totalMillions = (customsFeesDZD / 10000).toFixed(2);
