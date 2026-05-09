@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خالد كارز إكسبور - استيراد السيارات من أوروبا والصين</title>
+    <title>Khaled Cars Export - استيراد السيارات من أوروبا والصين</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
     <style>
         :root {
             --primary: #1A5FB4; 
@@ -92,7 +93,7 @@
         .btn-whatsapp { background: #25D366; color: white; }
         .sold-badge { position: absolute; top: 10px; right: 10px; background: var(--accent); color: white; padding: 5px 12px; border-radius: 8px; font-weight: 900; z-index: 5; }
 
-        /* Contact Section Original */
+        /* Contact Section */
         .contact-section { margin-top: 60px; }
         .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .contact-card { background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow-sm); border-top: 4px solid var(--secondary); text-align: center; }
@@ -102,15 +103,61 @@
         .contact-row i { color: var(--secondary); font-size: 1.2rem; }
         .address-box { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #CCC; color: var(--text-muted); font-weight: 600; }
 
-        /* Footer Style Original */
+        /* Footer Style */
         footer { text-align: center; padding: 40px 20px; background: #0D3261; color: white; border-radius: var(--radius); margin-top: 40px; }
         .footer-socials { display: flex; justify-content: center; gap: 15px; margin: 25px 0; flex-wrap: wrap; }
 
-        /* Modal Original */
+        /* Modal Styles */
         .modal { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; }
         .modal-img { max-width: 90%; max-height: 80vh; border: 3px solid var(--secondary); border-radius: 10px; }
         .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; cursor: pointer; }
+
+        /* زر الحاسبة العائم */
+        .floating-calc-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--primary);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(26, 95, 180, 0.4);
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .floating-calc-btn:hover { background: var(--secondary); color: var(--primary-dark); transform: translateY(-5px); }
+        
+        /* نافذة الحاسبة الذكية */
+        .calc-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 480px;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .calc-modal-content .close-btn { color: var(--text-muted); right: 20px; top: 15px; }
+        .calc-modal-content h2 { color: var(--primary); margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.95rem; color: var(--text-main); }
+        .form-group input, .form-group select { 
+            width: 100%; padding: 12px; border: 2px solid #E2E8F0; 
+            border-radius: 10px; outline: none; transition: 0.3s; font-weight: 600;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+
+        html[dir="ltr"] .floating-calc-btn { left: auto; right: 30px; }
 
         @media (max-width: 900px) {
             .header-top { justify-content: center; text-align: center; flex-direction: column; }
@@ -226,11 +273,73 @@
     <div id="modalCaption" style="color:white; margin-top:15px; font-weight:bold;"></div>
 </div>
 
+<button class="floating-calc-btn" onclick="openCalcModal()">
+    <i class="fas fa-database"></i>
+    <span data-translate="calcButton">حاسبة الجمركة الذكية</span>
+</button>
+
+<div id="calcModal" class="modal" style="z-index: 10000;">
+    <div class="calc-modal-content">
+        <span class="close-btn" onclick="closeCalcModal()" style="position: absolute; right: 20px; top: 15px; font-size: 30px;">&times;</span>
+        <h2 data-translate="calcTitle"><i class="fas fa-database"></i> حاسبة الجمركة الذكية</h2>
+        
+        <div class="form-group" id="offlineDbUploadBox" style="background: #fff3cd; padding: 15px; border-radius: 10px; border: 1px solid #ffeeba;">
+            <label style="color: #856404; font-weight: bold;"><i class="fas fa-exclamation-triangle"></i> للتشغيل أوفلاين، الرجاء اختيار ملف (khaled_cars.db):</label>
+            <input type="file" id="dbFileInput" accept=".db,.sqlite" style="border: 1px dashed #856404; background: white;">
+        </div>
+
+        <div class="form-group">
+            <label data-translate="searchLabel">ابحث عن سيارة (النوع أو الموديل):</label>
+            <input type="text" id="searchCarName" placeholder="مثال: Golf أو Tucson أو 3008" oninput="searchCarInDB()">
+        </div>
+        
+        <div class="form-group">
+            <label data-translate="originLabel">مكان الصنع:</label>
+            <select id="searchOrigin" onchange="onOriginChange()">
+                <option value="Europe" data-translate="originEurope">أوروبا (Europe)</option>
+                <option value="Autres pays" data-translate="originOther">خارج أوروبا (آسيا، الصين...)</option>
+            </select>
+        </div>
+
+        <div id="dbDropdownArea" style="margin-bottom: 15px;"></div>
+
+        <div class="form-group">
+            <label>عمر السيارة:</label>
+            <select id="searchAge" onchange="calculateSelectedDbCar()">
+                <option value="neuf">جديدة (0 كم)</option>
+                <option value="1">أقل من سنة</option>
+                <option value="2">من سنة إلى سنتين</option>
+                <option value="3">من سنتين إلى 3 سنوات</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label id="bankRateLabel" data-translate="bankRate">سعر الصرف البنكي التقريبي (1€ = دينار):</label>
+            <input type="number" id="calcBankRate" value="148" step="0.5" onchange="calculateSelectedDbCar()" onkeyup="calculateSelectedDbCar()">
+        </div>
+
+        <div id="finalDbCalc" class="calc-result-box" style="display:none; background: #F8FAFC; border: 2px dashed var(--primary); padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: center;">
+            <h4 style="color:var(--text-muted); font-size:0.95rem; margin-bottom:5px;" id="dbCalcTotalLabel">تكلفة الجمركة التقريبية (بالمليون سنتيم):</h4>
+            <div class="final-price" id="dbCalcTotal" style="color:var(--accent); font-size: 2rem; font-weight: 900;">0</div>
+            <div style="font-size: 0.85rem; margin-top:10px; font-weight:bold; color:var(--text-main);">
+                السعر المرجعي: <span id="dbCarPrice" style="color:var(--primary);"></span><br>
+                مصاريف أخرى: <span id="dbOtherFees" style="color:var(--primary);"></span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <script>
     const translations = {
-        ar: { tabAll: "الكل", tabReady: "البطاقة الرمادية", tabEurope: "الحجز من أوروبا", tabChina: "الحجز من الصين", tabSold: "تم البيع", sold: "تم البيع", details: "التفاصيل والصور", inquiry: "حجز / استفسار", ourServices: "خدماتنا المميزة", service1: "سيارات من أوروبا - الصين - كوريا", service2: "جديدة و أقل من 3 سنوات", service3: "سرعة التوصيل", service4: "وثائق و فواتير رسمية", service5: "طريقة دفع آمنة", availableCars: "السيارات المتوفرة", contactUs: "للتواصل والاستفسار", algeria: "الجزائر", china: "الصين", europe: "أوروبا", korea: "كوريا", france: "فرنسا", skikda: "سكيكدة", tlemcen: "تلمسان", skikdaAddress: "مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال", ourServices2: "خدماتنا", serviceImport: "إستيراد كل أنواع السيارات", serviceShipping: "شحن أسبوعي إلى الجزائر", allRights: "جميع الحقوق محفوظة.", footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر" },
-        en: { tabAll: "All", tabReady: "Ready Card", tabEurope: "EU Booking", tabChina: "China Booking", tabSold: "Sold", sold: "Sold", details: "View Photos", inquiry: "Inquire Now", ourServices: "Our Services", service1: "Cars from EU, China, Korea", service2: "New & Under 3 Years", service3: "Fast Delivery", service4: "Official Docs", service5: "Secure Payment", availableCars: "Available Cars", contactUs: "Contact Us", algeria: "Algeria", china: "China", europe: "Europe", korea: "Korea", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Skikda Office", ourServices2: "Services", serviceImport: "Import Cars", serviceShipping: "Weekly Shipping", allRights: "All Rights Reserved.", footerTagline: "New & Used Cars to Algeria" },
-        fr: { tabAll: "Tout", tabReady: "Carte Grise", tabEurope: "Booking Europe", tabChina: "Booking Chine", tabSold: "Vendu", sold: "Vendu", details: "Voir Photos", inquiry: "Renseignement", ourServices: "Nos Services", service1: "Voitures d'Europe, Chine", service2: "Neuve et -3 ans", service3: "Livraison rapide", service4: "Docs officiels", service5: "Paiement sécurisé", availableCars: "Voitures Disponibles", contactUs: "Contact", algeria: "Algérie", china: "Chine", europe: "Europe", korea: "Corée", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Bureau Skikda", ourServices2: "Nos Services", serviceImport: "Importation", serviceShipping: "Expédition", allRights: "Tous Droits Réservés.", footerTagline: "Voitures neuves et d'occasion vers l'Algérie" }
+        ar: { tabAll: "الكل", tabReady: "البطاقة الرمادية", tabEurope: "الحجز من أوروبا", tabChina: "الحجز من الصين", tabSold: "تم البيع", sold: "تم البيع", details: "التفاصيل والصور", inquiry: "حجز / استفسار", ourServices: "خدماتنا المميزة", service1: "سيارات من أوروبا - الصين - كوريا", service2: "جديدة و أقل من 3 سنوات", service3: "سرعة التوصيل", service4: "وثائق و فواتير رسمية", service5: "طريقة دفع آمنة", availableCars: "السيارات المتوفرة", contactUs: "للتواصل والاستفسار", algeria: "الجزائر", china: "الصين", europe: "أوروبا", korea: "كوريا", france: "فرنسا", skikda: "سكيكدة", tlemcen: "تلمسان", skikdaAddress: "مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال", ourServices2: "خدماتنا", serviceImport: "إستيراد كل أنواع السيارات", serviceShipping: "شحن أسبوعي إلى الجزائر", allRights: "جميع الحقوق محفوظة.", footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر",
+        calcButton: "حاسبة الجمركة الذكية", calcTitle: "حاسبة الجمركة الذكية", searchLabel: "ابحث عن سيارة (النوع أو الموديل):", originLabel: "مكان الصنع:", originEurope: "أوروبا (Europe)", originOther: "خارج أوروبا (آسيا، الصين...)", bankRate: "سعر الصرف البنكي التقريبي (1€ = دينار):", doSearch: "ابحث واحسب" },
+        
+        en: { tabAll: "All", tabReady: "Ready Card", tabEurope: "EU Booking", tabChina: "China Booking", tabSold: "Sold", sold: "Sold", details: "View Photos", inquiry: "Inquire Now", ourServices: "Our Services", service1: "Cars from EU, China, Korea", service2: "New & Under 3 Years", service3: "Fast Delivery", service4: "Official Docs", service5: "Secure Payment", availableCars: "Available Cars", contactUs: "Contact Us", algeria: "Algeria", china: "China", europe: "Europe", korea: "Korea", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Skikda Office", ourServices2: "Services", serviceImport: "Import Cars", serviceShipping: "Weekly Shipping", allRights: "All Rights Reserved.", footerTagline: "New & Used Cars to Algeria",
+        calcButton: "Smart Customs Calculator", calcTitle: "Smart Customs Calculator", searchLabel: "Search Car (Brand or Model):", originLabel: "Origin:", originEurope: "Europe", originOther: "Outside Europe (Asia, China...)", bankRate: "Est. Bank Exchange Rate (1€ = DZD):", doSearch: "Search & Calculate" },
+        
+        fr: { tabAll: "Tout", tabReady: "Carte Grise", tabEurope: "Booking Europe", tabChina: "Booking Chine", tabSold: "Vendu", sold: "Vendu", details: "Voir Photos", inquiry: "Renseignement", ourServices: "Nos Services", service1: "Voitures d'Europe, Chine", service2: "Neuve et -3 ans", service3: "Livraison rapide", service4: "Docs officiels", service5: "Paiement sécurisé", availableCars: "Voitures Disponibles", contactUs: "Contact", algeria: "Algérie", china: "Chine", europe: "Europe", korea: "Corée", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Bureau Skikda", ourServices2: "Nos Services", serviceImport: "Importation", serviceShipping: "Expédition", allRights: "Tous Droits Réservés.", footerTagline: "Voitures neuves et d'occasion vers l'Algérie",
+        calcButton: "Calculateur Douane Intelligent", calcTitle: "Calculateur Intelligent", searchLabel: "Rechercher une voiture (Marque ou Modèle):", originLabel: "Origine:", originEurope: "Europe", originOther: "Hors Europe (Asie, Chine...)", bankRate: "Taux bancaire estimé (1€ = DZD):", doSearch: "Chercher & Calculer" }
     };
 
     const carsData = [
@@ -242,36 +351,11 @@
       "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/lFyTo7cla0nn6Q5lr34x0t0p9LmwAg7aZ9UXuApY.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "2.0  Tdi 150 حصان",
-        "text_en": "2.0  Tdi 150 HP",
-        "text_fr": "2.0  Tdi 150 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026", "text_en": "2026", "text_fr": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين", "text_en": "Petrol", "text_fr": "Essence" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك", "text_en": "Automatic", "text_fr": "Automatique" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم", "text_en": "0 km", "text_fr": "0 km" },
+      { "icon": "fas fa-horse-head", "text": "2.0  Tdi 150 حصان", "text_en": "2.0  Tdi 150 HP", "text_fr": "2.0  Tdi 150 CH" }
     ],
     "description": "البطاقة الرمادية",
     "name_en": "Audi Q3 Sportback  S Line",
@@ -288,44 +372,14 @@
     "name": "Dacia Duster Extreme",
     "images": [
       "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/OGl9R6g2nWWMShpWMIiwW9iADoooAG5A9dak5Af9.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/EJDSfhYBbCR19yYCmFix0akxaqGVFSWpSaiH4tye.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/ZerYJvmL68O9t9cRvzBHjokVZHzHFzih7d7fs0iC.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/3qAGasCP9kcOeHmufH0kA9IuOHH5aoHB6hhSBC2D.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/DqIsqD8SS08c61yyXPKqXJiMnwGANim86Fust1xJ.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/2LCLXqeVgqUFUP6JtnpB5js9wtK4vbcPxgf6gWeF.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/Td5KlWSgc1FQCXLoCv0ewhhGCB5XDXDHmKDNY3fP.webp"
+      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/EJDSfhYBbCR19yYCmFix0akxaqGVFSWpSaiH4tye.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.3 Tce 150 حصان",
-        "text_en": "1.3 Tce 150 HP",
-        "text_fr": "1.3 Tce 150 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026", "text_en": "2026", "text_fr": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين", "text_en": "Petrol", "text_fr": "Essence" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك", "text_en": "Automatic", "text_fr": "Automatique" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم", "text_en": "0 km", "text_fr": "0 km" },
+      { "icon": "fas fa-horse-head", "text": "1.3 Tce 150 حصان", "text_en": "1.3 Tce 150 HP", "text_fr": "1.3 Tce 150 CH" }
     ],
     "description": "البطاقة الرمادية",
     "name_en": "Dacia Duster Extreme",
@@ -342,43 +396,14 @@
     "name": "Dacia Duster Extreme",
     "images": [
       "https://i.ibb.co/nsk2j5T8/1.jpg",
-      "https://i.ibb.co/99k01TsL/2.jpg",
-      "https://i.ibb.co/gL3c1GR6/3.jpg",
-      "https://i.ibb.co/vCsQbpJt/4.jpg",
-      "https://i.ibb.co/99xcmz49/8.jpg",
-      "https://i.ibb.co/RTp6Ct2Z/9.jpg"
+      "https://i.ibb.co/99k01TsL/2.jpg"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "5000 كم",
-        "text_en": "5000 km",
-        "text_fr": "5000 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.3 Tce 150 حصان",
-        "text_en": "1.3 Tce 150 HP",
-        "text_fr": "1.3 Tce 150 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026", "text_en": "2026", "text_fr": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين", "text_en": "Petrol", "text_fr": "Essence" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك", "text_en": "Automatic", "text_fr": "Automatique" },
+      { "icon": "fas fa-tachometer-alt", "text": "5000 كم", "text_en": "5000 km", "text_fr": "5000 km" },
+      { "icon": "fas fa-horse-head", "text": "1.3 Tce 150 حصان", "text_en": "1.3 Tce 150 HP", "text_fr": "1.3 Tce 150 CH" }
     ],
     "description": "البطاقة الرمادية",
     "name_en": "Dacia Duster Extreme",
@@ -397,45 +422,14 @@
     "price_fr": "479 M",
     "images": [
       "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/ifqWO0m0Qx79vEnsCnNrCxJWSCf6Yu7zCkWCf2zw.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/g2YQdQhnljSEGrgxu57xKgL70EdnKS2m9E6H16G4.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/3sU3YTFQDjVqofyaWG0kBtEBikEQu140sGGsyTVp.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/28PAtzQbi0qdyGXVePkAtCw9Kk4uMKOHPEt4gv8h.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/X6YHK85LdkIAawIKgRgO2CKwKXOA2Ihaskrjmbv4.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/PcrLyLD3MnpHxhpqyuhYVJsj7gHACkoevsNyBagH.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/fu8aEz27i8nGxcHcK0cQDAvZiNnSisloD8b2i23Y.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/ifuqpNUvV0aA5TQLSkSnzq8qUz7FjQIrnszsrF4X.webp"
+      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/g2YQdQhnljSEGrgxu57xKgL70EdnKS2m9E6H16G4.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "هجين",
-        "text_en": "Hybrid",
-        "text_fr": "Hybride"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "41000 كم",
-        "text_en": "41000 km",
-        "text_fr": "41000 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.3 140 حصان",
-        "text_en": "1.3 TCe 140 HP",
-        "text_fr": "1.3 TCe 140 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024", "text_en": "2024", "text_fr": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "هجين", "text_en": "Hybrid", "text_fr": "Hybride" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك", "text_en": "Automatic", "text_fr": "Automatique" },
+      { "icon": "fas fa-tachometer-alt", "text": "41000 كم", "text_en": "41000 km", "text_fr": "41000 km" },
+      { "icon": "fas fa-horse-head", "text": "1.3 140 حصان", "text_en": "1.3 TCe 140 HP", "text_fr": "1.3 TCe 140 CH" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
     "description_en": "Price excludes customs fees",
@@ -449,100 +443,35 @@
     "tab": "ready",
     "name": "Dacia Logan",
     "images": [
-      "https://i.ibb.co/fdkJ2CQz/1.jpg",
-      "https://i.ibb.co/DHF5Dx5C/2.jpg",
-      "https://i.ibb.co/LzVB3tHz/3.jpg",
-      "https://i.ibb.co/dsbHG3F4/4.jpg"
+      "https://i.ibb.co/fdkJ2CQz/1.jpg"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.0 100 حصان",
-        "text_en": "1.0 TCe 100 HP",
-        "text_fr": "1.0 TCe 100 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.0 100 حصان" }
     ],
     "description": "البطاقة الرمادية",
     "name_en": "Dacia Logan",
     "name_fr": "Dacia Logan",
-    "price": "453 مليون",
-    "price_en": "453 Million",
-    "price_fr": "453 Million",
-    "description_en": "Grey Card",
-    "description_fr": "Carte Grise"
+    "price": "453 مليون"
   },
   {
     "id": 1015,
     "name": "Roewe  i5 Manual",
     "price": "209 مليون",
-    "price_en": "209 M",
-    "price_fr": "209 M",
     "images": [
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/HJvDPc52nbqslV5ZOJNl3BeG5ug8C4BjdwapvnYc.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/nWHefK2tbBx9vNf0dKPJHEJWSE4Buoms7UEfhgWN.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/BzGBQXhVBdXSYufxMj6ENqBk9JJDMbsRTp32gQJC.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/6hhNmKcgvlceiKUOIW6ld91gkJki3DiunCw8AHkr.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/5RyEeg3yZ60yGZHcztMy3vGpJ0FHim12XPUdlr5D.webp"
+      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/HJvDPc52nbqslV5ZOJNl3BeG5ug8C4BjdwapvnYc.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 129 حصان",
-        "text_en": "1.5 129 HP",
-        "text_fr": "1.5 129 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 129 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "Roewe  i5 Manual",
     "name_fr": "Roewe  i5 Manual"
@@ -551,55 +480,17 @@
     "id": 1000,
     "name": "Geely G X3 PRO",
     "price": "236 مليون",
-    "price_en": "236 M",
-    "price_fr": "236 M",
     "images": [
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/0mKO0gJmI2iBEBBxwyEXIDE7byKJUnZo4bvwK6li.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/RcBfOiWe9rcxLPjZwNB8yL8XnZSxfyOMr1Osznow.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/2prfjyFJjAq0SnoSDXLXB6XUNwlFWGHUTBvMDa0Q.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/djHudm9w5tKCGIWcYcK1tcbNtz8AXhwMiw9o0PFF.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/UGqSFqNZ5rqhxUonaAaJqF3eiw4YqP5hEyhUmxp6.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/AxiadPGd8CKd7VjhU1TyHxgGPQvztHU1hkXcnvnv.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/9HVtoQl8vj0fe0a38HOQjz4tnmztNoIpmUMYQx7G.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/T6eEuczPI9O08AHFpldrYE0DRaIVZ6Rzntz0aman.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/RJuo1mUAZAJCWtsMpoXH4x5qv9EnIvrZMEBhoXw5.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/3JOVVNchBEKA2TjZWPbcpbbzSr9H6A2UIB6eVdnU.webp"
+      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/0mKO0gJmI2iBEBBxwyEXIDE7byKJUnZo4bvwK6li.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 113 حصان",
-        "text_en": "1.5 113 HP",
-        "text_fr": "1.5 113 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 113 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "Geely G X3 PRO",
     "name_fr": "Geely G X3 PRO"
@@ -607,111 +498,37 @@
   {
     "id": 1011,
     "name": "Citroen C3 YOU",
-    "name_en": "Citroen C3 YOU",
-    "name_fr": "Citroen C3 YOU",
     "price": "375 مليون",
-    "price_en": "375 M",
-    "price_fr": "375 M",
     "images": [
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/CyH2Sd9ms6k4x7AEJMZdbUYwufMQ2Zf3NutNv8NQ.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/CjiUWiFfWeeaLJxKKRlDbvFZU4wLoXCJ5l1NZXi5.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/Mx5YQWeUN8tgIdihB2ZOLH8U3s0rDXqwP3T4qpvM.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/9PKvRQib4yEckLmG6Npi4mK0WXTo2uWvpUuJn6g7.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/HgK3LMH6f6PuhNM2vVVbEwxh82nACTkI6LVNT4Wk.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/gKPVZglixEa5pJ2cFnt2iJl1PlyBbmI1txA3ngB9.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/cIi6TYNXx0Emehce5u5WpkQEj3o1Rq6kZHh3uqGu.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/BiR60CTLyU6gplXHuYIlPxWwIlsEl8K4LxYjmMUK.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/abYOkCr1qV4og6NOLveEqeNtEBcdFxO1Y9rquflz.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/XrAPJLw5kLXcazCfCRI7ra4JoI5KaVUq6lkVn9Qn.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/rTc8A1jhS1KUyPbCZaK6NmIbQ6CFdSg9rAcVN27j.webp"
+      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/CyH2Sd9ms6k4x7AEJMZdbUYwufMQ2Zf3NutNv8NQ.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "29370 كم",
-        "text_en": "29370 km",
-        "text_fr": "29370 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.2 83 حصان",
-        "text_en": "1.2 Puretech 83 HP",
-        "text_fr": "1.2 Puretech 83 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "29370 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.2 83 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
-    "tab": "ready"
+    "tab": "ready",
+    "name_en": "Citroen C3 YOU",
+    "name_fr": "Citroen C3 YOU"
   },
   {
     "id": 6,
     "name": "Peugeot 308 Gt",
     "price": "525 مليون معروض",
-    "price_en": "525 millions offerts",
-    "price_fr": "525 million offered",
     "images": [
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/Of679gRXQJs3TDtLnca7wO0aVeGZNv7jZwz6sEJG.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/Z6qq8G1VfweMdrymIpJB4PYyLuzkcdU2dGHBcnrV.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/VEne8IAhrqpJhNJQOsWOPG2NFkM0cRX3CrLntf7k.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/aMe7kQso97rilqTus55sDiUGEeC07NG9V1FWWaLD.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/s90j3J9m8yyhZBQZPjuNoUpmv9QiWXqbwGrjxyOG.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/JQBBZUPAxkaIMdzp8XFHRDXCEViYMbCg6DWH6MAJ.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/FZ9i5fZDMXatFXZB2dOCux6wiDODxnRKZvedRBQD.webp"
+      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/Of679gRXQJs3TDtLnca7wO0aVeGZNv7jZwz6sEJG.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2023",
-        "text_en": "2023",
-        "text_fr": "2023"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "35000 كم",
-        "text_en": "35000 km",
-        "text_fr": "35000 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.2 - 130 حصان",
-        "text_en": "1.2 Puretech 130 HP",
-        "text_fr": "1.2 Puretech 130 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2023" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "35000 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.2 - 130 حصان" }
     ],
     "description": "البطاقة الرمادية",
-    "description_en": "Grey Card",
-    "description_fr": "Carte Grise",
     "tab": "ready",
     "name_en": "Peugeot 308 Gt",
     "name_fr": "Peugeot 308 Gt"
@@ -720,148 +537,53 @@
     "id": 1013,
     "tab": "ready",
     "name": "Geely Coolray Full Options",
-    "name_en": "Geely Coolray Full Options",
-    "name_fr": "Geely Coolray Full Options",
     "price": "535 مليون",
-    "price_en": "535 Million",
-    "price_fr": "535 Millions",
     "images": [
       "https://cdn7.ouedkniss.com/500/medias/announcements/images/KZ32jM/Td7xjfeQvc7xwIGLUILkI7devxZCmRZ6MTtDmxtm.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 126 حصان",
-        "text_en": "1.5 181 HP",
-        "text_fr": "1.5 181 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 126 حصان" }
     ],
     "description": "البطاقة الرمادية",
-    "description_en": "Grey Card",
-    "description_fr": "Carte Grise"
+    "name_en": "Geely Coolray Full Options",
+    "name_fr": "Geely Coolray Full Options"
   },
   {
     "id": 1012,
     "name": "Peugeot 3008 Gt Line",
-    "name_en": "Peugeot 3008 Gt Line",
-    "name_fr": "Peugeot 3008 Gt Line",
     "price": "570 مليون",
-    "price_en": "570 M",
-    "price_fr": "570 M",
     "images": [
-      "https://cdn8.ouedkniss.com/500/medias/announcements/images/KZ32jM/06xiaZAsXVzF5CKljnEqtHKnfnMl0E6xclCwyWNR.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/1pTnWkylK1N52PQLqBd6ck5wgLg2bBveWk5zxYNg.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/KyhsNHUTRNygk5MSPttJ6KhJKM8BlhWxkZrkfk6p.webp",
-      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/k8h2TpkNrdyOyyDrm0rHMGWOugzn2BL7bUZ1dFNw.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/qyzDGKhxfU7J2VdCxiZAMF7htgXKgf2IaXEHx4kc.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/Li3ndQ1Oonl8yzSgAKoaWBbYFKZ1jkSGdGASxPd8.webp",
-      "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/M5IcP9RmbBwPAgu7UhrtC4myDNtuskFVAoFmozsP.webp"
+      "https://cdn8.ouedkniss.com/500/medias/announcements/images/KZ32jM/06xiaZAsXVzF5CKljnEqtHKnfnMl0E6xclCwyWNR.webp"
     ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2021",
-        "text_en": "2021",
-        "text_fr": "2021"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "ديزل",
-        "text_en": "Diesel",
-        "text_fr": "Diesel"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "152000 كم",
-        "text_en": "152000 km",
-        "text_fr": "152000 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.6 130 حصان",
-        "text_en": "1.6 BlueHdi 130 HP",
-        "text_fr": "1.6 BlueHdi 130 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2021" },
+      { "icon": "fas fa-gas-pump", "text": "ديزل" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "152000 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.6 130 حصان" }
     ],
     "description": "البطاقة الرمادية",
-    "description_en": "Grey Card",
-    "description_fr": "Carte Grise",
-    "tab": "ready"
+    "tab": "ready",
+    "name_en": "Peugeot 3008 Gt Line",
+    "name_fr": "Peugeot 3008 Gt Line"
   },
   {
     "id": 1010,
     "name": "GAC GS3 R STYLE",
     "price": "359 مليون",
-    "price_en": "359 M",
-    "price_fr": "359 M",
-    "images": [
-      "https://i.ibb.co/bMp8YHJG/RSTYLE.png"
-    ],
+    "images": [ "https://i.ibb.co/bMp8YHJG/RSTYLE.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 177 حصان",
-        "text_en": "1.5T – 177 HP",
-        "text_fr": "1.5T – 177 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 177 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "GAC GS3 R STYLE",
     "name_fr": "GAC GS3 R STYLE"
@@ -870,46 +592,15 @@
     "id": 1009,
     "name": "GAC GS3 FULL",
     "price": "329 مليون",
-    "price_en": "329 M",
-    "price_fr": "329 M",
-    "images": [
-      "https://i.ibb.co/mMS6Xmc/FULL.png"
-    ],
+    "images": [ "https://i.ibb.co/mMS6Xmc/FULL.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 177 حصان",
-        "text_en": "1.5T – 177 HP",
-        "text_fr": "1.5T – 177 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 177 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "GAC GS3 FULL",
     "name_fr": "GAC GS3 FULL"
@@ -918,46 +609,15 @@
     "id": 1008,
     "name": "GAC GS3 MIDDLE",
     "price": "299 مليون",
-    "price_en": "299 M",
-    "price_fr": "299 M",
-    "images": [
-      "https://i.ibb.co/pvq6BMfr/middle.png"
-    ],
+    "images": [ "https://i.ibb.co/pvq6BMfr/middle.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 177 حصان",
-        "text_en": "1.5T – 177 HP",
-        "text_fr": "1.5T – 177 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 177 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "GAC GS3 MIDDLE",
     "name_fr": "GAC GS3 MIDDLE"
@@ -966,46 +626,15 @@
     "id": 1007,
     "name": "GAC GS3 BASIC",
     "price": "269 مليون",
-    "price_en": "269 M",
-    "price_fr": "269 M",
-    "images": [
-      "https://i.ibb.co/F432KZFq/basic.png"
-    ],
+    "images": [ "https://i.ibb.co/F432KZFq/basic.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 177 حصان",
-        "text_en": "1.5T – 177 HP",
-        "text_fr": "1.5T – 177 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 177 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "GAC GS3 BASIC",
     "name_fr": "GAC GS3 BASIC"
@@ -1014,46 +643,15 @@
     "id": 1006,
     "name": "MG5 Automatic",
     "price": "293 مليون",
-    "price_en": "293 M",
-    "price_fr": "293 M",
-    "images": [
-      "https://i.ibb.co/Kz0Cg1p9/auto.png"
-    ],
+    "images": [ "https://i.ibb.co/Kz0Cg1p9/auto.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 181 حصان",
-        "text_en": "1.5 181 HP",
-        "text_fr": "1.5 181 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 181 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "MG5 Automatic",
     "name_fr": "MG5 Automatic"
@@ -1062,46 +660,15 @@
     "id": 1005,
     "name": "MG5 Manual",
     "price": "235 مليون",
-    "price_en": "235 M",
-    "price_fr": "235 M",
-    "images": [
-      "https://i.ibb.co/mCG2Pw6N/manuel.png"
-    ],
+    "images": [ "https://i.ibb.co/mCG2Pw6N/manuel.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 129 حصان",
-        "text_en": "1.5 129 HP",
-        "text_fr": "1.5 129 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 129 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "MG5 Manual",
     "name_fr": "MG5 Manual"
@@ -1110,284 +677,100 @@
     "id": 1004,
     "tab": "cn",
     "name": "Geely Coolray Full Options",
-    "name_en": "Geely Coolray Full Options",
-    "name_fr": "Geely Coolray Full Options",
     "price": "363 مليون",
-    "price_en": "363 Million",
-    "price_fr": "363 Millions",
-    "images": [
-      "https://i.ibb.co/svWMxgKq/full.png"
-    ],
+    "images": [ "https://i.ibb.co/svWMxgKq/full.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 126 حصان",
-        "text_en": "1.5 181 HP",
-        "text_fr": "1.5 181 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 126 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande"
+    "name_en": "Geely Coolray Full Options",
+    "name_fr": "Geely Coolray Full Options"
   },
   {
     "id": 1003,
     "tab": "cn",
     "name": "Geely Coolray Battle",
-    "name_en": "Geely Coolray Battle",
-    "name_fr": "Geely Coolray Battle",
     "price": "355 مليون",
-    "price_en": "355 Million",
-    "price_fr": "355 Millions",
-    "images": [
-      "https://i.ibb.co/WvpkJ7b8/battle.png"
-    ],
+    "images": [ "https://i.ibb.co/WvpkJ7b8/battle.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 126 حصان",
-        "text_en": "1.5 181 HP",
-        "text_fr": "1.5 181 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 126 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande"
+    "name_en": "Geely Coolray Battle",
+    "name_fr": "Geely Coolray Battle"
   },
   {
     "id": 1002,
     "tab": "cn",
     "name": "Geely Coolray Super Max",
-    "name_en": "Geely Coolray Super Max",
-    "name_fr": "Geely Coolray Super Max",
     "price": "293 مليون",
-    "price_en": "293 Million",
-    "price_fr": "293 Millions",
-    "images": [
-      "https://i.ibb.co/DmjwG2K/super-max.png"
-    ],
+    "images": [ "https://i.ibb.co/DmjwG2K/super-max.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 126 حصان",
-        "text_en": "1.5 126 HP",
-        "text_fr": "1.5 126 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 126 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande"
+    "name_en": "Geely Coolray Super Max",
+    "name_fr": "Geely Coolray Super Max"
   },
   {
     "id": 1001,
     "tab": "cn",
     "name": "Geely Coolray Manual",
-    "name_en": "Geely Coolray Manual",
-    "name_fr": "Geely Coolray Manuelle",
     "price": "265 مليون",
-    "price_en": "265 Million",
-    "price_fr": "265 Millions",
-    "images": [
-      "https://i.ibb.co/0L28hTf/manual.jpg"
-    ],
+    "images": [ "https://i.ibb.co/0L28hTf/manual.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 126 حصان",
-        "text_en": "1.5 126 HP",
-        "text_fr": "1.5 126 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 126 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande"
+    "name_en": "Geely Coolray Manual",
+    "name_fr": "Geely Coolray Manuelle"
   },
   {
     "id": 999,
     "tab": "cn",
     "name": "Livan X3 pro Automatique",
-    "images": [
-      "https://i.ibb.co/3ymjq9v1/Gemini-Generated-Image-70gy9i70gy9i70gy.png"
-    ],
+    "images": [ "https://i.ibb.co/3ymjq9v1/Gemini-Generated-Image-70gy9i70gy9i70gy.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 113 حصان",
-        "text_en": "1.5 113 HP",
-        "text_fr": "1.5 113 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 113 حصان" }
     ],
     "description": "متوفر للحجز",
-    "name_en": "Livan X3 pro Automatique",
-    "name_fr": "Livan X3 pro Automatique",
     "price": "255 مليون",
-    "price_en": "255 Million",
-    "price_fr": "255 Millions",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande"
+    "name_en": "Livan X3 pro Automatique",
+    "name_fr": "Livan X3 pro Automatique"
   },
   {
     "id": 12,
     "name": "LIVAN X3 PRO",
     "price": "233 مليون",
-    "price_en": "233 M",
-    "price_fr": "233 M",
-    "images": [
-      "https://i.ibb.co/d04VqwtB/Gemini-Generated-Image-70gy9i70gy9i70gy.png"
-    ],
+    "images": [ "https://i.ibb.co/d04VqwtB/Gemini-Generated-Image-70gy9i70gy9i70gy.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 113 حصان"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 113 حصان" }
     ],
     "description": "متوفر للحجز",
-    "description_en": "Available for booking",
-    "description_fr": "Disponible sur commande",
     "tab": "cn",
     "name_en": "",
     "name_fr": ""
@@ -1395,197 +778,67 @@
   {
     "id": 18,
     "name": "Citroen C3 YOU",
-    "name_en": "Citroen C3 YOU",
-    "name_fr": "Citroen C3 YOU",
     "price": "369 مليون",
-    "price_en": "369 M",
-    "price_fr": "369 M",
-    "images": [
-      "https://i.ibb.co/S7X12Nq8/Whats-App-Image-2026-03-23-at-21-10-35.jpg",
-      "https://i.ibb.co/KczgGcKM/Whats-App-Image-2026-03-23-at-21-10-36.jpg",
-      "https://i.ibb.co/RTwFD0DC/Whats-App-Image-2026-03-23-at-21-10-35-1.jpg"
-    ],
+    "images": [ "https://i.ibb.co/S7X12Nq8/Whats-App-Image-2026-03-23-at-21-10-35.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2025",
-        "text_en": "2025",
-        "text_fr": "2025"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "9724 كم",
-        "text_en": "9724 km",
-        "text_fr": "9724 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.2 100 حصان",
-        "text_en": "1.2 Puretech100 HP",
-        "text_fr": "1.2 Puretech100 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2025" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "9724 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.2 100 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
-    "tab": "eu"
+    "tab": "eu",
+    "name_en": "Citroen C3 YOU",
+    "name_fr": "Citroen C3 YOU"
   },
   {
     "id": 17,
     "name": "Citroen C3 YOU",
-    "name_en": "Citroen C3 YOU",
-    "name_fr": "Citroen C3 YOU",
     "price": "310 مليون",
-    "price_en": "310 M",
-    "price_fr": "310 M",
-    "images": [
-      "https://i.ibb.co/fGNpKwQ5/Whats-App-Image-2026-03-23-at-20-29-36.jpg",
-      "https://i.ibb.co/6RfbFKrp/Whats-App-Image-2026-03-23-at-20-29-36-1.jpg"
-    ],
+    "images": [ "https://i.ibb.co/fGNpKwQ5/Whats-App-Image-2026-03-23-at-20-29-36.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "9735 كم",
-        "text_en": "9735 km",
-        "text_fr": "9735 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.2 83 حصان",
-        "text_en": "1.2 Puretech 83 HP",
-        "text_fr": "1.2 Puretech 83 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "9735 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.2 83 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
-    "tab": "eu"
+    "tab": "eu",
+    "name_en": "Citroen C3 YOU",
+    "name_fr": "Citroen C3 YOU"
   },
   {
     "id": 2,
     "name": "Renault Austral Evolution",
     "price": "515 مليون",
-    "price_en": "515 M",
-    "price_fr": "515 M",
-    "images": [
-      "https://i.ibb.co/ym0jqw6n/1.jpg",
-      "https://i.ibb.co/WN4vZjDL/2.jpg",
-      "https://i.ibb.co/GfLgK3rF/5.jpg",
-      "https://i.ibb.co/FkjYN5b8/7.jpg",
-      "https://i.ibb.co/B54nH7Q6/10.jpg",
-      "https://i.ibb.co/vxP32D5p/11.jpg"
-    ],
+    "images": [ "https://i.ibb.co/ym0jqw6n/1.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2023",
-        "text_en": "2023",
-        "text_fr": "2023"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "17349 كم",
-        "text_en": "17349 km",
-        "text_fr": "17349 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.2 هجين- 130 حصان",
-        "text_en": "1.2  TCe 130 ",
-        "text_fr": "1.2  TCe 130 "
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2023" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "17349 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.2 هجين- 130 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
+    "tab": "eu",
     "name_en": "Renault Austral Evolution",
-    "name_fr": "Renault Austral Evolution",
-    "tab": "eu"
+    "name_fr": "Renault Austral Evolution"
   },
   {
     "id": 13,
     "name": "Volkswagen Tharu XR",
     "price": "590 مليون",
-    "price_en": "590 M",
-    "price_fr": "590 M",
-    "images": [
-      "https://i.ibb.co/8nLFqkGM/650288545-122125783581086655-6713858372043815022-n.jpg"
-    ],
+    "images": [ "https://i.ibb.co/8nLFqkGM/650288545-122125783581086655-6713858372043815022-n.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.5 تيربو 160 حصان"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.5 تيربو 160 حصان" }
     ],
     "description": "متوفرة حالا",
-    "description_en": "Available now",
-    "description_fr": "Disponible immédiatement",
     "tab": "ready",
     "name_en": "",
     "name_fr": ""
@@ -1594,430 +847,134 @@
     "id": 8,
     "name": "Dacia Logan Essential",
     "price": "364 مليون",
-    "price_en": "364 M",
-    "price_fr": "364 M",
-    "images": [
-      "https://i.ibb.co/YFcBh0ch/LOGAN.png",
-      "https://i.ibb.co/bD3hMYn/ft.png"
-    ],
+    "images": [ "https://i.ibb.co/YFcBh0ch/LOGAN.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "0 كم",
-        "text_en": "0 km",
-        "text_fr": "0 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.0 100 حصان",
-        "text_en": "1.0 TCe 100 HP",
-        "text_fr": "1.0 TCe 100 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.0 100 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
+    "tab": "eu",
     "name_en": "Dacia Logan Essential",
-    "name_fr": "Dacia Logan Essential",
-    "tab": "eu"
+    "name_fr": "Dacia Logan Essential"
   },
   {
     "id": 11,
     "name": "Fiat Tipo Sedan Life",
     "price": "475 مليون",
-    "price_en": "475 M",
-    "price_fr": "475 M",
-    "images": [
-      "https://i.ibb.co/7tqbd2fj/1.jpg",
-      "https://i.ibb.co/v6jdV2gW/2.jpg",
-      "https://i.ibb.co/8gRVxN6z/3.jpg"
-    ],
+    "images": [ "https://i.ibb.co/7tqbd2fj/1.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2026",
-        "text_en": "2026",
-        "text_fr": "2026"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "500 كم",
-        "text_en": "500 km",
-        "text_fr": "500 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.4 95 حصان",
-        "text_en": "1.4 95 HP",
-        "text_fr": "1.4 95 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2026" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "500 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.4 95 حصان" }
     ],
     "description": "البطاقة الرمادية",
-    "description_en": "Grey Card",
-    "description_fr": "Carte Grise",
+    "tab": "ready",
     "name_en": "Fiat Tipo Sedan Life",
-    "name_fr": "Fiat Tipo Sedan Life",
-    "tab": "ready"
+    "name_fr": "Fiat Tipo Sedan Life"
   },
   {
     "id": 4,
     "name": "Renault Clio 5 Equilibre",
     "price": "312 مليون",
-    "price_en": "312 M",
-    "price_fr": "312 M",
-    "images": [
-      "https://i.ibb.co/wNjsZPb8/new.png",
-      "https://i.ibb.co/zhj0Rknt/4.png",
-      "https://i.ibb.co/hxz5y65x/1.png",
-      "https://i.ibb.co/Swd4rmKZ/2.jpg",
-      "https://i.ibb.co/qY5b9XGZ/3.png",
-      "https://i.ibb.co/wr4hnXXJ/5.png",
-      "https://i.ibb.co/Kj76pvRz/6.png",
-      "https://i.ibb.co/1t5QDmNt/table.png"
-    ],
+    "images": [ "https://i.ibb.co/wNjsZPb8/new.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2023",
-        "text_en": "2023",
-        "text_fr": "2023"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "65900 كم",
-        "text_en": "65900 km",
-        "text_fr": "65900 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.0 - 90 حصان",
-        "text_en": "1.0 TCe 90 HP",
-        "text_fr": "1.0 TCe 90 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2023" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "65900 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.0 - 90 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
+    "tab": "sold",
     "name_en": "Renault Clio 5 Equilibre",
-    "name_fr": "Renault Clio 5 Equilibre",
-    "tab": "sold"
+    "name_fr": "Renault Clio 5 Equilibre"
   },
   {
     "id": 5,
     "name": "Renault Clio 5 Equilibre",
     "price": "349 مليون",
-    "price_en": "349 M",
-    "price_fr": "349 M",
-    "images": [
-      "https://i.ibb.co/3ydQ3bjN/10.png",
-      "https://i.ibb.co/9kLYpnsV/11.png",
-      "https://i.ibb.co/HppxVmSV/1.png",
-      "https://i.ibb.co/sJD2Lv30/2.png",
-      "https://i.ibb.co/qYF55CnK/4.png",
-      "https://i.ibb.co/bRb5Nty4/5.png",
-      "https://i.ibb.co/prhPQYPQ/6.png",
-      "https://i.ibb.co/ksVtFvZH/7.png",
-      "https://i.ibb.co/MyPNHHST/8.png",
-      "https://i.ibb.co/svKRgbT9/9.png",
-      "https://i.ibb.co/1t5QDmNt/table.png"
-    ],
+    "images": [ "https://i.ibb.co/3ydQ3bjN/10.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2023",
-        "text_en": "2023",
-        "text_fr": "2023"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "37040 كم",
-        "text_en": "37040 km",
-        "text_fr": "37040 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.0 - 90 حصان",
-        "text_en": "1.0 TCe 90 HP",
-        "text_fr": "1.0 TCe 90 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2023" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "37040 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.0 - 90 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
+    "tab": "sold",
     "name_en": "Renault Clio 5 Equilibre",
-    "name_fr": "Renault Clio 5 Equilibre",
-    "tab": "sold"
+    "name_fr": "Renault Clio 5 Equilibre"
   },
   {
     "id": 7,
     "name": "Peugeot 208 Active",
     "price": "329 مليون",
-    "price_en": "329 M",
-    "price_fr": "329 M",
-    "images": [
-      "https://i.ibb.co/N2h4cmdV/photo-10.jpg",
-      "https://i.ibb.co/spWZYp4R/photo-13.jpg",
-      "https://i.ibb.co/GQ9j9wPp/photo-15.jpg",
-      "https://i.ibb.co/wNjtRZLX/photo-20.jpg",
-      "https://i.ibb.co/Mw6wVt8/photo-27.jpg",
-      "https://i.ibb.co/vtwjm6J/photo-28.jpg"
-    ],
+    "images": [ "https://i.ibb.co/N2h4cmdV/photo-10.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "17500 كم",
-        "text_en": "17500 km",
-        "text_fr": "17500 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.2 - 75 حصان",
-        "text_en": "1.2 Puretech 75 HP",
-        "text_fr": "1.2 Puretech 75 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "17500 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.2 - 75 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
+    "tab": "sold",
     "name_en": "Peugeot 208 Active",
-    "name_fr": "Peugeot 208 Active",
-    "tab": "sold"
+    "name_fr": "Peugeot 208 Active"
   },
   {
     "id": 16,
     "name": "Renault Arkana Evolution",
     "price": "479 مليون",
-    "price_en": "479 M",
-    "price_fr": "479 M",
-    "images": [
-      "https://i.ibb.co/CpFw10Y0/GZ184-JV-1.jpg",
-      "https://i.ibb.co/HftMjMRr/GZ184-JV-4.jpg",
-      "https://i.ibb.co/PZbG75xg/GZ184-JV-14.jpg",
-      "https://i.ibb.co/mCXDSbgd/GZ184-JV-10.jpg",
-      "https://i.ibb.co/TBkd3mzT/GZ184-JV-16.jpg",
-      "https://i.ibb.co/qY8wmw8d/GZ184-JV-15.jpg",
-      "https://i.ibb.co/rRDtfjP4/GZ184-JV-11.jpg",
-      "https://i.ibb.co/KjNs6zY1/GZ184-JV-9.jpg"
-    ],
+    "images": [ "https://i.ibb.co/CpFw10Y0/GZ184-JV-1.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "هجين",
-        "text_en": "Hybrid",
-        "text_fr": "Hybride"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "39850 كم",
-        "text_en": "39850 km",
-        "text_fr": "39850 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.3 140 حصان",
-        "text_en": "1.3 TCe 140 HP",
-        "text_fr": "1.3 TCe 140 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "هجين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "39850 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.3 140 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
+    "tab": "sold",
     "name_en": "Renault Arkana Evolution",
-    "name_fr": "Renault Arkana Evolution",
-    "tab": "sold"
+    "name_fr": "Renault Arkana Evolution"
   },
   {
     "id": 15,
     "name": "Renault Arkana Evolution",
     "price": "485 مليون",
-    "price_en": "485 M",
-    "price_fr": "485 M",
-    "images": [
-      "https://i.ibb.co/vvRy9WW3/GZ965-JE-1.jpg",
-      "https://i.ibb.co/1YJNvp4H/GZ965-JE-2.jpg",
-      "https://i.ibb.co/svVvyXtp/GZ965-JE-3.jpg",
-      "https://i.ibb.co/KjwF78P8/GZ965-JE-4.jpg",
-      "https://i.ibb.co/LzPV0MFS/GZ965-JE-8.jpg",
-      "https://i.ibb.co/MDxgbfSP/GZ965-JE-10.jpg",
-      "https://i.ibb.co/JwvQwsdw/GZ965-JE-14.jpg",
-      "https://i.ibb.co/FbSxcdcW/GZ965-JE-16.jpg",
-      "https://i.ibb.co/BD0mQCT/GZ965-JE-15.jpg",
-      "https://i.ibb.co/PZ6GVPq1/GZ965-JE-12.jpg",
-      "https://i.ibb.co/6RWZPxLk/GZ965-JE-13.jpg"
-    ],
+    "images": [ "https://i.ibb.co/vvRy9WW3/GZ965-JE-1.jpg" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "هجين",
-        "text_en": "Hybrid",
-        "text_fr": "Hybride"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "أوتوماتيك",
-        "text_en": "Automatic",
-        "text_fr": "Automatique"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "36800 كم",
-        "text_en": "36800 km",
-        "text_fr": "36800 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.3 140 حصان",
-        "text_en": "1.3 TCe 140 HP",
-        "text_fr": "1.3 TCe 140 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "هجين" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
+      { "icon": "fas fa-tachometer-alt", "text": "36800 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.3 140 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
+    "tab": "sold",
     "name_en": "Renault Arkana Evolution",
-    "name_fr": "Renault Arkana Evolution",
-    "tab": "sold"
+    "name_fr": "Renault Arkana Evolution"
   },
   {
     "id": 1,
     "name": "Renault Arkana Evolution",
     "price": "--- مليون",
-    "price_en": "--- M",
-    "price_fr": "--- M",
-    "images": [
-      "https://i.ibb.co/yFCxGZzV/Chat-GPT-Image-15-mars-2026-13-58-55.png",
-      "https://i.ibb.co/VYs2h3Gn/2.png",
-      "https://i.ibb.co/jj72S6K/3.png",
-      "https://i.ibb.co/vx4LFfVn/4.png",
-      "https://i.ibb.co/jPqPGJ3L/5.png",
-      "https://i.ibb.co/ZpBdZmdv/6.png",
-      "https://i.ibb.co/sG047pL/7.png"
-    ],
+    "images": [ "https://i.ibb.co/yFCxGZzV/Chat-GPT-Image-15-mars-2026-13-58-55.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "52000 كم",
-        "text_en": "52000 km",
-        "text_fr": "52000 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.3 140 حصان",
-        "text_en": "1.3 TCe 140 HP",
-        "text_fr": "1.3 TCe 140 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "52000 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.3 140 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
     "tab": "sold",
     "name_en": "",
     "name_fr": ""
@@ -2026,52 +983,15 @@
     "id": 3,
     "name": "Citroen C3 You",
     "price": "--- مليون",
-    "price_en": "--- M",
-    "price_fr": "--- M",
-    "images": [
-      "https://i.ibb.co/gKBhY0T/8a4a0fbb-db27-47e0-9074-5a61ad3e2ab2.png",
-      "https://i.ibb.co/nMNF8bMx/photo-2.jpg",
-      "https://i.ibb.co/QjPzPxsL/photo-4.jpg",
-      "https://i.ibb.co/vxyf5Gbj/photo-8.jpg",
-      "https://i.ibb.co/BKzy966B/photo-13.jpg",
-      "https://i.ibb.co/qFBKHMYn/photo-19.jpg",
-      "https://i.ibb.co/JwdQn4qs/photo-21.jpg"
-    ],
+    "images": [ "https://i.ibb.co/gKBhY0T/8a4a0fbb-db27-47e0-9074-5a61ad3e2ab2.png" ],
     "details": [
-      {
-        "icon": "fas fa-calendar-alt",
-        "text": "2024",
-        "text_en": "2024",
-        "text_fr": "2024"
-      },
-      {
-        "icon": "fas fa-gas-pump",
-        "text": "بنزين",
-        "text_en": "Petrol",
-        "text_fr": "Essence"
-      },
-      {
-        "icon": "fas fa-cogs",
-        "text": "يدوي",
-        "text_en": "Manual",
-        "text_fr": "Manuelle"
-      },
-      {
-        "icon": "fas fa-tachometer-alt",
-        "text": "13000 كم",
-        "text_en": "13000 km",
-        "text_fr": "13000 km"
-      },
-      {
-        "icon": "fas fa-horse-head",
-        "text": "1.2 - 83 حصان",
-        "text_en": "1.2 Puretech 83 HP",
-        "text_fr": "1.2 Puretech 83 CH"
-      }
+      { "icon": "fas fa-calendar-alt", "text": "2024" },
+      { "icon": "fas fa-gas-pump", "text": "بنزين" },
+      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-tachometer-alt", "text": "13000 كم" },
+      { "icon": "fas fa-horse-head", "text": "1.2 - 83 حصان" }
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
-    "description_en": "Price excludes customs fees",
-    "description_fr": "Prix hors frais de douane",
     "tab": "sold",
     "name_en": "",
     "name_fr": ""
@@ -2110,7 +1030,6 @@
             const name = currentLang === 'en' ? (car.name_en || car.name) : (currentLang === 'fr' ? (car.name_fr || car.name) : car.name);
             const price = isSold ? lang.sold : car.price;
             
-            // إضافة متغير الوصف الذي يعتمد على اللغة الحالية
             const desc = currentLang === 'en' ? (car.description_en || car.description) : (currentLang === 'fr' ? (car.description_fr || car.description) : car.description);
 
             let specsHtml = car.details.map(d => {
@@ -2157,6 +1076,238 @@
         document.getElementById('modalCaption').innerText = `${currentIndex + 1}/${currentImages.length}`;
     }
     function updateModalView(n) { document.getElementById('modalImage').src = currentImages[0]; document.getElementById('modalCaption').innerText = n || ""; }
+
+    // --- وظائف حاسبة الجمركة بقاعدة البيانات ---
+    let db = null;
+
+    document.getElementById('dbFileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async function() {
+            try {
+                const Uints = new Uint8Array(reader.result);
+                const sqlPromise = initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
+                const SQL = await sqlPromise;
+                db = new SQL.Database(Uints);
+                
+                document.getElementById('offlineDbUploadBox').style.display = 'none';
+                alert(currentLang === 'ar' ? 'تم ربط قاعدة البيانات بنجاح! يمكنك الآن البحث.' : 'Database linked successfully!');
+            } catch (e) {
+                console.error(e);
+                alert("حدث خطأ في قراءة ملف قاعدة البيانات.");
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    });
+
+    async function loadDatabaseAuto() {
+        try {
+            const sqlPromise = initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}` });
+            // إضافة كود زمني للرابط يجبر المتصفح على جلب أحدث نسخة دائماً
+const dataPromise = fetch("khaled_cars.db?v=" + new Date().getTime()).then(res => {
+                if(!res.ok) throw new Error("Fetch failed");
+                return res.arrayBuffer();
+            });
+            const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
+            db = new SQL.Database(new Uint8Array(buf));
+            document.getElementById('offlineDbUploadBox').style.display = 'none';
+        } catch (e) {
+            console.log("التحميل التلقائي غير مدعوم محلياً، يرجى رفع الملف يدوياً.");
+        }
+    }
+    loadDatabaseAuto();
+
+    function openCalcModal() {
+        document.getElementById('calcModal').style.display = 'flex';
+        document.getElementById('dbDropdownArea').innerHTML = '';
+        document.getElementById('finalDbCalc').style.display = 'none';
+        document.getElementById('searchCarName').value = '';
+        onOriginChange();
+    }
+
+    function closeCalcModal() {
+        document.getElementById('calcModal').style.display = 'none';
+    }
+
+    function onOriginChange() {
+        const origin = document.getElementById('searchOrigin').value;
+        const label = document.getElementById('bankRateLabel');
+        if (origin === 'Europe') {
+            label.innerHTML = 'سعر الصرف البنكي التقريبي (1€ = دينار):';
+        } else {
+            label.innerHTML = 'سعر الصرف البنكي التقريبي (1$ = دينار):';
+        }
+        
+        if (document.getElementById('searchCarName').value.trim() !== '') {
+            searchCarInDB();
+        }
+    }
+
+    function searchCarInDB() {
+        const dropdownArea = document.getElementById('dbDropdownArea');
+        const finalBox = document.getElementById('finalDbCalc');
+
+        if (!db) {
+            if (document.getElementById('searchCarName').value.trim() !== '') {
+                dropdownArea.innerHTML = `<p style="color:var(--accent); text-align:center; font-weight:bold; font-size: 0.9rem;">الرجاء اختيار ملف قاعدة البيانات أولاً من الأعلى.</p>`;
+            }
+            return;
+        }
+
+        let carName = document.getElementById('searchCarName').value.trim().toLowerCase();
+        const origin = document.getElementById('searchOrigin').value;
+        const currencySymbol = origin === 'Europe' ? '€' : '$';
+
+        if (!carName) {
+            dropdownArea.innerHTML = '';
+            finalBox.style.display = 'none';
+            return;
+        }
+
+        carName = carName.replace(/'/g, "''");
+
+        const query = `
+            SELECT marque, modele, energie, cylindre, taux_dc, Prix_neuf, Prix_1, Prix_2, Prix_3 
+            FROM cars 
+            WHERE (LOWER(marque) LIKE '%${carName}%' OR LOWER(modele) LIKE '%${carName}%') 
+            AND pays_origine = '${origin}'
+            LIMIT 15;
+        `;
+
+        try {
+            const stmt = db.exec(query);
+            
+            if (stmt.length === 0) {
+                dropdownArea.innerHTML = `<p style="color:var(--accent); text-align:center; font-weight:bold; font-size:0.9rem;">لم يتم العثور على سيارة بهذا الاسم.</p>`;
+                finalBox.style.display = 'none';
+                return;
+            }
+
+            const values = stmt[0].values;
+            
+            let html = `
+                <select id="selectedDbCar" onchange="calculateSelectedDbCar()" style="width: 100%; padding: 12px; border: 2px solid var(--secondary); border-radius: 10px; font-weight:bold; background-color: #fcfcfc;">
+                    <option value="">-- اضغط هنا لاختيار السيارة (${values.length} نتائج) --</option>
+            `;
+
+            values.forEach(row => {
+                const marque = row[0];
+                const modele = row[1];
+                const energie = row[2];
+                const cylindre = row[3] || 0;
+                const taux_dc = row[4] || 0;
+                const prix_neuf = row[5] || 0;
+                const prix_1 = row[6] || 0;
+                const prix_2 = row[7] || 0;
+                const prix_3 = row[8] || 0;
+
+                const carData = JSON.stringify({ marque, modele, energie, cylindre, taux_dc, prix_neuf, prix_1, prix_2, prix_3 });
+                html += `<option value='${carData}'>${marque} ${modele} - ${energie} ${cylindre}cc (${prix_neuf}${currencySymbol})</option>`;
+            });
+
+            html += `</select>`;
+
+            dropdownArea.innerHTML = html;
+            finalBox.style.display = 'none';
+
+        } catch (err) {
+            console.error("خطأ في قراءة قاعدة البيانات:", err);
+            dropdownArea.innerHTML = `<p style="color:red; text-align:center; font-size:0.9rem;">حدث خطأ أثناء البحث.</p>`;
+        }
+    }
+
+    function calculateSelectedDbCar() {
+        const select = document.getElementById('selectedDbCar');
+        const finalBox = document.getElementById('finalDbCalc');
+        const bankRate = parseFloat(document.getElementById('calcBankRate').value);
+        const age = document.getElementById('searchAge').value;
+        const origin = document.getElementById('searchOrigin').value;
+        const currencySymbol = origin === 'Europe' ? '€' : '$';
+
+        if (!select || !select.value) {
+            if(finalBox) finalBox.style.display = 'none';
+            return;
+        }
+
+        const car = JSON.parse(select.value);
+        
+        let basePrice = 0;
+        if (age === 'neuf') basePrice = parseFloat(car.prix_neuf) || 0;
+        else if (age === '1') basePrice = parseFloat(car.prix_1) || 0;
+        else if (age === '2') basePrice = parseFloat(car.prix_2) || 0;
+        else if (age === '3') basePrice = parseFloat(car.prix_3) || 0;
+
+        document.getElementById('dbCalcTotal').style.color = "var(--accent)";
+        document.getElementById('dbCalcTotal').style.fontSize = "2rem";
+
+        if (basePrice <= 0 || isNaN(basePrice)) {
+            document.getElementById('dbCalcTotal').innerText = "غير متوفر";
+            document.getElementById('dbCarPrice').innerText = "---";
+            document.getElementById('dbOtherFees').innerText = "السعر غير مسجل لهذه السنة";
+            finalBox.style.display = 'block';
+            return;
+        }
+
+        let cylindre = parseInt(car.cylindre) || 0;
+        let isDiesel = (car.energie === 'DSL');
+        let isEssenceSmall = (car.energie === 'ESS' && cylindre < 1800);
+        let isEssenceBig = (car.energie === 'ESS' && cylindre >= 1800);
+
+        let taxRate = parseFloat(car.taux_dc);
+        if (taxRate > 1) taxRate = taxRate / 100;
+
+        let transportCost = (origin === 'Europe') ? 600 : 1700;
+        let priceDZD = (basePrice + transportCost) * bankRate;
+        
+        let customsFeesDZD = 0;
+
+        if (isDiesel) {
+            if (age === 'neuf') {
+                customsFeesDZD = (priceDZD * 1.5323) + 2500;
+            } else {
+                document.getElementById('dbCalcTotal').innerText = "ممنوع الاستيراد";
+                document.getElementById('dbCalcTotal').style.color = "red";
+                document.getElementById('dbCalcTotal').style.fontSize = "1.5rem";
+                document.getElementById('dbCarPrice').innerText = basePrice.toLocaleString() + currencySymbol;
+                document.getElementById('dbOtherFees').innerText = "يُمنع استيراد سيارات الديزل المستعملة في الجزائر";
+                finalBox.style.display = 'block';
+                return;
+            }
+        } else if (isEssenceSmall) {
+            if (age === 'neuf') {
+                customsFeesDZD = (priceDZD * 0.4042) + 2500;
+            } else {
+                customsFeesDZD = (priceDZD * 0.2021) + 2500;
+            }
+        } else if (isEssenceBig) {
+            if (age === 'neuf') {
+                customsFeesDZD = (priceDZD * 1.5323) + 2500;
+            } else {
+                customsFeesDZD = (priceDZD * 1.2258) + 2500;
+            }
+        } else {
+            customsFeesDZD = priceDZD * taxRate;
+        }
+
+        const totalMillions = (customsFeesDZD / 10000).toFixed(2);
+        
+        let otherFeesText = (origin === 'Europe') ? "حوالي 5 ملاين سنتيم" : "حوالي 30-45 مليون";
+
+        document.getElementById('dbCalcTotal').innerText = totalMillions + " مليون";
+        document.getElementById('dbCarPrice').innerText = basePrice.toLocaleString() + currencySymbol + ` (+${transportCost}${currencySymbol} شحن)`;
+        document.getElementById('dbOtherFees').innerText = otherFeesText;
+        
+        finalBox.style.display = 'block';
+    }
+
+    // إغلاق النوافذ عند النقر خارجها
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('imageModal')) closeModal();
+        if (event.target == document.getElementById('calcModal')) closeCalcModal();
+    }
+
     window.onload = () => changeLanguage('ar');
 </script>
 </body>
