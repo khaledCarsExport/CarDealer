@@ -285,20 +285,20 @@
     </header>
 
     <div class="search-filter-section">
-        <div class="filter-grid">
-            <input type="text" id="carSearchInput" class="filter-control" placeholder="ابحث عن سيارة معروضة..." oninput="handleFilters()">
-            <select id="gearboxFilter" class="filter-control" onchange="handleFilters()">
-                <option value="all">كل علب السرعات</option>
-                <option value="manual">يدوي</option>
-                <option value="automatic">أوتوماتيك</option>
-            </select>
-            <select id="priceSort" class="filter-control" onchange="handleFilters()">
-                <option value="default">ترتيب افتراضي</option>
-                <option value="asc">السعر: من الأقل إلى الأعلى</option>
-                <option value="desc">السعر: من الأعلى إلى الأقل</option>
-            </select>
-        </div>
+    <div class="filter-grid">
+        <input type="text" id="carSearchInput" class="filter-control" placeholder="ابحث عن سيارة معروضة..." oninput="handleFilters()">
+        <select id="gearboxFilter" class="filter-control" onchange="handleFilters()">
+            <option value="all" id="optAllGear">كل علب السرعات</option>
+            <option value="manual" id="optManualGear">يدوي</option>
+            <option value="automatic" id="optAutoGear">أوتوماتيك</option>
+        </select>
+        <select id="priceSort" class="filter-control" onchange="handleFilters()">
+            <option value="default" id="optDefaultSort">ترتيب افتراضي</option>
+            <option value="asc" id="optPriceAsc">السعر: من الأقل إلى الأعلى</option>
+            <option value="desc" id="optPriceDesc">السعر: من الأعلى إلى الأقل</option>
+        </select>
     </div>
+</div>
 
     <h2 class="section-title" data-translate="availableCars">السيارات المتوفرة</h2>
 
@@ -418,16 +418,27 @@
 
 <script>
     const translations = {
-        ar: { tabAll: "الكل", tabReady: "البطاقة الرمادية", tabEurope: "الحجز من أوروبا", tabChina: "الحجز من الصين", tabSold: "تم البيع", sold: "تم البيع", details: "التفاصيل والصور", inquiry: "حجز / استفسار", ourServices: "خدماتنا المميزة", service1: "سيارات من أوروبا - الصين - كوريا", service2: "جديدة و أقل من 3 سنوات", service3: "سرعة التوصيل", service4: "وثائق و فواتير رسمية", service5: "طريقة دفع آمنة", availableCars: "السيارات المتوفرة", contactUs: "للتواصل والاستفسار", algeria: "الجزائر", china: "الصين", europe: "أوروبا", korea: "كوريا", france: "فرنسا", skikda: "سكيكدة", tlemcen: "تلمسان", skikdaAddress: "مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال", ourServices2: "خدماتنا", serviceImport: "إستيراد كل أنواع السيارات", serviceShipping: "شحن أسبوعي إلى الجزائر", allRights: "جميع الحقوق محفوظة.", footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر",
-        calcButton: "حاسبة الجمركة", calcTitle: "حاسبة الجمركة", searchLabel: "ابحث عن سيارة (النوع أو الموديل):", originLabel: "مكان الصنع:", originEurope: "أوروبا (Europe)", originOther: "خارج أوروبا (آسيا، الصين...)", bankRate: "سعر الصرف البنكي التقريبي (1€ = دينار):", doSearch: "ابحث واحسب" },
-        
-        en: { tabAll: "All", tabReady: "Ready Card", tabEurope: "EU Booking", tabChina: "China Booking", tabSold: "Sold", sold: "Sold", details: "View Photos", inquiry: "Inquire Now", ourServices: "Our Services", service1: "Cars from EU, China, Korea", service2: "New & Under 3 Years", service3: "Fast Delivery", service4: "Official Docs", service5: "Secure Payment", availableCars: "Available Cars", contactUs: "Contact Us", algeria: "Algeria", china: "China", europe: "Europe", korea: "Korea", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Skikda Office", ourServices2: "Services", serviceImport: "Import Cars", serviceShipping: "Weekly Shipping", allRights: "All Rights Reserved.", footerTagline: "New & Used Cars to Algeria",
-        calcButton: "Customs Calculator", calcTitle: "Customs Calculator", searchLabel: "Search Car (Brand or Model):", originLabel: "Origin:", originEurope: "Europe", originOther: "Outside Europe (Asia, China...)", bankRate: "Est. Bank Exchange Rate (1€ = DZD):", doSearch: "Search & Calculate" },
-        
-        fr: { tabAll: "Tout", tabReady: "Carte Grise", tabEurope: "Booking Europe", tabChina: "Booking Chine", tabSold: "Vendu", sold: "Vendu", details: "Voir Photos", inquiry: "Renseignement", ourServices: "Nos Services", service1: "Voitures d'Europe, Chine", service2: "Neuve et -3 ans", service3: "Livraison rapide", service4: "Docs officiels", service5: "Paiement sécurisé", availableCars: "Voitures Disponibles", contactUs: "Contact", algeria: "Algérie", china: "Chine", europe: "Europe", korea: "Corée", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Bureau Skikda", ourServices2: "Nos Services", serviceImport: "Importation", serviceShipping: "Expédition", allRights: "Tous Droits Réservés.", footerTagline: "Voitures neuves et d'occasion vers l'Algérie",
-        calcButton: "Calculateur Douane", calcTitle: "Calculateur Intelligent", searchLabel: "Rechercher une voiture (Marque ou Modèle):", originLabel: "Origine:", originEurope: "Europe", originOther: "Hors Europe (Asie, Chine...)", bankRate: "Taux bancaire estimé (1€ = DZD):", doSearch: "Chercher & Calculer" }
-    };
-
+    ar: { 
+        tabAll: "الكل", tabReady: "البطاقة الرمادية", tabEurope: "الحجز من أوروبا", tabChina: "الحجز من الصين", tabSold: "تم البيع", sold: "تم البيع", details: "التفاصيل والصور", inquiry: "حجز / استفسار", ourServices: "خدماتنا المميزة", service1: "سيارات من أوروبا - الصين - كوريا", service2: "جديدة و أقل من 3 سنوات", service3: "سرعة التوصيل", service4: "وثائق و فواتير رسمية", service5: "طريقة دفع آمنة", availableCars: "السيارات المتوفرة", contactUs: "للتواصل والاستفسار", algeria: "الجزائر", china: "الصين", europe: "أوروبا", korea: "كوريا", france: "فرنسا", skikda: "سكيكدة", tlemcen: "تلمسان", skikdaAddress: "مكتب سكيكدة: المفرزة البلدية رقم 2 رمضان جمال", ourServices2: "خدماتنا", serviceImport: "إستيراد كل أنواع السيارات", serviceShipping: "شحن أسبوعي إلى الجزائر", allRights: "جميع الحقوق محفوظة.", footerTagline: "سيارات جديدة ومستعملة من أوروبا - الصين - كوريا إلى الجزائر",
+        calcButton: "حاسبة الجمركة", calcTitle: "حاسبة الجمركة", searchLabel: "ابحث عن سيارة (النوع أو الموديل):", originLabel: "مكان الصنع:", originEurope: "أوروبا (Europe)", originOther: "خارج أوروبا (آسيا، الصين...)", bankRate: "سعر الصرف البنكي التقريبي (1€ = دينار):", doSearch: "ابحث واحسب",
+        // ترجمات الفلاتر الجديدة
+        searchPlaceholder: "ابحث عن سيارة معروضة...", allGearboxes: "كل علب السرعات", manualGear: "يدوي", autoGear: "أوتوماتيك", defaultSort: "ترتيب افتراضي", priceAsc: "السعر: من الأقل إلى الأعلى", priceDesc: "السعر: من الأعلى إلى الأقل", noCars: "لا توجد سيارات تطابق خيارات البحث الحالية."
+    },
+    
+    en: { 
+        tabAll: "All", tabReady: "Ready Card", tabEurope: "EU Booking", tabChina: "China Booking", tabSold: "Sold", sold: "Sold", details: "View Photos", inquiry: "Inquire Now", ourServices: "Our Services", service1: "Cars from EU, China, Korea", service2: "New & Under 3 Years", service3: "Fast Delivery", service4: "Official Docs", service5: "Secure Payment", availableCars: "Available Cars", contactUs: "Contact Us", algeria: "Algeria", china: "China", europe: "Europe", korea: "Korea", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Skikda Office", ourServices2: "Services", serviceImport: "Import Cars", serviceShipping: "Weekly Shipping", allRights: "All Rights Reserved.", footerTagline: "New & Used Cars to Algeria",
+        calcButton: "Customs Calculator", calcTitle: "Customs Calculator", searchLabel: "Search Car (Brand or Model):", originLabel: "Origin:", originEurope: "Europe", originOther: "Outside Europe (Asia, China...)", bankRate: "Est. Bank Exchange Rate (1€ = DZD):", doSearch: "Search & Calculate",
+        // New Filters Translations
+        searchPlaceholder: "Search displayed cars...", allGearboxes: "All Gearboxes", manualGear: "Manual", autoGear: "Automatic", defaultSort: "Default Sorting", priceAsc: "Price: Low to High", priceDesc: "Price: High to Low", noCars: "No cars match the current search criteria."
+    },
+    
+    fr: { 
+        tabAll: "Tout", tabReady: "Carte Grise", tabEurope: "Booking Europe", tabChina: "Booking Chine", tabSold: "Vendu", sold: "Vendu", details: "Voir Photos", inquiry: "Renseignement", ourServices: "Nos Services", service1: "Voitures d'Europe, Chine", service2: "Neuve et -3 ans", service3: "Livraison rapide", service4: "Docs officiels", service5: "Paiement sécurisé", availableCars: "Voitures Disponibles", contactUs: "Contact", algeria: "Algérie", china: "Chine", europe: "Europe", korea: "Corée", france: "France", skikda: "Skikda", tlemcen: "Tlemcen", skikdaAddress: "Bureau Skikda", ourServices2: "Nos Services", serviceImport: "Importation", serviceShipping: "Expédition", allRights: "Tous Droits Réservés.", footerTagline: "Voitures neuves et d'occasion vers l'Algérie",
+        calcButton: "Calculateur Douane", calcTitle: "Calculateur Intelligent", searchLabel: "Rechercher une voiture (Marque ou Modèle):", originLabel: "Origine:", originEurope: "Europe", originOther: "Hors Europe (Asie, Chine...)", bankRate: "Taux bancaire estimé (1€ = DZD):", doSearch: "Chercher & Calculer",
+        // Traductions des Filtres
+        searchPlaceholder: "Rechercher une voiture...", allGearboxes: "Toutes les boîtes", manualGear: "Manuelle", autoGear: "Automatique", defaultSort: "Tri par défaut", priceAsc: "Prix: Du - cher au + cher", priceDesc: "Prix: Du + cher au - cher", noCars: "Aucune voiture ne correspond aux critères de recherche."
+    }
+};
     const carsData = [
   {
     "id": 1017,
@@ -1749,14 +1760,27 @@
     let usdRate = 130;
 
     function changeLanguage(lang) {
-        currentLang = lang;
-        document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-        document.querySelectorAll('[data-translate]').forEach(el => {
-            const key = el.getAttribute('data-translate');
-            if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
-        });
-        renderCars();
-    }
+    currentLang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    // ترجمة العناصر العادية
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
+    });
+
+    // ترجمة نصوص شريط الفلاتر والبحث ديناميكياً
+    const l = translations[lang];
+    document.getElementById('carSearchInput').placeholder = l.searchPlaceholder;
+    document.getElementById('optAllGear').textContent = l.allGearboxes;
+    document.getElementById('optManualGear').textContent = l.manualGear;
+    document.getElementById('optAutoGear').textContent = l.autoGear;
+    document.getElementById('optDefaultSort').textContent = l.defaultSort;
+    document.getElementById('optPriceAsc').textContent = l.priceAsc;
+    document.getElementById('optPriceDesc').textContent = l.priceDesc;
+
+    renderCars();
+}
 
     function filterBy(tab, btn) {
         currentFilter = tab;
@@ -1799,80 +1823,107 @@ function changeCardImage(carId, direction, event) {
         renderCars();
     }
 
-    function renderCars() {
-        const container = document.getElementById('cars-container');
-        container.innerHTML = '';
-        const lang = translations[currentLang];
-        
-        // الحصول على قيم الفلاتر الإضافية
-        const searchQuery = document.getElementById('carSearchInput').value.toLowerCase().trim();
-        const gearboxValue = document.getElementById('gearboxFilter').value;
-        const sortValue = document.getElementById('priceSort').value;
+    function changeLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    
+    // ترجمة العناصر العادية
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
+    });
 
-        // 1. فلترة حسب التبويبات العلوية والمخزون
-        let filtered = carsData.filter(c => currentFilter === 'all' || c.tab === currentFilter);
+    // ترجمة نصوص شريط الفلاتر والبحث ديناميكياً
+    const l = translations[lang];
+    document.getElementById('carSearchInput').placeholder = l.searchPlaceholder;
+    document.getElementById('optAllGear').textContent = l.allGearboxes;
+    document.getElementById('optManualGear').textContent = l.manualGear;
+    document.getElementById('optAutoGear').textContent = l.autoGear;
+    document.getElementById('optDefaultSort').textContent = l.defaultSort;
+    document.getElementById('optPriceAsc').textContent = l.priceAsc;
+    document.getElementById('optPriceDesc').textContent = l.priceDesc;
 
-        // 2. فلترة البحث النصي (اسم السيارة)
-        if (searchQuery !== '') {
-            filtered = filtered.filter(c => c.name.toLowerCase().includes(searchQuery));
-        }
+    renderCars();
+}
 
-        // 3. فلترة نوع علبة السرعات (أوتوماتيك أو يدوي)
-        if (gearboxValue !== 'all') {
-            filtered = filtered.filter(c => {
-                const hasAuto = c.details.some(d => d.icon === 'fas fa-cogs' && d.text.includes('أوتوماتيك'));
-                const hasManual = c.details.some(d => d.icon === 'fas fa-cogs' && d.text.includes('يدوي'));
-                return gearboxValue === 'automatic' ? hasAuto : hasManual;
-            });
-        }
+function renderCars() {
+    const container = document.getElementById('cars-container');
+    container.innerHTML = '';
+    const lang = translations[currentLang];
+    
+    const searchQuery = document.getElementById('carSearchInput').value.toLowerCase().trim();
+    const gearboxValue = document.getElementById('gearboxFilter').value;
+    const sortValue = document.getElementById('priceSort').value;
 
-        // 4. ترتيب الأسعار (تصاعدي أو تنازلي)
-        if (sortValue === 'asc') {
-            filtered.sort((a, b) => parseCarPrice(a.price) - parseCarPrice(b.price));
-        } else if (sortValue === 'desc') {
-            filtered.sort((a, b) => parseCarPrice(b.price) - parseCarPrice(a.price));
-        }
+    let filtered = carsData.filter(c => currentFilter === 'all' || c.tab === currentFilter);
 
-        if(filtered.length === 0) {
-            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; font-weight: bold; color: var(--text-muted); padding: 40px 0;">لا توجد سيارات تطابق خيارات البحث الحالية.</p>`;
-            return;
-        }
-
-        filtered.forEach(car => {
-            const isSold = car.tab === 'sold';
-            const name = currentLang === 'en' ? (car.name_en || car.name) : (currentLang === 'fr' ? (car.name_fr || car.name) : car.name);
-            const price = isSold ? lang.sold : car.price;
-            const desc = currentLang === 'en' ? (car.description_en || car.description) : (currentLang === 'fr' ? (car.description_fr || car.description) : car.description);
-
-            let specsHtml = car.details.map(d => {
-                let text = currentLang === 'en' ? (d.text_en || d.text) : (currentLang === 'fr' ? (d.text_fr || d.text) : d.text);
-                return `<div class="spec-item"><i class="${d.icon}"></i> <span>${text}</span></div>`;
-            }).join('');
-
-            container.innerHTML += `
-    <div class="car-card">
-        ${isSold ? `<div class="sold-badge">${lang.sold}</div>` : ''}
-        <div class="car-img-box" onclick="openModal(${car.id})">
-            <img src="${car.images[0]}" id="img-${car.id}" class="car-img" alt="${name} - Khaled Cars Export" style="${isSold ? 'filter:grayscale(1)' : ''}">
-            ${car.images.length > 1 ? `
-                <button class="card-nav-btn card-prev" onclick="changeCardImage(${car.id}, -1, event)"><i class="fas fa-chevron-left"></i></button>
-                <button class="card-nav-btn card-next" onclick="changeCardImage(${car.id}, 1, event)"><i class="fas fa-chevron-right"></i></button>
-                <div class="photo-count"><i class="fas fa-camera"></i> ${car.images.length}</div>
-            ` : ''}
-            <div class="car-price">${price}</div>
-        </div>
-        <div class="car-info">
-            <h3 class="car-name">${name}</h3>
-            <p class="car-desc">${desc}</p>
-            <div class="specs-grid">${specsHtml}</div>
-            <div class="card-actions">
-                <button class="btn btn-outline" onclick="openModal(${car.id})">${lang.details}</button>
-                ${!isSold ? `<a href="https://wa.me/213549883720?text=${encodeURIComponent('مرحباً Khaled Cars Export، أود الاستفسار عن سيارة: ' + name + ' (السعر: ' + price + ')')}" target="_blank" class="btn btn-whatsapp">${lang.inquiry}</a>` : ''}
-            </div>
-        </div>
-    </div>`;
+    // تحسين البحث النصي: يبحث في الاسم العربي والإنجليزي والفرنسي معاً لضمان إيجاد النتيجة بأي لغة
+    if (searchQuery !== '') {
+        filtered = filtered.filter(c => {
+            const nameAr = (c.name || "").toLowerCase();
+            const nameEn = (c.name_en || "").toLowerCase();
+            const nameFr = (c.name_fr || "").toLowerCase();
+            return nameAr.includes(searchQuery) || nameEn.includes(searchQuery) || nameFr.includes(searchQuery);
         });
     }
+
+    // فلترة علبة السرعات بناءً على الأيقونة والنص البرمجي
+    if (gearboxValue !== 'all') {
+        filtered = filtered.filter(c => {
+            const hasAuto = c.details.some(d => d.icon === 'fas fa-cogs' && (d.text.includes('أوتوماتيك') || (d.text_en && d.text_en.toLowerCase().includes('auto'))));
+            const hasManual = c.details.some(d => d.icon === 'fas fa-cogs' && (d.text.includes('يدوي') || (d.text_en && d.text_en.toLowerCase().includes('manual'))));
+            return gearboxValue === 'automatic' ? hasAuto : hasManual;
+        });
+    }
+
+    // ترتيب الأسعار
+    if (sortValue === 'asc') {
+        filtered.sort((a, b) => parseCarPrice(a.price) - parseCarPrice(b.price));
+    } else if (sortValue === 'desc') {
+        filtered.sort((a, b) => parseCarPrice(b.price) - parseCarPrice(a.price));
+    }
+
+    if(filtered.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; font-weight: bold; color: var(--text-muted); padding: 40px 0;">${lang.noCars}</p>`;
+        return;
+    }
+
+    filtered.forEach(car => {
+        const isSold = car.tab === 'sold';
+        const name = currentLang === 'en' ? (car.name_en || car.name) : (currentLang === 'fr' ? (car.name_fr || car.name) : car.name);
+        const price = isSold ? lang.sold : car.price;
+        const desc = currentLang === 'en' ? (car.description_en || car.description) : (currentLang === 'fr' ? (car.description_fr || car.description) : car.description);
+
+        let specsHtml = car.details.map(d => {
+            let text = currentLang === 'en' ? (d.text_en || d.text) : (currentLang === 'fr' ? (d.text_fr || d.text) : d.text);
+            return `<div class="spec-item"><i class="${d.icon}"></i> <span>${text}</span></div>`;
+        }).join('');
+
+        container.innerHTML += `
+            <div class="car-card">
+                ${isSold ? `<div class="sold-badge">${lang.sold}</div>` : ''}
+                <div class="car-img-box" onclick="openModal(${car.id})">
+                    <img src="${car.images[0]}" id="img-${car.id}" class="car-img" alt="${name} - Khaled Cars Export" style="${isSold ? 'filter:grayscale(1)' : ''}">
+                    ${car.images.length > 1 ? `
+                        <button class="card-nav-btn card-prev" onclick="changeCardImage(${car.id}, -1, event)"><i class="fas fa-chevron-left"></i></button>
+                        <button class="card-nav-btn card-next" onclick="changeCardImage(${car.id}, 1, event)"><i class="fas fa-chevron-right"></i></button>
+                        <div class="photo-count"><i class="fas fa-camera"></i> ${car.images.length}</div>
+                    ` : ''}
+                    <div class="car-price">${price}</div>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-name">${name}</h3>
+                    <p class="car-desc">${desc}</p>
+                    <div class="specs-grid">${specsHtml}</div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openModal(${car.id})">${lang.details}</button>
+                        ${!isSold ? `<a href="https://wa.me/213549883720?text=${encodeURIComponent('مرحباً Khaled Cars Export، أود الاستفسار عن سيارة: ' + name + ' (السعر: ' + price + ')')}" target="_blank" class="btn btn-whatsapp">${lang.inquiry}</a>` : ''}
+                    </div>
+                </div>
+            </div>`;
+    });
+}
+     
 
     let currentImages = []; let currentIndex = 0;
     function openModal(id) {
