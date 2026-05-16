@@ -1,1 +1,36 @@
+backend:
+  name: github
+  repo: /CarDealer ضع هنا اسم حسابك واسم المستودع بدقة
+  branch: main # أو master حسب الفرع الرئيسي عندك
+
+media_folder: "assets/images/cars" # المجلد الذي ستُحفظ فيه صور السيارات المرفوعة
+public_folder: "/assets/images/cars"
+
+collections:
+  - name: "cars"
+    label: "السيارات المعروضة"
+    folder: "content/cars" # المجلد الذي ستُحفظ فيه بيانات السيارات كملفات مستقلة
+    create: true
+    slug: "{{year}}-{{title}}"
+    fields:
+      - { label: "المعرف الفرعي (ID رقبي متميز)", name: "id", widget: "number", value_type: "int" }
+      - { label: "نوع التبويب (ready, eu, cn, sold)", name: "tab", widget: "select", options: ["ready", "eu", "cn", "sold"] }
+      - { label: "اسم السيارة (بالعربية)", name: "title", widget: "string" }
+      - { label: "اسم السيارة (English)", name: "name_en", widget: "string", required: false }
+      - { label: "اسم السيارة (Français)", name: "name_fr", widget: "string", required: false }
+      - { label: "السعر بالعملة المحلية (مثال: 535 مليون)", name: "price", widget: "string" }
+      - { label: "السعر (English)", name: "price_en", widget: "string", required: false }
+      - { label: "السعر (Français)", name: "price_fr", widget: "string", required: false }
+      - { label: "حالة البطاقة / الوصف الخارجي", name: "description", widget: "string" }
+      - { label: "الوصف (English)", name: "description_en", widget: "string", required: false }
+      - { label: "الوصف (Français)", name: "description_fr", widget: "string", required: false }
+      - { label: "صور السيارة (يمكنك رفع عدة صور للسيارة)", name: "images", widget: "list", field: { label: "صورة", name: "image", widget: "image" } }
+      - label: "الخصائص الأساسية للسيارة"
+        name: "details"
+        widget: "list"
+        fields:
+          - { label: "أيقونة الخاصية (FontAwesome مثل: fas fa-cogs)", name: "icon", widget: "string" }
+          - { label: "النص بالعربية", name: "text", widget: "string" }
+          - { label: "النص بالإنجليزية", name: "text_en", widget: "string", required: false }
+          - { label: "النص بالفرنسية", name: "text_fr", widget: "string", required: false }
 
