@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: /CarDealer ضع هنا اسم حسابك واسم المستودع بدقة
+  repo: KhaledCarsExport/CarDealer ضع هنا اسم حسابك واسم المستودع بدقة
   branch: main # أو master حسب الفرع الرئيسي عندك
 
 media_folder: "assets/images/cars" # المجلد الذي ستُحفظ فيه صور السيارات المرفوعة
