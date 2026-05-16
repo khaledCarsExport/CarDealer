@@ -67,6 +67,34 @@
         .services-list li { display: flex; align-items: center; gap: 8px; font-weight: 600; }
         .services-list i { color: var(--secondary); }
 
+        /* Advanced Filter Bar Style */
+        .search-filter-section {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 30px;
+            border: 1px solid #E2E8F0;
+        }
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 15px;
+        }
+        .filter-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            outline: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+        .filter-control:focus {
+            border-color: var(--primary);
+        }
+
         /* Tabs Style */
         .tabs-wrapper { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
         .tab-btn { padding: 10px 20px; border-radius: 50px; border: 2px solid var(--primary); background: white; color: var(--primary); font-weight: 700; cursor: pointer; transition: 0.3s; }
@@ -163,6 +191,7 @@
             .header-top { justify-content: center; text-align: center; flex-direction: column; }
             .flags-box { border-right: none; border-bottom: 2px solid rgba(255,193,7,0.4); padding-right: 0; padding-bottom: 15px; }
             .language-selector { position: relative; top: 0; left: 0; display: inline-block; margin-bottom: 15px; }
+            .filter-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -213,6 +242,22 @@
             </ul>
         </div>
     </header>
+
+    <div class="search-filter-section">
+        <div class="filter-grid">
+            <input type="text" id="carSearchInput" class="filter-control" placeholder="ابحث عن سيارة معروضة..." oninput="handleFilters()">
+            <select id="gearboxFilter" class="filter-control" onchange="handleFilters()">
+                <option value="all">كل علب السرعات</option>
+                <option value="manual">يدوي</option>
+                <option value="automatic">أوتوماتيك</option>
+            </select>
+            <select id="priceSort" class="filter-control" onchange="handleFilters()">
+                <option value="default">ترتيب افتراضي</option>
+                <option value="asc">السعر: من الأقل إلى الأعلى</option>
+                <option value="desc">السعر: من الأعلى إلى الأقل</option>
+            </select>
+        </div>
+    </div>
 
     <h2 class="section-title" data-translate="availableCars">السيارات المتوفرة</h2>
 
@@ -444,7 +489,7 @@
     "name": "Dacia Logan",
     "images": [
       "https://i.ibb.co/fdkJ2CQz/1.jpg"
-    ],
+                ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -575,7 +620,9 @@
     "id": 1010,
     "name": "GAC GS3 R STYLE",
     "price": "359 مليون",
-    "images": [ "https://i.ibb.co/bMp8YHJG/RSTYLE.png" ],
+    "images": [
+      "https://i.ibb.co/bMp8YHJG/RSTYLE.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -592,7 +639,9 @@
     "id": 1009,
     "name": "GAC GS3 FULL",
     "price": "329 مليون",
-    "images": [ "https://i.ibb.co/mMS6Xmc/FULL.png" ],
+    "images": [
+      "https://i.ibb.co/mMS6Xmc/FULL.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -609,7 +658,9 @@
     "id": 1008,
     "name": "GAC GS3 MIDDLE",
     "price": "299 مليون",
-    "images": [ "https://i.ibb.co/pvq6BMfr/middle.png" ],
+    "images": [
+      "https://i.ibb.co/pvq6BMfr/middle.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -626,7 +677,9 @@
     "id": 1007,
     "name": "GAC GS3 BASIC",
     "price": "269 مليون",
-    "images": [ "https://i.ibb.co/F432KZFq/basic.png" ],
+    "images": [
+      "https://i.ibb.co/F432KZFq/basic.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -643,11 +696,13 @@
     "id": 1006,
     "name": "MG5 Automatic",
     "price": "293 مليون",
-    "images": [ "https://i.ibb.co/Kz0Cg1p9/auto.png" ],
+    "images": [
+      "https://i.ibb.co/Kz0Cg1p9/auto.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
-      { "icon": "fas fa-cogs", "text": "يدوي" },
+      { "icon": "fas fa-cogs", "text": "أوتوماتيك" },
       { "icon": "fas fa-tachometer-alt", "text": "0 كم" },
       { "icon": "fas fa-horse-head", "text": "1.5 181 حصان" }
     ],
@@ -660,7 +715,9 @@
     "id": 1005,
     "name": "MG5 Manual",
     "price": "235 مليون",
-    "images": [ "https://i.ibb.co/mCG2Pw6N/manuel.png" ],
+    "images": [
+      "https://i.ibb.co/mCG2Pw6N/manuel.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -678,7 +735,9 @@
     "tab": "cn",
     "name": "Geely Coolray Full Options",
     "price": "363 مليون",
-    "images": [ "https://i.ibb.co/svWMxgKq/full.png" ],
+    "images": [
+      "https://i.ibb.co/svWMxgKq/full.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -695,7 +754,9 @@
     "tab": "cn",
     "name": "Geely Coolray Battle",
     "price": "355 مليون",
-    "images": [ "https://i.ibb.co/WvpkJ7b8/battle.png" ],
+    "images": [
+      "https://i.ibb.co/WvpkJ7b8/battle.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -712,7 +773,9 @@
     "tab": "cn",
     "name": "Geely Coolray Super Max",
     "price": "293 مليون",
-    "images": [ "https://i.ibb.co/DmjwG2K/super-max.png" ],
+    "images": [
+      "https://i.ibb.co/DmjwG2K/super-max.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -729,7 +792,9 @@
     "tab": "cn",
     "name": "Geely Coolray Manual",
     "price": "265 مليون",
-    "images": [ "https://i.ibb.co/0L28hTf/manual.jpg" ],
+    "images": [
+      "https://i.ibb.co/0L28hTf/manual.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -745,7 +810,9 @@
     "id": 999,
     "tab": "cn",
     "name": "Livan X3 pro Automatique",
-    "images": [ "https://i.ibb.co/3ymjq9v1/Gemini-Generated-Image-70gy9i70gy9i70gy.png" ],
+    "images": [
+      "https://i.ibb.co/3ymjq9v1/Gemini-Generated-Image-70gy9i70gy9i70gy.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -762,7 +829,9 @@
     "id": 12,
     "name": "LIVAN X3 PRO",
     "price": "233 مليون",
-    "images": [ "https://i.ibb.co/d04VqwtB/Gemini-Generated-Image-70gy9i70gy9i70gy.png" ],
+    "images": [
+      "https://i.ibb.co/d04VqwtB/Gemini-Generated-Image-70gy9i70gy9i70gy.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -772,14 +841,16 @@
     ],
     "description": "متوفر للحجز",
     "tab": "cn",
-    "name_en": "",
-    "name_fr": ""
+    "name_en": "Livan X3 PRO Manual",
+    "name_fr": "Livan X3 PRO Manuelle"
   },
   {
     "id": 18,
     "name": "Citroen C3 YOU",
     "price": "369 مليون",
-    "images": [ "https://i.ibb.co/S7X12Nq8/Whats-App-Image-2026-03-23-at-21-10-35.jpg" ],
+    "images": [
+      "https://i.ibb.co/S7X12Nq8/Whats-App-Image-2026-03-23-at-21-10-35.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2025" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -796,7 +867,9 @@
     "id": 17,
     "name": "Citroen C3 YOU",
     "price": "310 مليون",
-    "images": [ "https://i.ibb.co/fGNpKwQ5/Whats-App-Image-2026-03-23-at-20-29-36.jpg" ],
+    "images": [
+      "https://i.ibb.co/fGNpKwQ5/Whats-App-Image-2026-03-23-at-20-29-36.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2024" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -813,7 +886,9 @@
     "id": 2,
     "name": "Renault Austral Evolution",
     "price": "515 مليون",
-    "images": [ "https://i.ibb.co/ym0jqw6n/1.jpg" ],
+    "images": [
+      "https://i.ibb.co/ym0jqw6n/1.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2023" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -830,7 +905,9 @@
     "id": 13,
     "name": "Volkswagen Tharu XR",
     "price": "590 مليون",
-    "images": [ "https://i.ibb.co/8nLFqkGM/650288545-122125783581086655-6713858372043815022-n.jpg" ],
+    "images": [
+      "https://i.ibb.co/8nLFqkGM/650288545-122125783581086655-6713858372043815022-n.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -840,14 +917,16 @@
     ],
     "description": "متوفرة حالا",
     "tab": "ready",
-    "name_en": "",
-    "name_fr": ""
+    "name_en": "Volkswagen Tharu XR",
+    "name_fr": "Volkswagen Tharu XR"
   },
   {
     "id": 8,
     "name": "Dacia Logan Essential",
     "price": "364 مليون",
-    "images": [ "https://i.ibb.co/YFcBh0ch/LOGAN.png" ],
+    "images": [
+      "https://i.ibb.co/YFcBh0ch/LOGAN.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2026" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -861,27 +940,12 @@
     "name_fr": "Dacia Logan Essential"
   },
   {
-    "id": 11,
-    "name": "Fiat Tipo Sedan Life",
-    "price": "475 مليون",
-    "images": [ "https://i.ibb.co/7tqbd2fj/1.jpg" ],
-    "details": [
-      { "icon": "fas fa-calendar-alt", "text": "2026" },
-      { "icon": "fas fa-gas-pump", "text": "بنزين" },
-      { "icon": "fas fa-cogs", "text": "يدوي" },
-      { "icon": "fas fa-tachometer-alt", "text": "500 كم" },
-      { "icon": "fas fa-horse-head", "text": "1.4 95 حصان" }
-    ],
-    "description": "البطاقة الرمادية",
-    "tab": "ready",
-    "name_en": "Fiat Tipo Sedan Life",
-    "name_fr": "Fiat Tipo Sedan Life"
-  },
-  {
     "id": 4,
     "name": "Renault Clio 5 Equilibre",
     "price": "312 مليون",
-    "images": [ "https://i.ibb.co/wNjsZPb8/new.png" ],
+    "images": [
+      "https://i.ibb.co/wNjsZPb8/new.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2023" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -898,7 +962,9 @@
     "id": 5,
     "name": "Renault Clio 5 Equilibre",
     "price": "349 مليون",
-    "images": [ "https://i.ibb.co/3ydQ3bjN/10.png" ],
+    "images": [
+      "https://i.ibb.co/3ydQ3bjN/10.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2023" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -915,7 +981,9 @@
     "id": 7,
     "name": "Peugeot 208 Active",
     "price": "329 مليون",
-    "images": [ "https://i.ibb.co/N2h4cmdV/photo-10.jpg" ],
+    "images": [
+      "https://i.ibb.co/N2h4cmdV/photo-10.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2024" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -932,7 +1000,9 @@
     "id": 16,
     "name": "Renault Arkana Evolution",
     "price": "479 مليون",
-    "images": [ "https://i.ibb.co/CpFw10Y0/GZ184-JV-1.jpg" ],
+    "images": [
+      "https://i.ibb.co/CpFw10Y0/GZ184-JV-1.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2024" },
       { "icon": "fas fa-gas-pump", "text": "هجين" },
@@ -949,7 +1019,9 @@
     "id": 15,
     "name": "Renault Arkana Evolution",
     "price": "485 مليون",
-    "images": [ "https://i.ibb.co/vvRy9WW3/GZ965-JE-1.jpg" ],
+    "images": [
+      "https://i.ibb.co/vvRy9WW3/GZ965-JE-1.jpg"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2024" },
       { "icon": "fas fa-gas-pump", "text": "هجين" },
@@ -966,7 +1038,9 @@
     "id": 1,
     "name": "Renault Arkana Evolution",
     "price": "--- مليون",
-    "images": [ "https://i.ibb.co/yFCxGZzV/Chat-GPT-Image-15-mars-2026-13-58-55.png" ],
+    "images": [
+      "https://i.ibb.co/yFCxGZzV/Chat-GPT-Image-15-mars-2026-13-58-55.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2024" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -976,14 +1050,16 @@
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
     "tab": "sold",
-    "name_en": "",
-    "name_fr": ""
+    "name_en": "Renault Arkana Evolution",
+    "name_fr": "Renault Arkana Evolution"
   },
   {
     "id": 3,
     "name": "Citroen C3 You",
     "price": "--- مليون",
-    "images": [ "https://i.ibb.co/gKBhY0T/8a4a0fbb-db27-47e0-9074-5a61ad3e2ab2.png" ],
+    "images": [
+      "https://i.ibb.co/gKBhY0T/8a4a0fbb-db27-47e0-9074-5a61ad3e2ab2.png"
+    ],
     "details": [
       { "icon": "fas fa-calendar-alt", "text": "2024" },
       { "icon": "fas fa-gas-pump", "text": "بنزين" },
@@ -993,8 +1069,8 @@
     ],
     "description": "السعر دون إحتساب مصاريف الجمركة",
     "tab": "sold",
-    "name_en": "",
-    "name_fr": ""
+    "name_en": "Citroen C3 You",
+    "name_fr": "Citroen C3 You"
   }
 ];
 
@@ -1002,7 +1078,6 @@
     let currentLang = 'ar';
     let currentFilter = 'all';
 
-    // المتغيرات الافتراضية لأسعار الصرف (في حال لم يتم استخراجها من القاعدة)
     let eurRate = 153;
     let usdRate = 130;
 
@@ -1023,17 +1098,61 @@
         renderCars();
     }
 
+    // دالة لاستخراج القيمة الرقمية النظيفة من نص السعر من أجل الترتيب الصحيح
+    function parseCarPrice(priceStr) {
+        if (!priceStr || priceStr.includes('---') || priceStr.includes('معروض')) return 0;
+        const match = priceStr.match(/\d+/);
+        return match ? parseInt(match[0], 10) : 0;
+    }
+
+    // دالة الفلترة الذكية المدمجة (التبويبات + شريط البحث + علبة السرعات + الترتيب)
+    function handleFilters() {
+        renderCars();
+    }
+
     function renderCars() {
         const container = document.getElementById('cars-container');
         container.innerHTML = '';
         const lang = translations[currentLang];
-        const filtered = carsData.filter(c => currentFilter === 'all' || c.tab === currentFilter);
+        
+        // الحصول على قيم الفلاتر الإضافية
+        const searchQuery = document.getElementById('carSearchInput').value.toLowerCase().trim();
+        const gearboxValue = document.getElementById('gearboxFilter').value;
+        const sortValue = document.getElementById('priceSort').value;
+
+        // 1. فلترة حسب التبويبات العلوية والمخزون
+        let filtered = carsData.filter(c => currentFilter === 'all' || c.tab === currentFilter);
+
+        // 2. فلترة البحث النصي (اسم السيارة)
+        if (searchQuery !== '') {
+            filtered = filtered.filter(c => c.name.toLowerCase().includes(searchQuery));
+        }
+
+        // 3. فلترة نوع علبة السرعات (أوتوماتيك أو يدوي)
+        if (gearboxValue !== 'all') {
+            filtered = filtered.filter(c => {
+                const hasAuto = c.details.some(d => d.icon === 'fas fa-cogs' && d.text.includes('أوتوماتيك'));
+                const hasManual = c.details.some(d => d.icon === 'fas fa-cogs' && d.text.includes('يدوي'));
+                return gearboxValue === 'automatic' ? hasAuto : hasManual;
+            });
+        }
+
+        // 4. ترتيب الأسعار (تصاعدي أو تنازلي)
+        if (sortValue === 'asc') {
+            filtered.sort((a, b) => parseCarPrice(a.price) - parseCarPrice(b.price));
+        } else if (sortValue === 'desc') {
+            filtered.sort((a, b) => parseCarPrice(b.price) - parseCarPrice(a.price));
+        }
+
+        if(filtered.length === 0) {
+            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; font-weight: bold; color: var(--text-muted); padding: 40px 0;">لا توجد سيارات تطابق خيارات البحث الحالية.</p>`;
+            return;
+        }
 
         filtered.forEach(car => {
             const isSold = car.tab === 'sold';
             const name = currentLang === 'en' ? (car.name_en || car.name) : (currentLang === 'fr' ? (car.name_fr || car.name) : car.name);
             const price = isSold ? lang.sold : car.price;
-            
             const desc = currentLang === 'en' ? (car.description_en || car.description) : (currentLang === 'fr' ? (car.description_fr || car.description) : car.description);
 
             let specsHtml = car.details.map(d => {
@@ -1046,7 +1165,7 @@
                     ${isSold ? `<div class="sold-badge">${lang.sold}</div>` : ''}
                     <div class="car-img-box" onclick="openModal(${car.id})">
                         <img src="${car.images[0]}" class="car-img" style="${isSold ? 'filter:grayscale(1)' : ''}">
-                        ${car.images.length > 1 ? `<div class="photo-count"><i class="far fa-images"></i> ${car.images.length}</div>` : ''}
+                        <div class="photo-count"><i class="fas fa-camera"></i> ${car.images.length}</div>
                         <div class="car-price">${price}</div>
                     </div>
                     <div class="car-info">
@@ -1084,24 +1203,20 @@
     // --- وظائف حاسبة الجمركة بقاعدة البيانات ---
     let db = null;
 
-    // استخراج أسعار الصرف من القاعدة بناءً على عمود devise
     function extractExchangeRates() {
         try {
-            // البحث عن سعر الأورو (EUR)
             const resEur = db.exec("SELECT taux_dc FROM cars WHERE devise='EUR' AND taux_dc IS NOT NULL LIMIT 1");
             if (resEur.length > 0 && resEur[0].values.length > 0) {
                 let val = parseFloat(resEur[0].values[0][0]);
                 if (!isNaN(val) && val > 0) eurRate = val;
             }
             
-            // البحث عن سعر الدولار (USD)
             const resUsd = db.exec("SELECT taux_dc FROM cars WHERE devise='USD' AND taux_dc IS NOT NULL LIMIT 1");
             if (resUsd.length > 0 && resUsd[0].values.length > 0) {
                 let val = parseFloat(resUsd[0].values[0][0]);
                 if (!isNaN(val) && val > 0) usdRate = val;
             }
             
-            // تحديث الحقل مباشرة بعد الاستخراج
             onOriginChange();
         } catch (e) {
             console.log("استخدام قيم الصرف الافتراضية.");
@@ -1123,7 +1238,7 @@
                 document.getElementById('offlineDbUploadBox').style.display = 'none';
                 alert(currentLang === 'ar' ? 'تم ربط قاعدة البيانات بنجاح! يمكنك الآن البحث.' : 'Database linked successfully!');
                 
-                extractExchangeRates(); // جلب الأسعار عند الرفع اليدوي
+                extractExchangeRates();
             } catch (e) {
                 console.error(e);
                 alert("حدث خطأ في قراءة ملف قاعدة البيانات.");
@@ -1143,7 +1258,7 @@
             db = new SQL.Database(new Uint8Array(buf));
             document.getElementById('offlineDbUploadBox').style.display = 'none';
             
-            extractExchangeRates(); // جلب الأسعار التلقائي
+            extractExchangeRates();
         } catch (e) {
             console.log("التحميل التلقائي غير مدعوم محلياً، يرجى رفع الملف يدوياً.");
         }
@@ -1170,10 +1285,10 @@
 
         if (origin === 'Europe') {
             label.innerHTML = 'سعر الصرف البنكي التقريبي (1€ = دينار):';
-            rateInput.value = eurRate; // القيمة من القاعدة أو الافتراضية
+            rateInput.value = eurRate;
         } else {
             label.innerHTML = 'سعر الصرف البنكي التقريبي (1$ = دينار):';
-            rateInput.value = usdRate; // القيمة من القاعدة أو الافتراضية
+            rateInput.value = usdRate;
         }
         
         if (document.getElementById('selectedDbCar') && document.getElementById('selectedDbCar').value) {
