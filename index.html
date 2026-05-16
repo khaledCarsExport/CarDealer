@@ -2,6 +2,16 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+<meta name="description" content="Khaled Cars Export - الوكالة الرائدة في استيراد السيارات الجديدة وأقل من 3 سنوات إلى الجزائر من أوروبا، الصين، وكوريا. احسب جمركة سيارتك الآن.">
+<meta name="keywords" content="استيراد السيارات, أقل من 3 سنوات, جمركة السيارات في الجزائر, خالد كارز, رخصة مجاهدين, Geely الجزائر, Dacia Duster, Renault الجزائر, Khaled Cars Export, سكيكدة">
+<meta name="author" content="Khaled Cars Export">
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Khaled Cars Export - استيراد السيارات إلى الجزائر">
+<meta property="og:description" content="تصفح السيارات المتوفرة وواردات أوروبا والصين، واستخدم حاسبة الجمركة الذكية أوفلاين.">
+<meta property="og:image" content="https://i.ibb.co/N68V7Ybn/logo.jpg">
+<meta property="og:url" content="https://khaledcarsexport.github.io/CarDealer/">
+<meta property="og:type" content="website">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khaled Cars Export - استيراد السيارات من أوروبا والصين</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,6 +48,7 @@
             box-shadow: var(--shadow-lg);
             position: relative;
         }
+
         .language-selector {
             position: absolute; top: 20px; left: 30px;
             background: rgba(255,255,255,0.15);
@@ -94,6 +105,36 @@
         .filter-control:focus {
             border-color: var(--primary);
         }
+
+        /* تصميم أسهم التنقل السريع داخل كرت السيارة */
+.card-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    opacity: 0; /* تختفي تلقائياً وتظهر عند تمرير الفأرة */
+}
+.car-img-box:hover .card-nav-btn {
+    opacity: 1;
+}
+.card-nav-btn:hover {
+    background: var(--secondary);
+    color: var(--primary-dark);
+}
+.card-prev { left: 10px; }
+.card-next { right: 10px; }
 
         /* Tabs Style */
         .tabs-wrapper { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
@@ -1098,6 +1139,28 @@
         renderCars();
     }
 
+function changeCardImage(carId, direction, event) {
+    event.stopPropagation(); // لمنع فتح النافذة الكبيرة عند الضغط على السهم
+    
+    const car = carsData.find(c => c.id === carId);
+    if (!car || car.images.length <= 1) return;
+    
+    const imgElement = document.getElementById(`img-${carId}`);
+    // البحث عن الفهرس الحالي للصورة المعروضة
+    let currentIndex = car.images.indexOf(imgElement.src);
+    
+    // إذا لم يجدها (بسبب الرابط الكامل)، نبحث بالـ URL الجزئي
+    if (currentIndex === -1) {
+        currentIndex = car.images.findIndex(imgUrl => imgElement.src.includes(imgUrl));
+    }
+    
+    let nextIndex = currentIndex + direction;
+    if (nextIndex >= car.images.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = car.images.length - 1;
+    
+    imgElement.src = car.images[nextIndex];
+}
+
     // دالة لاستخراج القيمة الرقمية النظيفة من نص السعر من أجل الترتيب الصحيح
     function parseCarPrice(priceStr) {
         if (!priceStr || priceStr.includes('---') || priceStr.includes('معروض')) return 0;
@@ -1161,23 +1224,27 @@
             }).join('');
 
             container.innerHTML += `
-                <div class="car-card">
-                    ${isSold ? `<div class="sold-badge">${lang.sold}</div>` : ''}
-                    <div class="car-img-box" onclick="openModal(${car.id})">
-                        <img src="${car.images[0]}" class="car-img" style="${isSold ? 'filter:grayscale(1)' : ''}">
-                        <div class="photo-count"><i class="fas fa-camera"></i> ${car.images.length}</div>
-                        <div class="car-price">${price}</div>
-                    </div>
-                    <div class="car-info">
-                        <h3 class="car-name">${name}</h3>
-                        <p class="car-desc">${desc}</p>
-                        <div class="specs-grid">${specsHtml}</div>
-                        <div class="card-actions">
-                            <button class="btn btn-outline" onclick="openModal(${car.id})">${lang.details}</button>
-                            ${!isSold ? `<a href="https://wa.me/213549883720" target="_blank" class="btn btn-whatsapp">${lang.inquiry}</a>` : ''}
-                        </div>
-                    </div>
-                </div>`;
+    <div class="car-card">
+        ${isSold ? `<div class="sold-badge">${lang.sold}</div>` : ''}
+        <div class="car-img-box" onclick="openModal(${car.id})">
+            <img src="${car.images[0]}" id="img-${car.id}" class="car-img" alt="${name} - Khaled Cars Export" style="${isSold ? 'filter:grayscale(1)' : ''}">
+            ${car.images.length > 1 ? `
+                <button class="card-nav-btn card-prev" onclick="changeCardImage(${car.id}, -1, event)"><i class="fas fa-chevron-left"></i></button>
+                <button class="card-nav-btn card-next" onclick="changeCardImage(${car.id}, 1, event)"><i class="fas fa-chevron-right"></i></button>
+                <div class="photo-count"><i class="fas fa-camera"></i> ${car.images.length}</div>
+            ` : ''}
+            <div class="car-price">${price}</div>
+        </div>
+        <div class="car-info">
+            <h3 class="car-name">${name}</h3>
+            <p class="car-desc">${desc}</p>
+            <div class="specs-grid">${specsHtml}</div>
+            <div class="card-actions">
+                <button class="btn btn-outline" onclick="openModal(${car.id})">${lang.details}</button>
+                ${!isSold ? `<a href="https://wa.me/213549883720?text=${encodeURIComponent('مرحباً Khaled Cars Export، أود الاستفسار عن سيارة: ' + name + ' (السعر: ' + price + ')')}" target="_blank" class="btn btn-whatsapp">${lang.inquiry}</a>` : ''}
+            </div>
+        </div>
+    </div>`;
         });
     }
 
@@ -1465,6 +1532,57 @@
     }
 
     window.onload = () => changeLanguage('ar');
+// دالة لتوليد بيانات Schema Markup لجوجل تلقائياً بناءً على السيارات المتوفرة
+function generateSchemaMarkup() {
+    // إزالة أي سكربت قديم تم توليده
+    const oldScript = document.getElementById('dynamic-schema');
+    if (oldScript) oldScript.remove();
+
+    const schemaData = {
+        "@context": "https://schema.org",
+        "@type": "AutoDealer",
+        "name": "Khaled Cars Export",
+        "image": "https://i.ibb.co/N68V7Ybn/logo.jpg",
+        "url": "https://khaledcarsexport.github.io/CarDealer/",
+        "telephone": "+213549883720",
+        "priceRange": "$$$$",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "المفرزة البلدية رقم 2 رمضان جمال",
+            "addressLocality": "Skikda",
+            "addressCountry": "DZ"
+        },
+        "makesOffer": carsData.map(car => ({
+            "@type": "Offer",
+            "itemOffered": {
+                "@type": "Car",
+                "name": car.name,
+                "image": car.images[0],
+                "description": car.description
+            },
+            "priceSpecification": {
+                "@type": "PriceSpecification",
+                "price": parseCarPrice(car.price) > 0 ? parseCarPrice(car.price) * 1000000 : undefined,
+                "priceCurrency": "DZD"
+            }
+        }))
+    };
+
+    const script = document.createElement('script');
+    script.id = 'dynamic-schema';
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(schemaData);
+    document.head.appendChild(script);
+}
+
+// استدعاء الدالة فور تحميل البيانات المعروضة
+const originalRenderCars = renderCars;
+renderCars = function() {
+    originalRenderCars();
+    generateSchemaMarkup();
+};
+
+
 </script>
 </body>
 </html>
