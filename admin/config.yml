@@ -1,9 +1,10 @@
 backend:
   name: github
-  repo: khaledCarsExport/CarDealer
+  repo: khaledcarsexport/CarDealer
   branch: main
-  site_domain: https://khaledcarsexport.netlify.app/ # <-- أضف هذا السطر هنا بدقة
-media_folder: "assets/images/cars" # المجلد الذي ستُحفظ فيه صور السيارات المرفوعة
+  site_domain: khaledcarsexport.netlify.app
+
+media_folder: "assets/images/cars"
 public_folder: "/assets/images/cars"
 
 collections:
