@@ -4,9 +4,9 @@ backend:
   branch: main # أو master حسب الفرع الرئيسي عندك
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME
+  repo: khaledCarsExport/CarDealer
   branch: main
-  site_domain: YOUR_NETLIFY_SITE_NAME.netlify.app # <-- أضف هذا السطر هنا بدقة
+  site_domain: https://khaledcarsexport.netlify.app/ # <-- أضف هذا السطر هنا بدقة
 media_folder: "assets/images/cars" # المجلد الذي ستُحفظ فيه صور السيارات المرفوعة
 public_folder: "/assets/images/cars"
 
