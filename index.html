@@ -574,81 +574,105 @@
     }
 
     function renderCars() {
-        const container = document.getElementById('cars-container');
-        if(!container) return;
-        container.innerHTML = '';
-        const lang = translations[currentLang];
-        
-        const searchQuery = document.getElementById('carSearchInput').value.toLowerCase().trim();
-        const gearboxValue = document.getElementById('gearboxFilter').value;
-        const sortValue = document.getElementById('priceSort').value;
+    const container = document.getElementById('cars-container');
+    if(!container) return;
+    container.innerHTML = '';
+    const lang = translations[currentLang];
+    
+    const searchQuery = document.getElementById('carSearchInput').value.toLowerCase().trim();
+    const gearboxValue = document.getElementById('gearboxFilter').value;
+    const sortValue = document.getElementById('priceSort').value;
 
-        let filtered = carsData.filter(c => currentFilter === 'all' || c.tab === currentFilter);
+    let filtered = carsData.filter(c => currentFilter === 'all' || c.tab === currentFilter);
 
-        if (searchQuery !== '') {
-            filtered = filtered.filter(c => {
-                const nameAr = (c.name || "").toLowerCase();
-                const nameEn = (c.name_en || "").toLowerCase();
-                const nameFr = (c.name_fr || "").toLowerCase();
-                return nameAr.includes(searchQuery) || nameEn.includes(searchQuery) || nameFr.includes(searchQuery);
+    // فلترة البحث
+    if (searchQuery !== '') {
+        filtered = filtered.filter(c => {
+            const nameAr = (c.name || "").toLowerCase();
+            const nameEn = (c.name_en || "").toLowerCase();
+            const nameFr = (c.name_fr || "").toLowerCase();
+            return nameAr.includes(searchQuery) || nameEn.includes(searchQuery) || nameFr.includes(searchQuery);
+        });
+    }
+
+    // فلترة علبة السرعات
+    if (gearboxValue !== 'all') {
+        filtered = filtered.filter(c => {
+            const hasAuto = c.details.some(d => d.icon === 'fas fa-cogs' && (d.text.includes('أوتوماتيك') || (d.text_en && d.text_en.toLowerCase().includes('auto'))));
+            const hasManual = c.details.some(d => d.icon === 'fas fa-cogs' && (d.text.includes('يدوي') || (d.text_en && d.text_en.toLowerCase().includes('manual'))));
+            return gearboxValue === 'automatic' ? hasAuto : hasManual;
+        });
+    }
+
+    // الترتيب حسب السعر
+    if (sortValue === 'asc') {
+        filtered.sort((a, b) => parseCarPrice(a.price) - parseCarPrice(b.price));
+    } else if (sortValue === 'desc') {
+        filtered.sort((a, b) => parseCarPrice(b.price) - parseCarPrice(a.price));
+    }
+
+    if(filtered.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; font-weight: bold; color: var(--text-muted); padding: 40px 0;">${lang.noCars}</p>`;
+        return;
+    }
+
+    filtered.forEach(car => {
+        const isSold = car.tab === 'sold';
+        const name = currentLang === 'en' ? (car.name_en || car.name) : (currentLang === 'fr' ? (car.name_fr || car.name) : car.name);
+        const price = isSold ? lang.sold : car.price;
+        const desc = currentLang === 'en' ? (car.description_en || car.description) : (currentLang === 'fr' ? (car.description_fr || car.description) : car.description);
+
+        // --- 🛠️ الجزء المطور لمعالجة مسارات الصور تلقائياً 🛠️ ---
+        let processedImages = [];
+        if (car.images && car.images.length > 0) {
+            processedImages = car.images.map(img => {
+                if (!img) return 'https://via.placeholder.com/350x230?text=No+Image';
+                // إذا كان رابطاً خارجياً كاملاً يبدأ بـ http أو https نتركه كما هو
+                if (img.startsWith('http://') || img.startsWith('https://')) {
+                    return img;
+                }
+                // إذا كان مساراً محلياً مرفوعاً من اللوحة، نضمن قراءته الصحيحة من المستودع بنسبة 100%
+                // نقوم بنزع أي سلاش زائد في البداية لتجنب أخطاء المسارات المفاجئة
+                let cleanPath = img.replace(/^\//, '');
+                return `./${cleanPath}`;
             });
+        } else {
+            processedImages = ['https://via.placeholder.com/350x230?text=No+Image'];
         }
+        // تحديث مصفوفة الصور داخل الكائن لتعمل الأسهم والنوافذ المنبثقة بشكل صحيح
+        car.images = processedImages; 
+        // --------------------------------------------------------
 
-        if (gearboxValue !== 'all') {
-            filtered = filtered.filter(c => {
-                const hasAuto = c.details.some(d => d.icon === 'fas fa-cogs' && (d.text.includes('أوتوماتيك') || (d.text_en && d.text_en.toLowerCase().includes('auto'))));
-                const hasManual = c.details.some(d => d.icon === 'fas fa-cogs' && (d.text.includes('يدوي') || (d.text_en && d.text_en.toLowerCase().includes('manual'))));
-                return gearboxValue === 'automatic' ? hasAuto : hasManual;
-            });
-        }
+        let specsHtml = car.details.map(d => {
+            let text = currentLang === 'en' ? (d.text_en || d.text) : (currentLang === 'fr' ? (d.text_fr || d.text) : d.text);
+            return `<div class="spec-item"><i class="${d.icon}"></i> <span>${text}</span></div>`;
+        }).join('');
 
-        if (sortValue === 'asc') {
-            filtered.sort((a, b) => parseCarPrice(a.price) - parseCarPrice(b.price));
-        } else if (sortValue === 'desc') {
-            filtered.sort((a, b) => parseCarPrice(b.price) - parseCarPrice(a.price));
-        }
-
-        if(filtered.length === 0) {
-            container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; font-weight: bold; color: var(--text-muted); padding: 40px 0;">${lang.noCars}</p>`;
-            return;
-        }
-
-        filtered.forEach(car => {
-            const isSold = car.tab === 'sold';
-            const name = currentLang === 'en' ? (car.name_en || car.name) : (currentLang === 'fr' ? (car.name_fr || car.name) : car.name);
-            const price = isSold ? lang.sold : car.price;
-            const desc = currentLang === 'en' ? (car.description_en || car.description) : (currentLang === 'fr' ? (car.description_fr || car.description) : car.description);
-
-            let specsHtml = car.details.map(d => {
-                let text = currentLang === 'en' ? (d.text_en || d.text) : (currentLang === 'fr' ? (d.text_fr || d.text) : d.text);
-                return `<div class="spec-item"><i class="${d.icon}"></i> <span>${text}</span></div>`;
-            }).join('');
-
-            container.innerHTML += `
-                <div class="car-card">
-                    ${isSold ? `<div class="sold-badge">${lang.sold}</div>` : ''}
-                    <div class="car-img-box" onclick="openModal(${car.id})">
-                        <img src="${car.images && car.images[0] ? car.images[0] : 'https://via.placeholder.com/350x230?text=No+Image'}" id="img-${car.id}" class="car-img" alt="${name} - Khaled Cars Export" style="${isSold ? 'filter:grayscale(1)' : ''}">
-                        ${car.images && car.images.length > 1 ? `
-                            <button class="card-nav-btn card-prev" onclick="changeCardImage(${car.id}, -1, event)"><i class="fas fa-chevron-left"></i></button>
-                            <button class="card-nav-btn card-next" onclick="changeCardImage(${car.id}, 1, event)"><i class="fas fa-chevron-right"></i></button>
-                            <div class="photo-count"><i class="fas fa-camera"></i> ${car.images.length}</div>
-                        ` : ''}
-                        <div class="car-price">${price}</div>
+        container.innerHTML += `
+            <div class="car-card">
+                ${isSold ? `<div class="sold-badge">${lang.sold}</div>` : ''}
+                <div class="car-img-box" onclick="openModal(${car.id})">
+                    <img src="${car.images[0]}" id="img-${car.id}" class="car-img" alt="${name} - Khaled Cars Export" style="${isSold ? 'filter:grayscale(1)' : ''}">
+                    ${car.images.length > 1 ? `
+                        <button class="card-nav-btn card-prev" onclick="changeCardImage(${car.id}, -1, event)"><i class="fas fa-chevron-left"></i></button>
+                        <button class="card-nav-btn card-next" onclick="changeCardImage(${car.id}, 1, event)"><i class="fas fa-chevron-right"></i></button>
+                        <div class="photo-count"><i class="fas fa-camera"></i> ${car.images.length}</div>
+                    ` : ''}
+                    <div class="car-price">${price}</div>
+                </div>
+                <div class="car-info">
+                    <h3 class="car-name">${name}</h3>
+                    <p class="car-desc">${desc}</p>
+                    <div class="specs-grid">${specsHtml}</div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="openModal(${car.id})">${lang.details}</button>
+                        ${!isSold ? `<a href="https://wa.me/213549883720?text=${encodeURIComponent('مرحباً Khaled Cars Export، أود الاستفسار عن سيارة: ' + name + ' (السعر: ' + price + ')')}" target="_blank" class="btn btn-whatsapp">${lang.inquiry}</a>` : ''}
                     </div>
-                    <div class="car-info">
-                        <h3 class="car-name">${name}</h3>
-                        <p class="car-desc">${desc}</p>
-                        <div class="specs-grid">${specsHtml}</div>
-                        <div class="card-actions">
-                            <button class="btn btn-outline" onclick="openModal(${car.id})">${lang.details}</button>
-                            ${!isSold ? `<a href="https://wa.me/213549883720?text=${encodeURIComponent('مرحباً Khaled Cars Export، أود الاستفسار عن سيارة: ' + name + ' (السعر: ' + price + ')')}" target="_blank" class="btn btn-whatsapp">${lang.inquiry}</a>` : ''}
-                        </div>
-                    </div>
-                </div>`;
+                </div>
+            </div>`;
         });
         generateSchemaMarkup();
-    }
+}
      
     let currentImages = []; let currentIndex = 0;
     function openModal(id) {
