@@ -18,9 +18,9 @@ details:
     text_en: "2026"
     text_fr: "2026"
   - icon: fas fa-gas-pump
-    text: بنزين
-    text_en: Petrol
-    text_fr: Essence
+    text: مازوت
+    text_en: Diesel
+    text_fr: Diesel
   - icon: fas fa-cogs
     text: أوتوماتيكية
     text_en: Automatic
