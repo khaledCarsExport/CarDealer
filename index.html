@@ -441,79 +441,97 @@
     let eurRate = 153;
     let usdRate = 130;
 
-    // --- جلب السيارات ديناميكياً من مستودع GitHub (مخرجات Decap CMS) ---
-    async function loadCarsFromCMS() {
-        try {
-            // !! هام جداً: استبدل USERNAME و REPO_NAME ببيانات حسابك !!
-            const response = await fetch('https://api.github.com/repos/khaledCarsExport/CarDealer/contents/content/cars');
-            if (!response.ok) {
-                console.log("لم يتم العثور على مجلد السيارات أو أن مجلد البيانات فارغ حالياً.");
-                return;
-            }
-            const files = await response.json();
-            
-            const fetchPromises = files.map(async (file) => {
-                const res = await fetch(file.download_url);
-                const textContent = await res.text();
-                return parseYamlFrontmatter(textContent);
-            });
-            
-            carsData = await Promise.all(fetchPromises);
-            renderCars();
-        } catch (error) {
-            console.error("حدث خطأ أثناء تحميل سيارات لوحة التحكم:", error);
+    // دالة جلب السيارات من لوحة التحكم المحدثة
+async function loadCarsFromCMS() {
+    try {
+        // تأكد من وضع حسابك ومستودعك هنا بدلاً من الكلمات المؤقتة
+        const response = await fetch('https://api.github.com/repos/khaledcarsexport/CarDealer/contents/content/cars');
+        if (!response.ok) {
+            console.log("لم يتم العثور على مجلد السيارات بعد.");
+            return;
         }
+        const files = await response.json();
+        
+        const fetchPromises = files.map(async (file) => {
+            const res = await fetch(file.download_url);
+            const textContent = await res.text();
+            return parseYamlFrontmatter(textContent);
+        });
+        
+        carsData = await Promise.all(fetchPromises);
+        renderCars(); // تشغيل العرض بعد جلب كافة الصور والبيانات
+    } catch (error) {
+        console.error("حدث خطأ أثناء تحميل سيارات لوحة التحكم:", error);
     }
+}
 
-    // دالة فك التشفير لملفات اللوحة المرفوعة وتصنيف خياراتها برمجياً لشبكة العرض
-    function parseYamlFrontmatter(text) {
-        const lines = text.split('\n');
-        let obj = { details: [], images: [] };
-        let inDetails = false;
-        let currentDetail = {};
+// دالة تفكيك ملف الـ YAML المحدثة لحل مشكلة الصور المتعددة (1/1)
+function parseYamlFrontmatter(text) {
+    const lines = text.split('\n');
+    let obj = { details: [], images: [] };
+    let inDetails = false;
+    let inImages = false;
+    let currentDetail = {};
 
-        lines.forEach(line => {
-            const trimmed = line.trim();
-            if (trimmed === '---') return;
+    lines.forEach(line => {
+        const trimmed = line.trim();
+        if (trimmed === '---' || trimmed === '') return;
 
-            if (!inDetails && trimmed.includes(':')) {
-                const parts = line.split(':');
-                const key = parts[0].trim();
-                let value = parts.slice(1).join(':').trim().replace(/^["']|["']$/g, ''); 
-                
-                if (key === 'id') obj.id = parseInt(value);
-                else if (key === 'tab') obj.tab = value;
-                else if (key === 'title') obj.name = value;
-                else if (key === 'name_en') obj.name_en = value;
-                else if (key === 'name_fr') obj.name_fr = value;
-                else if (key === 'price') obj.price = value;
-                else if (key === 'price_en') obj.price_en = value;
-                else if (key === 'price_fr') obj.price_fr = value;
-                else if (key === 'description') obj.description = value;
-                else if (key === 'description_en') obj.description_en = value;
-                else if (key === 'description_fr') obj.description_fr = value;
-            }
+        // تحديد ما إذا كنا بداخل منطقة مصفوفة الصور أو الخصائص
+        if (trimmed === 'images:') { inImages = true; inDetails = false; return; }
+        if (trimmed === 'details:') { inDetails = true; inImages = false; return; }
+
+        // إذا كنا بداخل قائمة الصور، نقوم بسحب كل السطور التي تبدأ بـ (-)
+        if (inImages && trimmed.startsWith('-')) {
+            const imgUrl = trimmed.replace(/^-/, '').trim().replace(/^["']|["']$/g, '');
+            if (imgUrl) obj.images.push(imgUrl);
+            return;
+        }
+
+        // قراءة الخصائص العادية (نصوص، أسعار، تدوينات)
+        if (!inDetails && !inImages && trimmed.includes(':')) {
+            const parts = line.split(':');
+            const key = parts[0].trim();
+            let value = parts.slice(1).join(':').trim().replace(/^["']|["']$/g, ''); 
             
-            if (trimmed.startsWith('- image:')) {
-                const imgUrl = trimmed.replace('- image:', '').trim().replace(/^["']|["']$/g, '');
-                obj.images.push(imgUrl);
-            }
-            
-            if (trimmed === 'details:') { inDetails = true; return; }
-            if (inDetails && trimmed.startsWith('- icon:')) {
+            if (key === 'id') obj.id = parseInt(value);
+            else if (key === 'tab') obj.tab = value;
+            else if (key === 'title') obj.name = value;
+            else if (key === 'name_en') obj.name_en = value;
+            else if (key === 'name_fr') obj.name_fr = value;
+            else if (key === 'price') obj.price = value;
+            else if (key === 'price_en') obj.price_en = value;
+            else if (key === 'price_fr') obj.price_fr = value;
+            else if (key === 'description') obj.description = value;
+            else if (key === 'description_en') obj.description_en = value;
+            else if (key === 'description_fr') obj.description_fr = value;
+            return;
+        }
+        
+        // معالجة قائمة التفاصيل والأيقونات الـ 5
+        if (inDetails) {
+            if (trimmed.startsWith('- icon:')) {
                 if (currentDetail.icon) obj.details.push(currentDetail);
                 currentDetail = { icon: trimmed.replace('- icon:', '').trim().replace(/^["']|["']$/g, '') };
-            } else if (inDetails && trimmed.startsWith('text:')) {
+            } else if (trimmed.startsWith('text:')) {
                 currentDetail.text = trimmed.replace('text:', '').trim().replace(/^["']|["']$/g, '');
-            } else if (inDetails && trimmed.startsWith('text_en:')) {
+            } else if (trimmed.startsWith('text_en:')) {
                 currentDetail.text_en = trimmed.replace('text_en:', '').trim().replace(/^["']|["']$/g, '');
-            } else if (inDetails && trimmed.startsWith('text_fr:')) {
+            } else if (trimmed.startsWith('text_fr:')) {
                 currentDetail.text_fr = trimmed.replace('text_fr:', '').trim().replace(/^["']|["']$/g, '');
             }
-        });
-        if (currentDetail.icon) obj.details.push(currentDetail);
-        return obj;
-    }
+        }
+    });
+
+    // إضافة آخر خاصية متبقية في الحلقة التكرارية
+    if (currentDetail.icon) obj.details.push(currentDetail);
+    
+    // إلغاء تفعيل الرايات عند انتهاء الملف
+    inImages = false;
+    inDetails = false;
+    
+    return obj;
+}
 
     function changeLanguage(lang) {
         currentLang = lang;
