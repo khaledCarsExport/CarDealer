@@ -1,20 +1,21 @@
 ---
-id: 5
-tab: ready
-title: Dacia Logan
-name_en: Dacia Logan
-name_fr: Dacia Logan
-price: 453 مليون
-price_en: 453 Million
-price_fr: 453 Millions
-description: البطاقة الرمادية جاهزة
-description_en: Grey Card
-description_fr: Carte Grise
+id: 6
+tab: cn
+title: "Roewe i5 "
+name_en: "Roewe i5 "
+name_fr: "Roewe i5 "
+price: 209 مليون
+price_en: 209 Million
+price_fr: 209 Millions
+description: متوفر للحجز
+description_en: Available for booking
+description_fr: Disponible sur commande
 images:
-  - https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/Nrw0dYbfBXHwbo5zZyQY9R8Xg5zqsqRLooHGVcKX.webp
-  - https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/TBYhBHFSZ3bB69Y0aQYg2cryCR8UbHwtLXyzW6HY.webp
-  - https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/SMZzbAWEiAt5kkIQjcAJLZ6axGhlZiPvvyy29izU.webp
-  - https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/NHUlWWZlziEImTZHeBsfBKdple5Wd6bkmGLCtzD6.webp
+  - https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/HJvDPc52nbqslV5ZOJNl3BeG5ug8C4BjdwapvnYc.webp
+  - https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/nWHefK2tbBx9vNf0dKPJHEJWSE4Buoms7UEfhgWN.webp
+  - https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/BzGBQXhVBdXSYufxMj6ENqBk9JJDMbsRTp32gQJC.webp
+  - https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/6hhNmKcgvlceiKUOIW6ld91gkJki3DiunCw8AHkr.webp
+  - https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/5RyEeg3yZ60yGZHcztMy3vGpJ0FHim12XPUdlr5D.webp
 details:
   - icon: fas fa-calendar-alt
     text: "2026"
