@@ -1,9 +1,5 @@
 backend:
   name: github
-  repo: KhaledCarsExport/CarDealer ضع هنا اسم حسابك واسم المستودع بدقة
-  branch: main # أو master حسب الفرع الرئيسي عندك
-backend:
-  name: github
   repo: khaledCarsExport/CarDealer
   branch: main
   site_domain: https://khaledcarsexport.netlify.app/ # <-- أضف هذا السطر هنا بدقة
