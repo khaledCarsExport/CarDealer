@@ -1947,8 +1947,48 @@ function renderCars() {
     // --- وظائف حاسبة الجمركة بقاعدة البيانات ---
     let db = null;
 
-    function extractExchangeRates() {
+    // دالة جديدة لجلب الأسعار مباشرة من موقع الجمارك باستخدام بروكسي لتخطي حماية CORS
+    async function fetchRatesFromCustoms() {
+        // ⚠️ ضع الرابط السري الذي استخرجته من موقع الجمارك في السطر التالي ⚠️
+        const apiUrl = "https://alces.douane.gov.dz/api/public/com/main/selectFxrtList?searchCondition=&searchKeyword=&searchKeywordFrom=&searchKeywordTo=&langCd=&pageIndex=0&pageUnit=10&pageSize=10&firstIndex=0&lastIndex=0&recordCountPerPage=10&totCnt=0&rnum=0&aplyBgnDtFrom=&aplyBgnDtTo=&aplyBgnDt=&aplyEndDt=&aplyDt=&xtrnOfrYn=&xtrnOfrDttm=&xtrnOfrEmpId=&currNm=&currCd=&fxrt=0&aprvId=&delYn=&frstRegstId=&frstRgsrDttm=&lastChprId=&lastChgDttm=&locale=fr-FR&fxrtTpCd=&buyAmt=0&selAmt=0"; 
+        
+        // خدمة البروكسي لتخطي الحماية
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+
         try {
+            console.log("جاري الاتصال بموقع الجمارك لتحديث الأسعار...");
+            const response = await fetch(proxyUrl);
+            
+            if (response.ok) {
+                const proxyData = await response.json();
+                const data = JSON.parse(proxyData.contents);
+                
+                let updated = false;
+                if (data && data.resultList) {
+                    data.resultList.forEach(item => {
+                        if (item.currCd === "EUR" && item.selAmt) {
+                            eurRate = parseFloat(item.selAmt);
+                            updated = true;
+                        } else if (item.currCd === "USD" && item.selAmt) {
+                            usdRate = parseFloat(item.selAmt);
+                            updated = true;
+                        }
+                    });
+                }
+                
+                if (updated) {
+                    console.log(`تم تحديث الأسعار من الجمارك بنجاح: EUR=${eurRate} | USD=${usdRate}`);
+                    onOriginChange(); // تحديث الأرقام المعروضة في الحاسبة فوراً
+                }
+            }
+        } catch (error) {
+            console.log("الجمارك لا تستجيب حالياً، سيتم الاستمرار بأسعار قاعدة البيانات.");
+        }
+    }
+
+    async function extractExchangeRates() {
+        try {
+            // 1. أخذ الأسعار من قاعدة البيانات كاحتياط أولي
             const resEur = db.exec("SELECT taux_dc FROM cars WHERE devise='EUR' AND taux_dc IS NOT NULL LIMIT 1");
             if (resEur.length > 0 && resEur[0].values.length > 0) {
                 let val = parseFloat(resEur[0].values[0][0]);
@@ -1961,7 +2001,12 @@ function renderCars() {
                 if (!isNaN(val) && val > 0) usdRate = val;
             }
             
+            // تحديث الحاسبة مبدئياً بأسعار قاعدة البيانات
             onOriginChange();
+            
+            // 2. محاولة جلب الأسعار المحدثة مباشرة من الجمارك
+            await fetchRatesFromCustoms();
+            
         } catch (e) {
             console.log("استخدام قيم الصرف الافتراضية.");
         }
