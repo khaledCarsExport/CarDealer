@@ -1,0 +1,46 @@
+# .github/workflows/check_rates.yml
+#
+# هذا الملف يأمر GitHub بتشغيل check_rates.py تلقائياً كل 10 دقائق
+# بدون أي خادم أو هاتف — GitHub يتولى كل شيء مجاناً
+
+name: Check & Update Exchange Rates
+
+on:
+  # ── تشغيل تلقائي كل 10 دقائق ──────────────────────────────────────
+  # cron format: دقيقة ساعة يوم_الشهر شهر يوم_الأسبوع
+  # */10 * * * *  =  كل 10 دقائق، 24 ساعة، 7 أيام
+  schedule:
+    - cron: "*/10 * * * *"
+
+  # ── تشغيل يدوي من واجهة GitHub عند الحاجة ──────────────────────────
+  workflow_dispatch:
+
+jobs:
+  update-rates:
+    runs-on: ubuntu-latest   # GitHub يوفر آلة Linux مجانية لكل تشغيل
+
+    steps:
+      # الخطوة 1: تحميل ملفات الـ Repo على الآلة المؤقتة
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # الخطوة 2: تثبيت Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # الخطوة 3: تثبيت المكتبات المطلوبة فقط (requests)
+      - name: Install dependencies
+        run: pip install requests urllib3
+
+      # الخطوة 4: تشغيل السكريبت
+      # المتغيرات تأتي من GitHub Secrets (آمنة، لا تظهر في الـ logs)
+      - name: Run rate checker
+        env:
+          GH_TOKEN:       ${{ secrets.GH_TOKEN }}
+          REPO_OWNER:     ${{ secrets.REPO_OWNER }}
+          REPO_NAME:      ${{ secrets.REPO_NAME }}
+          DB_FILE_PATH:   ${{ secrets.DB_FILE_PATH }}    # اختياري، افتراضي: khaled_cars.db
+          RATES_FILE_PATH: last_rates.json               # ملف تتبع آخر سعر محفوظ
+        run: python check_rates.py
