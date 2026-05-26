@@ -1,46 +1,47 @@
 # .github/workflows/check_rates.yml
 #
-# هذا الملف يأمر GitHub بتشغيل check_rates.py تلقائياً كل 10 دقائق
-# بدون أي خادم أو هاتف — GitHub يتولى كل شيء مجاناً
+# جدول الفحص:
+#   اوقات العمل  (الاحد-الخميس 08:00-13:00 بتوقيت الجزائر = 07:00-12:00 UTC): كل ساعة
+#   خارج العمل   (الاحد-الخميس 13:00-08:00): كل 3 ساعات
+#   العطلة        (الجمعة والسبت): كل 5 ساعات
 
 name: Check & Update Exchange Rates
 
 on:
-  # ── تشغيل تلقائي كل 10 دقائق ──────────────────────────────────────
-  # cron format: دقيقة ساعة يوم_الشهر شهر يوم_الأسبوع
-  # */10 * * * *  =  كل 10 دقائق، 24 ساعة، 7 أيام
   schedule:
-    - cron: "*/10 * * * *"
+    # -- اوقات العمل: كل ساعة (الاحد-الخميس 07:00-12:00 UTC) ----------
+    - cron: "0 7,8,9,10,11,12 * * 0,1,2,3,4"
 
-  # ── تشغيل يدوي من واجهة GitHub عند الحاجة ──────────────────────────
+    # -- خارج اوقات العمل: كل 3 ساعات (الاحد-الخميس) ------------------
+    - cron: "0 0,3,13,16,19,22 * * 0,1,2,3,4"
+
+    # -- العطلة: كل 5 ساعات (الجمعة والسبت) ----------------------------
+    - cron: "0 0,5,10,15,20 * * 5,6"
+
+  # -- تشغيل يدوي من واجهة GitHub عند الحاجة --------------------------
   workflow_dispatch:
 
 jobs:
   update-rates:
-    runs-on: ubuntu-latest   # GitHub يوفر آلة Linux مجانية لكل تشغيل
+    runs-on: ubuntu-latest
 
     steps:
-      # الخطوة 1: تحميل ملفات الـ Repo على الآلة المؤقتة
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # الخطوة 2: تثبيت Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      # الخطوة 3: تثبيت المكتبات المطلوبة فقط (requests)
       - name: Install dependencies
         run: pip install requests urllib3
 
-      # الخطوة 4: تشغيل السكريبت
-      # المتغيرات تأتي من GitHub Secrets (آمنة، لا تظهر في الـ logs)
       - name: Run rate checker
         env:
-          GH_TOKEN:       ${{ secrets.GH_TOKEN }}
-          REPO_OWNER:     ${{ secrets.REPO_OWNER }}
-          REPO_NAME:      ${{ secrets.REPO_NAME }}
-          DB_FILE_PATH:   ${{ secrets.DB_FILE_PATH }}    # اختياري، افتراضي: khaled_cars.db
-          RATES_FILE_PATH: last_rates.json               # ملف تتبع آخر سعر محفوظ
+          GH_TOKEN:        ${{ secrets.GH_TOKEN }}
+          REPO_OWNER:      ${{ secrets.REPO_OWNER }}
+          REPO_NAME:       ${{ secrets.REPO_NAME }}
+          DB_FILE_PATH:    ${{ secrets.DB_FILE_PATH }}
+          RATES_FILE_PATH: last_rates.json
         run: python check_rates.py
