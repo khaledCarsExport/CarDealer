@@ -555,8 +555,8 @@
     "id": 1014,
     "name": "Renault Arkana Evolution",
     "price": "469 مليون",
-    "price_en": "469 M",
-    "price_fr": "469 M",
+    "price_en": "469 Million",
+    "price_fr": "469 Millions",
     "images": [
       "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/ifqWO0m0Qx79vEnsCnNrCxJWSCf6Yu7zCkWCf2zw.webp",
       "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/g2YQdQhnljSEGrgxu57xKgL70EdnKS2m9E6H16G4.webp",
@@ -1424,29 +1424,6 @@ function changeCardImage(carId, direction, event) {
         renderCars();
     }
 
-    function changeLanguage(lang) {
-    currentLang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    
-    // ترجمة العناصر العادية
-    document.querySelectorAll('[data-translate]').forEach(el => {
-        const key = el.getAttribute('data-translate');
-        if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
-    });
-
-    // ترجمة نصوص شريط الفلاتر والبحث ديناميكياً
-    const l = translations[lang];
-    document.getElementById('carSearchInput').placeholder = l.searchPlaceholder;
-    document.getElementById('optAllGear').textContent = l.allGearboxes;
-    document.getElementById('optManualGear').textContent = l.manualGear;
-    document.getElementById('optAutoGear').textContent = l.autoGear;
-    document.getElementById('optDefaultSort').textContent = l.defaultSort;
-    document.getElementById('optPriceAsc').textContent = l.priceAsc;
-    document.getElementById('optPriceDesc').textContent = l.priceDesc;
-
-    renderCars();
-}
-
 function renderCars() {
     const container = document.getElementById('cars-container');
     container.innerHTML = '';
@@ -1492,7 +1469,7 @@ function renderCars() {
     filtered.forEach(car => {
         const isSold = car.tab === 'sold';
         const name = currentLang === 'en' ? (car.name_en || car.name) : (currentLang === 'fr' ? (car.name_fr || car.name) : car.name);
-        const price = isSold ? lang.sold : car.price;
+        const price = isSold ? lang.sold : (currentLang === 'en' ? (car.price_en || car.price) : (currentLang === 'fr' ? (car.price_fr || car.price) : car.price));
         const desc = currentLang === 'en' ? (car.description_en || car.description) : (currentLang === 'fr' ? (car.description_fr || car.description) : car.description);
 
         let specsHtml = car.details.map(d => {
