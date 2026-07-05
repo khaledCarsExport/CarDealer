@@ -447,7 +447,7 @@
     "images": [
       "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/v71XsJeOF1yf4bx1xFvCICHyVhRlPFkEr7rtEEGO.webp",
       "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/1nTPkGcFmnA466PCrUSIg0wbPU05UVYyldzgy1Ny.webp",
-      "https://cdn8.ouedkniss.com/1600/medias/announcements/images/KZ32jM/9T7vFYae04TgIzcHJtwR0g73pJc9wPkUWIDaqJXP.webp",
+      "https://cdn9.ouedkniss.com/1600/medias/announcements/images/KZ32jM/9T7vFYae04TgIzcHJtwR0g73pJc9wPkUWIDaqJXP.webp",
       "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/kcBhgQ5NqdVWzsknV3lq4qJXaa5nRFB6sv6Iy3Mg.webp",
       "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/0SZa8tvtKTdkwd3OGlHnAVQj67HabX4wn4egPoUY.webp",
       "https://cdn7.ouedkniss.com/1600/medias/announcements/images/KZ32jM/2HQfqP0Vtgnplk6GGLfDsmr8ZV8peDKdncepZ1Gw.webp",
@@ -2372,7 +2372,7 @@ function renderCars() {
         const currencySymbol = origin === 'Europe' ? '€' : '$';
 
         if (!select || !select.value) {
-            if(finalBox) finalBox.style.display = 'none';
+            if (finalBox) finalBox.style.display = 'none';
             return;
         }
 
@@ -2395,57 +2395,55 @@ function renderCars() {
             return;
         }
 
-        let cylindre = parseInt(car.cylindre) || 0;
-        let isDiesel = (car.energie === 'DSL');
-        let isEssenceSmall = (car.energie === 'ESS' && cylindre < 1800);
-        let isEssenceBig = (car.energie === 'ESS' && cylindre >= 1800);
+        const FIXED_COST = 2500;
+        const transportCost = (origin === 'Europe') ? 600 : 1700;
+        const cc = parseInt(car.cylindre) || 0;
+        const energie = (car.energie || "").toUpperCase();
+        const isNeuf = (age === 'neuf');
 
-        let taxRate = parseFloat(car.taux_dc);
-        if (taxRate > 1) taxRate = taxRate / 100;
+        // 1. حساب نسبة الضريبة (TAX_RATE) ديناميكياً بناءً على نوع الوقود وسعة المحرك وحالة السيارة
+        let taxRate = 0.4042;
 
-        let transportCost = (origin === 'Europe') ? 600 : 1700;
-        let priceDZD = (basePrice + transportCost) * bankRate;
-        
-        let customsFeesDZD = 0;
-
-        if (isDiesel) {
-            if (age === 'neuf') {
-                customsFeesDZD = (priceDZD * 1.5323) + 2500;
+        if (energie === "ESS" || energie === "HYB" || energie === "GAZ" || energie === "ELC") {
+            if (cc < 1800) {
+                taxRate = isNeuf ? 0.4042 : 0.2021;
             } else {
-                document.getElementById('dbCalcTotal').innerText = "ممنوع الاستيراد";
-                document.getElementById('dbCalcTotal').style.color = "red";
-                document.getElementById('dbCalcTotal').style.fontSize = "1.5rem";
-                document.getElementById('dbCarPrice').innerText = basePrice.toLocaleString() + currencySymbol;
-                document.getElementById('dbOtherFees').innerText = "يُمنع استيراد سيارات الديزل المستعملة في الجزائر";
-                finalBox.style.display = 'block';
-                return;
+                taxRate = isNeuf ? 1.5323 : 1.2258;
             }
-        } else if (isEssenceSmall || car.energie === 'HYB' || car.energie === 'ELC') {
-            if (age === 'neuf') {
-                customsFeesDZD = (priceDZD * 0.4042) + 2500;
+        } else if (energie === "DSL") {
+            if (cc < 2000) {
+                taxRate = 0.5558;
             } else {
-                customsFeesDZD = (priceDZD * 0.2021) + 2500;
-            }
-        } else if (isEssenceBig) {
-            if (age === 'neuf') {
-                customsFeesDZD = (priceDZD * 1.5323) + 2500;
-            } else {
-                customsFeesDZD = (priceDZD * 1.2258) + 2500;
-            }
-        } else {
-            if (age === 'neuf') {
-                customsFeesDZD = (priceDZD * 0.4042) + 2500;
-            } else {
-                customsFeesDZD = (priceDZD * 0.2021) + 2500;
+                taxRate = 1.5323;
             }
         }
 
+        let customsFeesDZD = 0;
+
+        // 2. تطبيق الحساب المعتمد مع منع استيراد الديزل المستعمل
+        if (energie === "DSL" && !isNeuf) {
+            document.getElementById('dbCalcTotal').innerText = "ممنوع الاستيراد";
+            document.getElementById('dbCalcTotal').style.color = "red";
+            document.getElementById('dbCalcTotal').style.fontSize = "1.5rem";
+            document.getElementById('dbCarPrice').innerText = basePrice.toLocaleString() + currencySymbol;
+            document.getElementById('dbOtherFees').innerText = "يُمنع استيراد سيارات الديزل المستعملة في الجزائر";
+            finalBox.style.display = 'block';
+            return;
+        }
+
+        if (isNeuf) {
+            // جديد = (السعر + التعديل) * نسبة الضريبة * سعر الصرف
+            customsFeesDZD = (basePrice + transportCost) * taxRate * bankRate;
+        } else {
+            // مستعمل = ((السعر + التعديل) * نسبة الضريبة * سعر الصرف) / 2 + الرسوم الثابتة
+            customsFeesDZD = (((basePrice + transportCost) * taxRate * bankRate) / 2) + FIXED_COST;
+        }
+
         const totalMillions = (customsFeesDZD / 10000).toFixed(2);
-        
         let otherFeesText = (origin === 'Europe') ? "حوالي 5 ملاين سنتيم" : "حوالي 30-45 مليون";
 
         document.getElementById('dbCalcTotal').innerText = totalMillions + " مليون";
-        document.getElementById('dbCarPrice').innerText = basePrice.toLocaleString() + currencySymbol + ` (+${transportCost}${currencySymbol} شحن)`;
+        document.getElementById('dbCarPrice').innerText = basePrice.toLocaleString() + currencySymbol + ` (+${transportCost}${currencySymbol} شحن) | نسبة الضريبة: ${(taxRate * 100).toFixed(2)}%`;
         document.getElementById('dbOtherFees').innerText = otherFeesText;
         
         finalBox.style.display = 'block';
