@@ -2766,8 +2766,8 @@ function renderCars() {
             // جديد = (السعر + التعديل) * نسبة الضريبة * سعر الصرف
             customsFeesDZD = (basePrice + transportCost) * taxRate * bankRate;
         } else {
-            // مستعمل = ((السعر + التعديل) * نسبة الضريبة * سعر الصرف) / 2 + الرسوم الثابتة
-            customsFeesDZD = (((basePrice + transportCost) * taxRate * bankRate) / 2) + FIXED_COST;
+            // مستعمل = ((السعر + التعديل) * نسبة الضريبة * سعر الصرف)  + الرسوم الثابتة
+            customsFeesDZD = (((basePrice + transportCost) * taxRate * bankRate) ) + FIXED_COST;
         }
 
         const totalMillions = (customsFeesDZD / 10000).toFixed(2);
